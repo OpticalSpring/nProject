@@ -5,6 +5,7 @@ using Photon.Pun;
 
     public class ThirdPersonUserControl : MonoBehaviourPun
     {
+        
         private ThirdPersonCharacter m_Character; // A reference to the ThirdPersonCharacter on the object
         public Transform m_Cam;                  // A reference to the main camera in the scenes transform
         public Vector3 m_CamForward;             // The current forward direction of the camera
