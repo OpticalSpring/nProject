@@ -40,7 +40,7 @@ public class MatchMaker : MonoBehaviourPunCallbacks
             Quaternion.identity,
             0
         );
-        player.GetComponent<ThirdPersonUserControl>().m_Cam = camObject.transform.GetChild(0);
+        player.GetComponent<PlayerControl>().cam = camObject.transform.GetChild(0);
         camObject.GetComponent<CameraControl>().camTarget = player;
 
 

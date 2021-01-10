@@ -9,7 +9,7 @@ public class CameraControl : MonoBehaviour
     public float rotationSpeed;
     public float maxDistance;
     public Vector2 correctionPos;
-
+    public float corDistance;
     public float camDistance;
     GameObject mainCamera;
     GameObject cameraPivot;
@@ -62,22 +62,32 @@ public class CameraControl : MonoBehaviour
     {
         RaycastHit rayHit;
 
-        Debug.DrawRay(cameraPivot.transform.position + new Vector3(0, correctionPos.y, 0), -mainCamera.transform.forward * maxDistance, Color.red);
+        
         int mask = 1 << 2 | 1 << 8 | 1 << 9 | 1 << 10;
         mask = ~mask;
-        if (Physics.SphereCast(cameraPivot.transform.position + new Vector3(0, correctionPos.y, 0),0.1f, -mainCamera.transform.forward, out rayHit, maxDistance, mask))
+        if (Physics.Raycast(cameraPivot.transform.position+ new Vector3(0, correctionPos.y, 0), -cameraPivot.transform.forward, out rayHit, maxDistance, mask))
         {
             Vector3 hitPoint = rayHit.point;
 
-            camDistance = Vector3.Distance(hitPoint, cameraPivot.transform.position + new Vector3(0, correctionPos.y, 0)) - 0.5f;
-
+            camDistance = Vector3.Distance(hitPoint, cameraPivot.transform.position + new Vector3(0, correctionPos.y, 0));
         }
         else
         {
-            camDistance = maxDistance - 0.5f;
+            camDistance = maxDistance;
+        }
+        if (Physics.Raycast(cameraPivot.transform.position + new Vector3(0, correctionPos.y, 0), cameraPivot.transform.right, out rayHit, 3.0f, mask))
+        {
+            Vector3 hitPoint = rayHit.point;
+            corDistance = Vector3.Distance(hitPoint, cameraPivot.transform.position + new Vector3(0, correctionPos.y, 0))-0.7f;
+            if (corDistance > correctionPos.x) corDistance = correctionPos.x;
+        }
+        else
+        {
+            corDistance = correctionPos.x;
         }
 
-        Vector3 localPos = new Vector3(correctionPos.x, correctionPos.y, -camDistance);
+
+        Vector3 localPos = new Vector3(corDistance, correctionPos.y, -camDistance);
         mainCamera.transform.localPosition = Vector3.Lerp(mainCamera.transform.localPosition, localPos, Time.fixedDeltaTime * 10f);
        
     }
