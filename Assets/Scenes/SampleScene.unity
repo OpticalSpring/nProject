@@ -6355,6 +6355,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainText: {fileID: 1641022483}
   chatField: {fileID: 1368424359}
+  nameColor: {r: 1, g: 0, b: 0, a: 1}
+  namePlayer: "\uB2C9\uB124\uC784"
 --- !u!114 &280600286
 MonoBehaviour:
   m_ObjectHideFlags: 0
