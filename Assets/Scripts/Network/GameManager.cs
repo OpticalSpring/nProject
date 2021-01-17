@@ -1,18 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviourPunCallbacks
 {
-    // Start is called before the first frame update
-    void Start()
+    private static GameManager instance = null;
+    void Awake()
     {
-        
+        if (null == instance)
+        {
+            instance = this;
+        }
+        Invoke("CountPlayerInRoom", 5f);
     }
 
-    // Update is called once per frame
-    void Update()
+    public int curPlayer;
+    public int maxPlayer;
+    void CountPlayerInRoom()
     {
-        
+        curPlayer = PhotonNetwork.PlayerList.Length;
+        maxPlayer = PhotonNetwork.CurrentRoom.MaxPlayers;
     }
 }

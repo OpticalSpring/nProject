@@ -6350,13 +6350,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 280600283}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f7d54b97e02f6144a33cca834d465a2, type: 3}
+  m_Script: {fileID: 11500000, guid: 5e461b6c12afa1e4190747a5a85fa4f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   mainText: {fileID: 1641022483}
   chatField: {fileID: 1368424359}
-  nameColor: {r: 1, g: 0, b: 0, a: 1}
-  namePlayer: "\uB2C9\uB124\uC784"
+  playerColor: {r: 1, g: 0, b: 0, a: 1}
+  playerName: Default
 --- !u!114 &280600286
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35563,6 +35563,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1975457167}
+  - component: {fileID: 1975457168}
   - component: {fileID: 1975457166}
   m_Layer: 0
   m_Name: NetworkManager
@@ -35599,6 +35600,20 @@ Transform:
   m_Father: {fileID: 113356181}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1975457168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1975457165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d39a802c8afbeb04d839664cf2dd70dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  curPlayer: 0
+  maxPlayer: 0
 --- !u!43 &1977741225
 Mesh:
   m_ObjectHideFlags: 0
