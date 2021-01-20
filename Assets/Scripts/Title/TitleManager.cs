@@ -29,6 +29,10 @@ public class TitleManager : MonoBehaviourPunCallbacks
     void Update()
     {
         
+
+
+
+        
         UpdateRoomInfo();
     }
 
@@ -58,7 +62,7 @@ public class TitleManager : MonoBehaviourPunCallbacks
 
     public void InitRoom()
     {
-        startButton.SetActive(true);
+        
         RoomOptions RO = new RoomOptions();
         RO.MaxPlayers = 8;
         RO.IsOpen = true;
@@ -86,6 +90,15 @@ public class TitleManager : MonoBehaviourPunCallbacks
             {
                 curPlayerList.text += PhotonNetwork.PlayerList[i].NickName + "\n";
 
+            }
+
+            if (PhotonNetwork.IsMasterClient)
+            {
+                startButton.SetActive(true);
+            }
+            else
+            {
+                startButton.SetActive(false);
             }
         }
         
@@ -138,8 +151,9 @@ public class TitleManager : MonoBehaviourPunCallbacks
 
     public void StartGame()
     {
-        PhotonView photonView = PhotonView.Get(this);
-        photonView.RPC("InitGame", RpcTarget.All);
+        SceneManager.LoadSceneAsync(1);
+        //PhotonView photonView = PhotonView.Get(this);
+        //photonView.RPC("InitGame", RpcTarget.All);
     }
 
 
