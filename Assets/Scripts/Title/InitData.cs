@@ -10,17 +10,15 @@ public class InitData : MonoBehaviour
     private void Start()
     {
         inputName.text = PlayerPrefs.GetString("UserName");
-        if(inputName.text.Length == 0)
-        {
-            inputName.text = "Random"+Random.Range(0, 999);
-        }
         SetName();
-
-
     }
 
     public void SetName()
     {
+        if (inputName.text.Length == 0)
+        {
+            inputName.text = "Random" + Random.Range(0, 999);
+        }
         if (inputName.text.Length > 10)
         {
             inputName.text = inputName.text.Substring(0, 10);
@@ -28,7 +26,6 @@ public class InitData : MonoBehaviour
             
         PlayerPrefs.SetString("UserName", inputName.text);
         PhotonNetwork.NickName = inputName.text;
-        Debug.Log(inputName.text.Length);
     }
 
     

@@ -7,21 +7,29 @@ using Photon.Pun;
 using Photon.Realtime;
 public class TitleManager : MonoBehaviourPunCallbacks
 {
+    public static TitleManager instance = null;
+    void Awake()
+    {
+        if (null == instance)
+        {
+            instance = this;
+        }
+        OnLogin();
+    }
     private string gameVer = "0.1";
     public GameObject[] uiGroup;
     public GameObject roomGrid;
     public GameObject roomPrefab;
     public GameObject startButton;
-    // Start is called before the first frame update
-    void Awake()
-    {
-        OnLogin();
-    }
+    public Text curRoomName;
+    public Text curPlayerList;
+    
 
     // Update is called once per frame
     void Update()
     {
         
+        UpdateRoomInfo();
     }
 
     void OnLogin()
@@ -34,11 +42,13 @@ public class TitleManager : MonoBehaviourPunCallbacks
         PhotonNetwork.SendRate = 60;
         PhotonNetwork.SerializationRate = 30;
         PhotonNetwork.QuickResends = 3;
+        Debug.Log("LoginServer");
     }
 
     public override void OnConnectedToMaster()
     {
         PhotonNetwork.JoinLobby();
+        Debug.Log("ConnectServer");
     }
 
     public override void OnJoinedRoom()
@@ -48,29 +58,46 @@ public class TitleManager : MonoBehaviourPunCallbacks
 
     public void InitRoom()
     {
-        OpenUI(3);
         startButton.SetActive(true);
         RoomOptions RO = new RoomOptions();
-        RO.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable();
         RO.MaxPlayers = 8;
         RO.IsOpen = true;
         RO.IsVisible = true;
 
-       // RO.CustomRoomPropertiesForLobby = new string[1];
-       // RO.CustomRoomPropertiesForLobby[0] = "map";
-        //int count1 = Random.Range(0, 10000);
-       // RO.CustomRoomProperties.Add("map", count1.ToString());
+        PhotonNetwork.JoinOrCreateRoom(PlayerPrefs.GetString("UserName"), RO, TypedLobby.Default);
+        OpenUI(3);
+        Debug.Log("InitRoom");
+    }
 
-        PhotonNetwork.JoinOrCreateRoom(PlayerPrefs.GetString("NickName"), RO, TypedLobby.Default);
+    public void JoinRoom(string roomName)
+    {
+        PhotonNetwork.JoinRoom(roomName, null);
+        OpenUI(3);
+        Debug.Log("JoinRoom");
+    }
 
+    public void UpdateRoomInfo()
+    {
+        if (PhotonNetwork.InRoom)
+        {
+            curRoomName.text = PhotonNetwork.CurrentRoom.Name + "";
+            curPlayerList.text = "";
+            for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
+            {
+                curPlayerList.text += PhotonNetwork.PlayerList[i].NickName + "\n";
+
+            }
+        }
+        
     }
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
-        foreach(GameObject obj in GameObject.FindGameObjectsWithTag("ROOM"))
+        for (int i = 0; i < roomGrid.transform.childCount; i++)
         {
-            Destroy(obj);
+            Destroy(roomGrid.transform.GetChild(i).gameObject);
         }
+        
         foreach(RoomInfo roomInfo in roomList)
         {
             GameObject _room = Instantiate(roomPrefab, roomGrid.transform);
@@ -79,21 +106,20 @@ public class TitleManager : MonoBehaviourPunCallbacks
             roomData.maxPlayer = roomInfo.MaxPlayers;
             roomData.curPlayer = roomInfo.PlayerCount;
             roomData.UpdateInfo();
-            roomData.GetComponent<Button>().onClick.AddListener(
-                delegate
-            {
-                OnClickRoom(roomData.roomName);
-            }
-            );
         }
     }
 
-    void OnClickRoom(string roomName)
-    {
-        PhotonNetwork.JoinRoom(roomName, null);
-    }
 
-    
+    public void LeftRoom()
+    {
+        if (PhotonNetwork.InRoom)
+        {
+            PhotonNetwork.LeaveRoom();
+            PhotonNetwork.JoinLobby();
+        }
+        OpenUI(1);
+        Debug.Log("LeftRoom");
+    }
 
     public void OpenUI(int i)
     {
@@ -107,6 +133,56 @@ public class TitleManager : MonoBehaviourPunCallbacks
         for (int i = 0; i < uiGroup.Length; i++)
         {
             uiGroup[i].SetActive(false);
+        }
+    }
+
+    public void StartGame()
+    {
+        PhotonView photonView = PhotonView.Get(this);
+        photonView.RPC("InitGame", RpcTarget.All);
+    }
+
+
+    [PunRPC]
+    public void InitGame()
+    {
+        SceneManager.LoadSceneAsync(1);
+    }
+
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        IngameChatManager.instance.SendChatMessage(otherPlayer.NickName + "님이 퇴장했습니다.");
+        
+    }
+
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        IngameChatManager.instance.SendChatMessage(newPlayer.NickName + "님이 입장했습니다.");
+        
+    }
+    void OnDisconnectedFromServer()
+    {
+        PhotonNetwork.ReconnectAndRejoin();
+    }
+    void OnPlayerDisconnected()
+    {
+        PhotonNetwork.RemoveRPCs(PhotonNetwork.LocalPlayer);
+    }
+
+    void OnFailedToConnect()
+    {
+        PhotonNetwork.ReconnectAndRejoin();
+    }
+
+    void OnFailedToConnectToMasterServer()
+    {
+        PhotonNetwork.ReconnectAndRejoin();
+    }
+    void OnApplicationPause(bool paused)
+    {
+        if (paused)
+        {
+            PhotonNetwork.ReconnectAndRejoin();
         }
     }
 }

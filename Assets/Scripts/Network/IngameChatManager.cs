@@ -6,7 +6,7 @@ using Photon.Pun;
 
 public class IngameChatManager : MonoBehaviourPunCallbacks
 {
-    private static IngameChatManager instance = null;
+    public static IngameChatManager instance = null;
     void Awake()
     {
         if (null == instance)
@@ -23,7 +23,7 @@ public class IngameChatManager : MonoBehaviourPunCallbacks
 
     void Start()
     {
-        playerName = photonView.Owner.NickName;
+        playerName = PhotonNetwork.NickName;
     }
 
     void Update()
@@ -77,7 +77,7 @@ public class IngameChatManager : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    private void SendChatMessage(string inputLine)
+    public void SendChatMessage(string inputLine)
     {
         if (string.IsNullOrEmpty(inputLine))
         {

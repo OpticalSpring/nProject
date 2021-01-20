@@ -34,4 +34,9 @@ public class RoomData : MonoBehaviour
             roomDataText.text += " 대기중";
         }
     }
+
+    public void JoinRoom()
+    {
+        TitleManager.instance.JoinRoom(roomName);
+    }
 }
