@@ -1,19 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class PlayerCharacter : MonoBehaviour
+using Photon.Pun;
+public class PlayerCharacter : MonoBehaviourPunCallbacks
 {
-    Vector3 point;
+   
     public float moveSpeed;
     public float moveFastSpeed;
 
+    public int colorNum;
     public Color playerColor;
     public string playerName;
+    public SkinnedMeshRenderer colorMat;
     // Start is called before the first frame update
     void Start()
     {
-        
+        playerName = photonView.Owner.NickName;
+        int a = int.Parse(playerName.Substring(playerName.IndexOf("#")+1, 2));
+        playerColor = ColorManager.instance.NumToCol(a);
+        colorMat.material.color = playerColor;
+        playerName = playerName.Substring(0, playerName.IndexOf("#"));
     }
 
     // Update is called once per frame

@@ -23,7 +23,9 @@ public class InitData : MonoBehaviour
         {
             inputName.text = inputName.text.Substring(0, 10);
         }
-            
+        inputName.text = inputName.text.Replace('#', ' ');
+
+
         PlayerPrefs.SetString("UserName", inputName.text);
         PhotonNetwork.NickName = inputName.text;
     }

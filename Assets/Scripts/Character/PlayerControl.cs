@@ -13,17 +13,7 @@ public class PlayerControl : MonoBehaviourPun
     // Start is called before the first frame update
     void Start()
     {
-        if (Camera.main != null)
-        {
-            cam = Camera.main.transform.parent;
-        }
-        else
-        {
-            Debug.LogWarning("카메라가 없는데?", gameObject);
-            
-        }
-
-       
+        
         character = GetComponent<PlayerCharacter>();
     }
 

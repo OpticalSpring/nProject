@@ -2523,6 +2523,7 @@ GameObject:
   m_Component:
   - component: {fileID: 113356181}
   - component: {fileID: 113356182}
+  - component: {fileID: 113356183}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2560,6 +2561,18 @@ MonoBehaviour:
   camObject: {fileID: 873201293}
   curPlayer: 0
   maxPlayer: 0
+--- !u!114 &113356183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 113356180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb6b718c21df0eb4bbe7727c9214b80b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &118594465 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8761578128121577958, guid: 462f5f68387014b46848da4a12cba46a,

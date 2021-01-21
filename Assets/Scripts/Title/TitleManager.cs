@@ -23,16 +23,11 @@ public class TitleManager : MonoBehaviourPunCallbacks
     public GameObject startButton;
     public Text curRoomName;
     public Text curPlayerList;
-    
+
 
     // Update is called once per frame
     void Update()
     {
-        
-
-
-
-        
         UpdateRoomInfo();
     }
 
@@ -57,20 +52,23 @@ public class TitleManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        
+
     }
 
     public void InitRoom()
     {
-        
-        RoomOptions RO = new RoomOptions();
-        RO.MaxPlayers = 8;
-        RO.IsOpen = true;
-        RO.IsVisible = true;
 
-        PhotonNetwork.JoinOrCreateRoom(PlayerPrefs.GetString("UserName"), RO, TypedLobby.Default);
-        OpenUI(3);
-        Debug.Log("InitRoom");
+        if (PhotonNetwork.InLobby)
+        {
+            RoomOptions RO = new RoomOptions();
+            RO.MaxPlayers = 8;
+            RO.IsOpen = true;
+            RO.IsVisible = true;
+
+            PhotonNetwork.JoinOrCreateRoom(PlayerPrefs.GetString("UserName"), RO, TypedLobby.Default);
+            OpenUI(3);
+            Debug.Log("InitRoom");
+        }
     }
 
     public void JoinRoom(string roomName)
@@ -88,7 +86,9 @@ public class TitleManager : MonoBehaviourPunCallbacks
             curPlayerList.text = "";
             for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
             {
-                curPlayerList.text += PhotonNetwork.PlayerList[i].NickName + "\n";
+                object colorNum;
+                PhotonNetwork.PlayerList[i].CustomProperties.TryGetValue("Color",out colorNum);
+                curPlayerList.text += PhotonNetwork.PlayerList[i].NickName + colorNum + "\n";
 
             }
 
@@ -101,7 +101,29 @@ public class TitleManager : MonoBehaviourPunCallbacks
                 startButton.SetActive(false);
             }
         }
-        
+
+    }
+    public void SetPlayerColor(int n)
+    {
+        string str = PhotonNetwork.NickName;
+        if (str.IndexOf("#") != -1)
+        {
+            str = str.Substring(0,str.IndexOf("#"));
+        }
+        if(n < 10)
+        {
+            PhotonNetwork.NickName = str + "#0" + n;
+        }
+        else
+        {
+
+             PhotonNetwork.NickName = str + "#" + n;
+        }
+
+    }
+    [PunRPC]
+    public void SendPlayerColor(int n)
+    {
     }
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
@@ -110,15 +132,20 @@ public class TitleManager : MonoBehaviourPunCallbacks
         {
             Destroy(roomGrid.transform.GetChild(i).gameObject);
         }
-        
-        foreach(RoomInfo roomInfo in roomList)
+
+        foreach (RoomInfo roomInfo in roomList)
         {
-            GameObject _room = Instantiate(roomPrefab, roomGrid.transform);
-            RoomData roomData = _room.GetComponent<RoomData>();
-            roomData.roomName = roomInfo.Name;
-            roomData.maxPlayer = roomInfo.MaxPlayers;
-            roomData.curPlayer = roomInfo.PlayerCount;
-            roomData.UpdateInfo();
+            if (roomInfo.MaxPlayers != 0)
+            {
+
+                GameObject _room = Instantiate(roomPrefab, roomGrid.transform);
+                RoomData roomData = _room.GetComponent<RoomData>();
+                roomData.roomName = roomInfo.Name;
+                roomData.maxPlayer = roomInfo.MaxPlayers;
+                roomData.curPlayer = roomInfo.PlayerCount;
+                roomData.UpdateInfo();
+            }
+
         }
     }
 
@@ -127,11 +154,13 @@ public class TitleManager : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.InRoom)
         {
+
             PhotonNetwork.LeaveRoom();
             PhotonNetwork.JoinLobby();
+
+            OpenUI(1);
+            Debug.Log("LeftRoom");
         }
-        OpenUI(1);
-        Debug.Log("LeftRoom");
     }
 
     public void OpenUI(int i)
@@ -152,27 +181,20 @@ public class TitleManager : MonoBehaviourPunCallbacks
     public void StartGame()
     {
         SceneManager.LoadSceneAsync(1);
-        //PhotonView photonView = PhotonView.Get(this);
-        //photonView.RPC("InitGame", RpcTarget.All);
     }
 
 
-    [PunRPC]
-    public void InitGame()
-    {
-        SceneManager.LoadSceneAsync(1);
-    }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         IngameChatManager.instance.SendChatMessage(otherPlayer.NickName + "님이 퇴장했습니다.");
-        
+
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         IngameChatManager.instance.SendChatMessage(newPlayer.NickName + "님이 입장했습니다.");
-        
+
     }
     void OnDisconnectedFromServer()
     {
@@ -199,4 +221,6 @@ public class TitleManager : MonoBehaviourPunCallbacks
             PhotonNetwork.ReconnectAndRejoin();
         }
     }
+
+
 }
