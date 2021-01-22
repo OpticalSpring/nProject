@@ -63,7 +63,7 @@ public class CameraControl : MonoBehaviour
         RaycastHit rayHit;
 
         
-        int mask = 1 << 2 | 1 << 8 | 1 << 9 | 1 << 10;
+        int mask = 1 << 2 | 1 << 8;
         mask = ~mask;
         if (Physics.Raycast(cameraPivot.transform.position+ new Vector3(0, correctionPos.y, 0), -cameraPivot.transform.forward, out rayHit, maxDistance, mask))
         {

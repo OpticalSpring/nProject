@@ -17,14 +17,10 @@ public class PlayerControl : MonoBehaviourPun
         character = GetComponent<PlayerCharacter>();
     }
 
-    // Update is called once per frame
+    
+
+
     void Update()
-    {
-        
-    }
-
-
-    private void FixedUpdate()
     {
         if (!photonView.IsMine)
         {
@@ -49,6 +45,11 @@ public class PlayerControl : MonoBehaviourPun
 
         
         character.CommentMovement(moveVector,run);
-        
+
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            character.TakeOtherPlayer();
+        }
     }
 }

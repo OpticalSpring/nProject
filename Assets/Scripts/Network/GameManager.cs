@@ -40,10 +40,28 @@ public class GameManager : MonoBehaviourPunCallbacks
             0
         );
         //player.GetComponent<PlayerCharacter>().playerColor = ColorManager.instance.NumToCol((int)PhotonNetwork.LocalPlayer.CustomProperties["Color"]);
-
+        
         player.GetComponent<PlayerControl>().cam = camObject.transform.GetChild(0);
         camObject.GetComponent<CameraControl>().camTarget = player;
+        
     }
 
-   
+    public void CheckPlayerList()
+    {
+        GameObject[] objects = GameObject.FindGameObjectsWithTag("Player");
+        
+    }
+
+    public GameObject GetPlayerObject(int ID)
+    {
+        GameObject[] objects = GameObject.FindGameObjectsWithTag("Player");
+        for (int i = 0; i < objects.Length; i++)
+        {
+            if(objects[i].GetComponent<PhotonView>().Owner.ActorNumber == ID)
+            {
+                return objects[i];
+            }
+        }
+        return null;
+    }
 }

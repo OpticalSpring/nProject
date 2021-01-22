@@ -18,9 +18,7 @@ public class PlayerNameTag : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-            gameObject.transform.LookAt(cam.transform.position);
-        
-       
+        nameTag.text = player.playerName;
+        gameObject.transform.LookAt(cam.transform.position);
     }
 }
