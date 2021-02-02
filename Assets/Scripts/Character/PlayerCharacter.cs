@@ -19,10 +19,10 @@ public class PlayerCharacter : MonoBehaviourPunCallbacks
     {
         HP_NOW = HP_MAX;
         playerName = photonView.Owner.NickName;
-        int a = int.Parse(playerName.Substring(playerName.IndexOf("#") + 1, 2));
-        playerColor = ColorManager.instance.NumToCol(a);
+        int a = ColorManager.GetPlayerNameToCol(playerName);
+        playerColor = ColorManager.NumToCol(a);
         colorMat.material.color = playerColor;
-        playerName = playerName.Substring(0, playerName.IndexOf("#"));
+        playerName = ColorManager.SetPlayerNameToCol(playerName);
         gameObject.name = playerName;
         cam = GameManager.instance.camObject.transform.GetChild(0).GetChild(0).gameObject;
         
@@ -120,7 +120,6 @@ public class PlayerCharacter : MonoBehaviourPunCallbacks
         RaycastHit rayHit;
         int mask = 1 << 2;
         mask = ~mask;
-
         if (Physics.Raycast(cam.transform.position, cam.transform.forward, out rayHit, 100f, mask))
         {
             Debug.Log(rayHit.collider.gameObject.name);
@@ -130,10 +129,6 @@ public class PlayerCharacter : MonoBehaviourPunCallbacks
                 return;
             }
             
-            if (rayHit.collider.gameObject.GetComponent<PlayerCharacter>().photonView.IsMine == true)
-            {
-                return;
-            }
             
             photonView.RPC("TakeOtherData", RpcTarget.All, rayHit.collider.gameObject.GetComponent<PhotonView>().Owner.ActorNumber);
         }

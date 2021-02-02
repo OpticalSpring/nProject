@@ -26,6 +26,13 @@ public class PlayerControl : MonoBehaviourPun
         {
             return;
         }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            character.TakeOtherPlayer();
+        }
+
+
         // read inputs
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
@@ -47,9 +54,6 @@ public class PlayerControl : MonoBehaviourPun
         character.CommentMovement(moveVector,run);
 
 
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            character.TakeOtherPlayer();
-        }
+        
     }
 }

@@ -39,7 +39,6 @@ public class GameManager : MonoBehaviourPunCallbacks
             Quaternion.identity,
             0
         );
-        //player.GetComponent<PlayerCharacter>().playerColor = ColorManager.instance.NumToCol((int)PhotonNetwork.LocalPlayer.CustomProperties["Color"]);
         
         player.GetComponent<PlayerControl>().cam = camObject.transform.GetChild(0);
         camObject.GetComponent<CameraControl>().camTarget = player;

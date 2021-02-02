@@ -8,7 +8,6 @@ public class RoomData : MonoBehaviour
     public string roomName;
     public int curPlayer;
     public int maxPlayer;
-    public int gameState;
     public Text roomDataText;
     // Start is called before the first frame update
     void Awake()
@@ -25,14 +24,6 @@ public class RoomData : MonoBehaviour
     public void UpdateInfo()
     {
         roomDataText.text = roomName + "[" + curPlayer + "/"+maxPlayer+"]";
-        if(gameState == 1)
-        {
-            roomDataText.text += " 게임중";
-        }
-        else
-        {
-            roomDataText.text += " 대기중";
-        }
     }
 
     public void JoinRoom()

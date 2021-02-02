@@ -57,7 +57,6 @@ public class TitleManager : MonoBehaviourPunCallbacks
 
     public void InitRoom()
     {
-
         if (PhotonNetwork.InLobby)
         {
             RoomOptions RO = new RoomOptions();
@@ -67,6 +66,7 @@ public class TitleManager : MonoBehaviourPunCallbacks
 
             PhotonNetwork.JoinOrCreateRoom(PlayerPrefs.GetString("UserName"), RO, TypedLobby.Default);
             OpenUI(3);
+            SetPlayerColorNoOverlap();
             Debug.Log("InitRoom");
         }
     }
@@ -75,6 +75,7 @@ public class TitleManager : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.JoinRoom(roomName, null);
         OpenUI(3);
+        SetPlayerColorNoOverlap();
         Debug.Log("JoinRoom");
     }
 
@@ -103,28 +104,42 @@ public class TitleManager : MonoBehaviourPunCallbacks
         }
 
     }
+
+    public bool GetPlayerColor(int n)
+    {
+        for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
+        {
+           if(ColorManager.GetPlayerNameToCol(PhotonNetwork.PlayerList[i].NickName) == n)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void SetPlayerColor(int n)
     {
-        string str = PhotonNetwork.NickName;
-        if (str.IndexOf("#") != -1)
+        if (GetPlayerColor(n) == true)
         {
-            str = str.Substring(0,str.IndexOf("#"));
+            return;
         }
-        if(n < 10)
-        {
-            PhotonNetwork.NickName = str + "#0" + n;
-        }
-        else
-        {
-
-             PhotonNetwork.NickName = str + "#" + n;
-        }
-
+        PhotonNetwork.NickName = ColorManager.SetPlayerColToName(PhotonNetwork.NickName, n);
     }
-    [PunRPC]
-    public void SendPlayerColor(int n)
+
+    void SetPlayerColorNoOverlap()
     {
+        int n;
+        while (true)
+        {
+            n = Random.Range(0, 13);
+            if (GetPlayerColor(n) == false)
+            {
+                break;
+            }
+        }
+        SetPlayerColor(n);
     }
+
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
@@ -135,7 +150,7 @@ public class TitleManager : MonoBehaviourPunCallbacks
 
         foreach (RoomInfo roomInfo in roomList)
         {
-            if (roomInfo.MaxPlayers != 0)
+            if (roomInfo.IsOpen == true)
             {
 
                 GameObject _room = Instantiate(roomPrefab, roomGrid.transform);
@@ -180,6 +195,7 @@ public class TitleManager : MonoBehaviourPunCallbacks
 
     public void StartGame()
     {
+        PhotonNetwork.CurrentRoom.IsOpen = false;
         SceneManager.LoadSceneAsync(1);
     }
 

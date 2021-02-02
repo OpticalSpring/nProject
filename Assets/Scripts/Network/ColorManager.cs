@@ -12,7 +12,7 @@ public class ColorManager : MonoBehaviour
             instance = this;
         }
     }
-    public Color NumToCol(int n)
+    static public Color NumToCol(int n)
     {
         Color c = Color.gray;
         switch (n)
@@ -59,4 +59,32 @@ public class ColorManager : MonoBehaviour
         }
         return c;
     }
+
+    static public string SetPlayerColToName(string name, int col)
+    {
+        string str = name;
+        if (str.IndexOf("#") != -1)
+        {
+            str = str.Substring(0, str.IndexOf("#"));
+        }
+        if (col < 10)
+        {
+            str = str + "#0" + col;
+        }
+        else
+        {
+
+            str = str + "#" + col;
+        }
+        return str;
+    }
+    static public int GetPlayerNameToCol(string name)
+    {
+        return int.Parse(name.Substring(name.IndexOf("#") + 1, 2));
+    }
+    static public string SetPlayerNameToCol(string name)
+    {
+        return name.Substring(0, name.IndexOf("#"));
+    }
+    
 }
