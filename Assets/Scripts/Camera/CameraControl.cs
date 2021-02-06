@@ -65,26 +65,31 @@ public class CameraControl : MonoBehaviour
         
         int mask = 1 << 2 | 1 << 8;
         mask = ~mask;
-        if (Physics.Raycast(cameraPivot.transform.position+ new Vector3(0, correctionPos.y, 0), -cameraPivot.transform.forward, out rayHit, maxDistance, mask))
+        if (Physics.Raycast(cameraPivot.transform.position+ new Vector3(0, correctionPos.y, 0), -mainCamera.transform.forward, out rayHit, maxDistance, mask))
         {
             Vector3 hitPoint = rayHit.point;
 
-            camDistance = Vector3.Distance(hitPoint, cameraPivot.transform.position + new Vector3(0, correctionPos.y, 0));
+            camDistance = Vector3.Distance(hitPoint, cameraPivot.transform.position + new Vector3(0, correctionPos.y, 0)) - 0.5f;
         }
         else
         {
-            camDistance = maxDistance;
+            camDistance = maxDistance - 0.5f;
         }
-        if (Physics.Raycast(cameraPivot.transform.position + new Vector3(0, correctionPos.y, 0), cameraPivot.transform.right, out rayHit, 3.0f, mask))
-        {
-            Vector3 hitPoint = rayHit.point;
-            corDistance = Vector3.Distance(hitPoint, cameraPivot.transform.position + new Vector3(0, correctionPos.y, 0))-0.7f;
-            if (corDistance > correctionPos.x) corDistance = correctionPos.x;
-        }
-        else
-        {
-            corDistance = correctionPos.x;
-        }
+
+        
+        
+
+        
+        //if (Physics.Raycast(cameraPivot.transform.position + new Vector3(0, correctionPos.y, 0), cameraPivot.transform.right, out rayHit, 3.0f, mask))
+        //{
+        //    Vector3 hitPoint = rayHit.point;
+        //    corDistance = Vector3.Distance(hitPoint, cameraPivot.transform.position + new Vector3(0, correctionPos.y, 0))-0.7f;
+        //    if (corDistance > correctionPos.x) corDistance = correctionPos.x;
+        //}
+        //else
+        //{
+        //    corDistance = correctionPos.x;
+        //}
 
 
         Vector3 localPos = new Vector3(corDistance, correctionPos.y, -camDistance);

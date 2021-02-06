@@ -12,7 +12,7 @@ public class PlayerCharacter : MonoBehaviourPunCallbacks
     public int colorNum;
     public Color playerColor;
     public string playerName;
-    public SkinnedMeshRenderer colorMat;
+    public MeshRenderer colorMat;
     GameObject cam;
     // Start is called before the first frame update
     void Start()
