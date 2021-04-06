@@ -4,14 +4,7 @@ using UnityEngine;
 
 public class ColorManager : MonoBehaviour
 {
-    public static ColorManager instance = null;
-    void Awake()
-    {
-        if (null == instance)
-        {
-            instance = this;
-        }
-    }
+    
     static public Color NumToCol(int n)
     {
         Color c = Color.gray;

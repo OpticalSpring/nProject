@@ -1,33 +1,22 @@
-﻿using System;
+﻿using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameContext : MonoBehaviour
+public class GameContext : MonoBehaviourPunCallbacks
 {
     public static GameContext Instance;
-
     private void Awake()
     {
         Instance = this;
-        InitGameEvent();
     }
 
     private readonly Dictionary<GameEvent.GameEventType, GameEventAction> _gameEvents = new Dictionary<GameEvent.GameEventType, GameEventAction>();
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
 
     #region GameEvent
-    void InitGameEvent()
+    public void InitGameEvent()
     {
         _gameEvents.Clear();
         foreach (GameEvent.GameEventType value in Enum.GetValues(typeof(GameEvent.GameEventType)))

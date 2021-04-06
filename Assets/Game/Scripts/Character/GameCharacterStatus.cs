@@ -1,15 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+public struct CharacterInfo
+{
+    public int ID;
+
+}
+
 public class CharacterStatus
 {
     public int HP_NOW;
-    public int HP_MAX;
-    public float moveSpeed;
-    public float moveFastSpeed;
+    public int HP_MAX = 1000;
+    public float MoveSpeed = 3;
+    public float MoveFastSpeed = 6;
 
-    public int colorNum;
-    public Color playerColor;
-    public string playerName;
-    
+
+
+    public CharacterStatus()
+    {
+        HP_NOW = HP_MAX;
+        
+    }
 }
