@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1399881077011170538}
   - component: {fileID: 9120135293882992228}
   - component: {fileID: 9120135293882992227}
+  - component: {fileID: 1614864172406308141}
   m_Layer: 0
   m_Name: GameContext
   m_TagString: Untagged
@@ -73,3 +74,25 @@ MonoBehaviour:
   PlayerObject: {fileID: 7817693550642248014, guid: d4917402cfdc55d4787a18e999fb3f7b,
     type: 3}
   CamObject: {fileID: 0}
+--- !u!114 &1614864172406308141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9120135293882992226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  observableSearch: 2
+  Synchronization: 3
+  OwnershipTransfer: 0
+  ObservedComponents: []
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0

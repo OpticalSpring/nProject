@@ -33273,6 +33273,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1614864172406308141, guid: 8d86eeabc82bec649b3f798cc90d0511,
+        type: 3}
+      propertyPath: viewIdField
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 9120135293882992226, guid: 8d86eeabc82bec649b3f798cc90d0511,
         type: 3}
       propertyPath: m_Name
@@ -38970,21 +38975,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3668193924616625712, guid: c00690684f182624fa7cfe345e58e037,
-        type: 3}
-      propertyPath: maxDistance
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3668193924616625712, guid: c00690684f182624fa7cfe345e58e037,
-        type: 3}
-      propertyPath: correctionPos.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3668193924616625712, guid: c00690684f182624fa7cfe345e58e037,
-        type: 3}
-      propertyPath: correctionPos.y
-      value: 0.5
-      objectReference: {fileID: 0}
     - target: {fileID: 3668193924616625713, guid: c00690684f182624fa7cfe345e58e037,
         type: 3}
       propertyPath: m_RootOrder
@@ -39044,26 +39034,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Camera
-      objectReference: {fileID: 0}
-    - target: {fileID: 3668193924616625714, guid: c00690684f182624fa7cfe345e58e037,
-        type: 3}
-      propertyPath: m_Layer
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3668193925749571243, guid: c00690684f182624fa7cfe345e58e037,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3668193925749571244, guid: c00690684f182624fa7cfe345e58e037,
-        type: 3}
-      propertyPath: m_Layer
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3668193925799359030, guid: c00690684f182624fa7cfe345e58e037,
-        type: 3}
-      propertyPath: m_Layer
-      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c00690684f182624fa7cfe345e58e037, type: 3}

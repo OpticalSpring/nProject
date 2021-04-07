@@ -1,8 +1,9 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameProcess : MonoBehaviour
+public class GameProcess : MonoBehaviourPunCallbacks
 {
     public static GameProcess Instance;
     private void Awake()
@@ -18,9 +19,15 @@ public class GameProcess : MonoBehaviour
     }
     IEnumerator GameStart()
     {
+
         Debug.Log("Enter Scene");
         yield return new WaitForSeconds(5);
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            yield break;
+        }
         Debug.Log("Init Character");
-        CharacterContext.Instance.InitCharacter();
+        new InitCharacterEvent().Send();
     }
+
 }

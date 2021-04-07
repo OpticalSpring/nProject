@@ -18,10 +18,10 @@ public class CharacterContext : MonoBehaviourPunCallbacks
 
     public void SubscribeEvent()
     {
-        GameContext.Instance.RegisterObserver(GameEvent.GameEventType.Test, TextFunc);
+        GameContext.Instance.RegisterObserver(GameEvent.GameEventType.InitCharacter, InitCharacter);
     }
 
-    public void InitCharacter()
+    public void InitCharacter(GameEvent eventData)
     {
         GameObject character = PhotonNetwork.Instantiate(
             PlayerObject.name,
