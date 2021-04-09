@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameCharacterLogic : MonoBehaviour
 {
-    static bool CheckObstacle(GameObject gameCharacter)
+    public static bool CheckObstacle(GameObject gameCharacter)
     {
         RaycastHit rayHit;
         int mask = 1 << 2 | 1 << 8 | 1 << 9;
@@ -24,4 +24,6 @@ public class GameCharacterLogic : MonoBehaviour
     {
         return Vector3.zero;
     }
+
+
 }

@@ -74,6 +74,14 @@ public class EventJsonUtility
 
     public static GameEvent BinaryToEvent(string eventString)
     {
+        switch (UnityEngine.JsonUtility.FromJson<GameEvent>(eventString).GameEventID)
+        {
+            case GameEvent.GameEventType.InitCharacter:
+                return UnityEngine.JsonUtility.FromJson<InitCharacterEvent>(eventString);
+            case GameEvent.GameEventType.CharacterMove:
+                return UnityEngine.JsonUtility.FromJson<CharacterMoveEvent>(eventString);
+        }
+
         return UnityEngine.JsonUtility.FromJson<GameEvent>(eventString);
     }
 }

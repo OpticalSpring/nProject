@@ -19,9 +19,10 @@ public class CharacterContext : MonoBehaviourPunCallbacks
     public void SubscribeEvent()
     {
         GameContext.Instance.RegisterObserver(GameEvent.GameEventType.InitCharacter, InitCharacter);
+        GameContext.Instance.RegisterObserver(GameEvent.GameEventType.CharacterMove, CharacterMove);
     }
 
-    public void InitCharacter(GameEvent eventData)
+    public void InitCharacter(GameEvent data)
     {
         GameObject character = PhotonNetwork.Instantiate(
             PlayerObject.name,
@@ -29,8 +30,9 @@ public class CharacterContext : MonoBehaviourPunCallbacks
             Quaternion.identity,
             0
         );
-
-        character.GetComponent<GameCharacterDriver>().cam = CamObject.transform.GetChild(0);
+        
+        CamObject.GetComponent<GameCharacterDriver>().cam = CamObject.transform.GetChild(0);
+        CamObject.GetComponent<GameCharacterDriver>().character = character.GetComponent<GameCharacter>();
         CamObject.GetComponent<CameraControl>().camTarget = character;
 
     }
@@ -42,7 +44,7 @@ public class CharacterContext : MonoBehaviourPunCallbacks
 
     public bool FindGameCharacter(int entityID, out GameCharacter character)
     {
-        character = GameCharacters.Find(x => x.ID == entityID);
+        character = GameCharacters.Find(x => x.CharacterInfo.ID == entityID);
         return (character != null);
     }
 
@@ -54,6 +56,13 @@ public class CharacterContext : MonoBehaviourPunCallbacks
         }
 
         return null;
+    }
+
+    void CharacterMove(GameEvent data)
+    {
+        CharacterMoveEvent e = (CharacterMoveEvent)data;
+        GetSpotCharacter(e.Info.ID)?.CommentMovement(e.Forwad, e.Run);
+        
     }
 
     private void TextFunc(GameEvent eventData)

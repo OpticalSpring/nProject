@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 169715001808813769}
   - component: {fileID: 4556748581827328842}
   - component: {fileID: 543488053940403447}
-  - component: {fileID: 1894160459606149666}
   - component: {fileID: 6089878446693534131}
   - component: {fileID: 1075721628929690387}
   m_Layer: 0
@@ -62,10 +61,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b9d52c2b4e96564cb7f41949e623a4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ID: 0
   ColorNum: 0
   PlayerColor: {r: 0, g: 0, b: 0, a: 0}
   PlayerName: 
+  CharacterInfo:
+    ID: 0
   SkinnedMeshes:
   - {fileID: 7554189229927712213}
   - {fileID: 7555421945139724565}
@@ -73,20 +73,6 @@ MonoBehaviour:
   - {fileID: 7555601444916097731}
   - {fileID: 7554110604320303931}
   - {fileID: 7554030820171614507}
---- !u!114 &1894160459606149666
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7817693550642248014}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 185208db785720648a81c45af809c0a0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cam: {fileID: 0}
-  camForward: {x: 0, y: 0, z: 0}
 --- !u!114 &6089878446693534131
 MonoBehaviour:
   m_ObjectHideFlags: 0

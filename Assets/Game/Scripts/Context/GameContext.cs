@@ -43,9 +43,9 @@ public class GameContext : MonoBehaviourPunCallbacks
 
     public void SendEvent(GameEvent data)
     {
-        Debug.Log("Event 호출 - " + data.GameEventID);
+        
         PhotonView photonView = PhotonView.Get(this);
-        Debug.LogWarning(EventJsonUtility.EventToBinary(data));
+        
         photonView.RPC("SendEventRPC", RpcTarget.All, EventJsonUtility.EventToBinary(data));
     }
     [PunRPC]
@@ -54,7 +54,6 @@ public class GameContext : MonoBehaviourPunCallbacks
         GameEvent data = EventJsonUtility.BinaryToEvent(sdata);
         if (_gameEvents.ContainsKey(data.GameEventID) == true)
         {
-            Debug.Log("Event 발동 - " + data.GameEventID);
             _gameEvents[data.GameEventID].OnGameEvent(data);
         }
     }

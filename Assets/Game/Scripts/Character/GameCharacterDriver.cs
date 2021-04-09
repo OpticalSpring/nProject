@@ -5,24 +5,20 @@ using UnityEngine;
 
 public class GameCharacterDriver : MonoBehaviourPunCallbacks
 {
-    GameCharacter character;
+    public GameCharacter character;
+    public int ID;
     public Transform cam;
     public Vector3 camForward;
     Vector3 moveVector;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-        character = GetComponent<GameCharacter>();
-    }
+    
 
 
 
 
     void Update()
     {
-        if (!photonView.IsMine)
+        if (character == null)
         {
             return;
         }
@@ -44,7 +40,9 @@ public class GameCharacterDriver : MonoBehaviourPunCallbacks
             camForward = Vector3.Scale(cam.forward, new Vector3(1, 0, 1)).normalized;
             moveVector = v * camForward + h * cam.right;
         }
+        bool run = Input.GetKey(KeyCode.LeftShift);
 
+        new CharacterMoveEvent(character, moveVector, run).Send();
 
 
 

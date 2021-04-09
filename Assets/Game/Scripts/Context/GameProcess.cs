@@ -19,9 +19,8 @@ public class GameProcess : MonoBehaviourPunCallbacks
     }
     IEnumerator GameStart()
     {
-
         Debug.Log("Enter Scene");
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(1);
         if (!PhotonNetwork.IsMasterClient)
         {
             yield break;
