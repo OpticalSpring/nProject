@@ -17,3 +17,14 @@ public class CharacterMoveEvent : GameEvent
         Run = run;
     }
 }
+
+[Serializable]
+public class CharacterJumpEvent : GameEvent
+{
+    public CharacterInfo Info;
+    public CharacterJumpEvent(GameCharacter caster)
+    {
+        GameEventID = GameEventType.CharacterJump;
+        Info = caster.CharacterInfo;
+    }
+}

@@ -15,11 +15,12 @@ public class CharacterStatus
     public float MoveFastSpeed = 6;
     public Vector3 ForwadVector;
     public bool RunState;
+    public float Velocity;
 
 
     public CharacterStatus()
     {
         HP_NOW = HP_MAX;
-        
+        Velocity = 0;
     }
 }

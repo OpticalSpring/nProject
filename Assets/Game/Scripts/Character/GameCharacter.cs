@@ -20,6 +20,7 @@ public class GameCharacter : MonoBehaviourPunCallbacks
     private void Update()
     {
         CommentMovement(CurrentStatus.ForwadVector, CurrentStatus.RunState);
+        GravityProcess();
     }
 
     void Init()
@@ -42,7 +43,6 @@ public class GameCharacter : MonoBehaviourPunCallbacks
         {
             return;
         }
-        gameObject.layer = 2;
         IngameChatManager.instance.playerName = PlayerName;
         IngameChatManager.instance.playerColor = PlayerColor;
     }
@@ -100,24 +100,31 @@ public class GameCharacter : MonoBehaviourPunCallbacks
         }
         else
         {
-            //앞에 장애물이 타밎될 경우 슬라이딩 벡터를 통해 벽에 미끄러지는 것을 구현하여 답답하지 않은 조작을 의도
-            Vector3 S;
-            Vector3 V = Vector3.Normalize(gameObject.transform.forward);
-            Vector3 nPoint = gameObject.transform.position;
-            if (Physics.SphereCast(gameObject.transform.position, 0.2f, gameObject.transform.forward, out rayHit, 0.8f, mask))
-            {
-                S = V - rayHit.normal * (Vector3.Dot(V, rayHit.normal));
-                if (Physics.Raycast(gameObject.transform.position, S, out rayHit, 0.5f, mask))
-                {
+            gameObject.transform.position = GameCharacterLogic.GetSlidingVector(gameObject, speed);
+        }
+    }
+    float jumpTime;
+    public void Jump()
+    {
+        CurrentStatus.Velocity = -0.12f;
+        jumpTime = 0.1f;
+    }
 
-                }
-                else
-                {
-
-                    nPoint += S * 10;
-                    gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, nPoint, Mathf.Abs(S.x + S.y + S.z) * speed * Time.deltaTime * 1.0f);
-                }
-            }
+    void GravityProcess()
+    {
+        Vector3 newPos;
+        if (GameCharacterLogic.CheckGround(gameObject, out newPos) && jumpTime < 0)
+        {
+            gameObject.transform.position = newPos;
+            CurrentStatus.Velocity = 0;
+        }
+        else
+        {
+            CurrentStatus.Velocity = Mathf.Clamp(CurrentStatus.Velocity + (0.5f * Time.deltaTime), -1, 1);
+            newPos = gameObject.transform.position;
+            newPos.y -= CurrentStatus.Velocity;
+            gameObject.transform.position = newPos;
+            jumpTime -= Time.deltaTime;
         }
     }
 }

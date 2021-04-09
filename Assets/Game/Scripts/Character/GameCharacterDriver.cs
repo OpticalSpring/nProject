@@ -24,18 +24,16 @@ public class GameCharacterDriver : MonoBehaviourPunCallbacks
             return;
         }
 
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            new CharacterJumpEvent(MyCharacter).Send();
+        }
 
         // read inputs
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
 
-        if (Mathf.Abs(h) + Mathf.Abs(v) == 0)
-        {
-            //return;
-        }
-        // calculate move direction to pass to character
-
-        // calculate camera relative direction Kto move:
+       
         CamForward = Vector3.Scale(Cam.forward, new Vector3(1, 0, 1)).normalized;
         Vector3 moveVector = v * CamForward + h * Cam.right;
 
@@ -48,7 +46,6 @@ public class GameCharacterDriver : MonoBehaviourPunCallbacks
             SecondRunBool = run;
             new CharacterMoveEvent(MyCharacter, SecondMoveVector, run).Send();
         }
-
 
 
     }

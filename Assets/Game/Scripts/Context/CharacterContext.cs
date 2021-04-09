@@ -20,6 +20,7 @@ public class CharacterContext : MonoBehaviourPunCallbacks
     {
         GameContext.Instance.RegisterObserver(GameEvent.GameEventType.InitCharacter, InitCharacter);
         GameContext.Instance.RegisterObserver(GameEvent.GameEventType.CharacterMove, CharacterMove);
+        GameContext.Instance.RegisterObserver(GameEvent.GameEventType.CharacterJump, CharacterJump);
     }
 
     public void InitCharacter(GameEvent data)
@@ -63,6 +64,13 @@ public class CharacterContext : MonoBehaviourPunCallbacks
         CharacterMoveEvent e = (CharacterMoveEvent)data;
         GetSpotCharacter(e.Info.ID)?.MovementUpdate(e.Forwad, e.Run);
         
+    }
+
+    void CharacterJump(GameEvent data)
+    {
+        CharacterJumpEvent e = (CharacterJumpEvent)data;
+        GetSpotCharacter(e.Info.ID)?.Jump();
+
     }
 
 }

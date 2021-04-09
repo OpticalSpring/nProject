@@ -14,7 +14,7 @@ public class GameEvent
 
         //Character
         CharacterMove,
-        CharacterRotate,
+        CharacterJump,
         CharacterAttack,
         CharacterTake,
     }
@@ -78,6 +78,8 @@ public class EventJsonUtility
                 return UnityEngine.JsonUtility.FromJson<InitCharacterEvent>(eventString);
             case GameEvent.GameEventType.CharacterMove:
                 return UnityEngine.JsonUtility.FromJson<CharacterMoveEvent>(eventString);
+            case GameEvent.GameEventType.CharacterJump:
+                return UnityEngine.JsonUtility.FromJson<CharacterJumpEvent>(eventString);
         }
 
         return UnityEngine.JsonUtility.FromJson<GameEvent>(eventString);
