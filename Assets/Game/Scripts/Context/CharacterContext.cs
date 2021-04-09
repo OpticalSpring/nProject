@@ -12,9 +12,10 @@ public class CharacterContext : MonoBehaviourPunCallbacks
         Instance = this;
     }
     public List<GameCharacter> GameCharacters;
-    public GameObject PlayerObject;
+    public GameObject CharacterPrefab;
     public GameObject CamObject;
-
+    public GameObject UITagGroup;
+    public GameObject NameTagPrefab;
 
     public void SubscribeEvent()
     {
@@ -26,7 +27,7 @@ public class CharacterContext : MonoBehaviourPunCallbacks
     public void InitCharacter(GameEvent data)
     {
         GameObject character = PhotonNetwork.Instantiate(
-            PlayerObject.name,
+            CharacterPrefab.name,
             gameObject.transform.position,
             Quaternion.identity,
             0
@@ -41,6 +42,10 @@ public class CharacterContext : MonoBehaviourPunCallbacks
     public void RigisterCharacter(GameCharacter character)
     {
         GameCharacters.Add(character);
+        GameObject tag = Instantiate(NameTagPrefab);
+        tag.GetComponent<NameTag>().Cam = CamObject.transform.GetChild(0).GetChild(0).GetComponent<Camera>();
+        tag.GetComponent<NameTag>().Target = character.gameObject;
+        tag.transform.parent = UITagGroup.transform;
     }
 
     public bool FindGameCharacter(int entityID, out GameCharacter character)

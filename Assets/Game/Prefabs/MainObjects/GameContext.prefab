@@ -71,9 +71,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GameCharacters: []
-  PlayerObject: {fileID: 7817693550642248014, guid: d4917402cfdc55d4787a18e999fb3f7b,
+  CharacterPrefab: {fileID: 7817693550642248014, guid: d4917402cfdc55d4787a18e999fb3f7b,
     type: 3}
   CamObject: {fileID: 0}
+  UITagGroup: {fileID: 0}
+  NameTagPrefab: {fileID: 4133017181264736091, guid: 5ff1e7440f7545f4b835cfb35feff9ab,
+    type: 3}
 --- !u!114 &1614864172406308141
 MonoBehaviour:
   m_ObjectHideFlags: 0
