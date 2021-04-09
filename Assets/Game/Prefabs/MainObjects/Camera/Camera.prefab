@@ -65,6 +65,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   character: {fileID: 0}
+  ID: 0
   cam: {fileID: 0}
   camForward: {x: 0, y: 0, z: 0}
 --- !u!1 &3668193925749571244

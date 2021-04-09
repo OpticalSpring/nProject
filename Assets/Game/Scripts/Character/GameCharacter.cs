@@ -50,10 +50,9 @@ public class GameCharacter : MonoBehaviourPunCallbacks
     }
 
 
-
     public void CommentMovement(Vector3 forwad, bool run)
     {
-        Debug.Log("ㄹㅇ");
+        GetComponent<GameCharacterAnim>().MoveStateUpdate(forwad.magnitude, run);
         Turn(forwad);
         if (run == true)
         {

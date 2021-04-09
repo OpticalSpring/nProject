@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 169715001808813769}
   - component: {fileID: 4556748581827328842}
   - component: {fileID: 543488053940403447}
+  - component: {fileID: 6932798183393069361}
   - component: {fileID: 6089878446693534131}
-  - component: {fileID: 1075721628929690387}
+  - component: {fileID: 5568509771938325846}
   m_Layer: 0
   m_Name: GameCharacter
   m_TagString: Untagged
@@ -73,6 +74,21 @@ MonoBehaviour:
   - {fileID: 7555601444916097731}
   - {fileID: 7554110604320303931}
   - {fileID: 7554030820171614507}
+--- !u!114 &6932798183393069361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7817693550642248014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94faf6975d3a40f459903e7ae8159553, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anim: {fileID: 7522069920782048429}
+  Move: 0
+  Run: 0
 --- !u!114 &6089878446693534131
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -92,11 +108,11 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   ObservedComponents:
-  - {fileID: 1075721628929690387}
+  - {fileID: 5568509771938325846}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &1075721628929690387
+--- !u!114 &5568509771938325846
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -111,7 +127,7 @@ MonoBehaviour:
   m_SynchronizePosition: 1
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
-  m_UseLocal: 1
+  m_UseLocal: 0
 --- !u!1001 &7580219425290319705
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -151,6 +167,16 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 95028430175513588, guid: 0814aba0a5f87494cb000251ab82361f,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 158c5ecde3f565d42bd1ec1dec65083f, type: 2}
+    - target: {fileID: 95028430175513588, guid: 0814aba0a5f87494cb000251ab82361f,
+        type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 137564419387753882, guid: 0814aba0a5f87494cb000251ab82361f,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -161,6 +187,12 @@ PrefabInstance:
 --- !u!4 &7575755998948186389 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4543829338664524, guid: 0814aba0a5f87494cb000251ab82361f,
+    type: 3}
+  m_PrefabInstance: {fileID: 7580219425290319705}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &7522069920782048429 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 95028430175513588, guid: 0814aba0a5f87494cb000251ab82361f,
     type: 3}
   m_PrefabInstance: {fileID: 7580219425290319705}
   m_PrefabAsset: {fileID: 0}
