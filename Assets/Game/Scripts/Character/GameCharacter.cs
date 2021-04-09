@@ -11,9 +11,15 @@ public class GameCharacter : MonoBehaviourPunCallbacks
     public CharacterStatus CurrentStatus;
     public List<SkinnedMeshRenderer> SkinnedMeshes;
 
+
     private void Awake()
     {
         Init();
+    }
+
+    private void Update()
+    {
+        CommentMovement(CurrentStatus.ForwadVector, CurrentStatus.RunState);
     }
 
     void Init()
@@ -49,10 +55,18 @@ public class GameCharacter : MonoBehaviourPunCallbacks
         }
     }
 
-
+    public void MovementUpdate(Vector3 forwad, bool run)
+    {
+        CurrentStatus.ForwadVector = forwad;
+        CurrentStatus.RunState = run;
+    }
     public void CommentMovement(Vector3 forwad, bool run)
     {
         GetComponent<GameCharacterAnim>().MoveStateUpdate(forwad.magnitude, run);
+        if(forwad.magnitude == 0)
+        {
+            return;
+        }
         Turn(forwad);
         if (run == true)
         {

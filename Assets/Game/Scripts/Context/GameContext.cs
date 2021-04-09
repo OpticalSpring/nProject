@@ -52,6 +52,7 @@ public class GameContext : MonoBehaviourPunCallbacks
     public void SendEventRPC(string sdata)
     {
         GameEvent data = EventJsonUtility.BinaryToEvent(sdata);
+        Debug.LogWarning(sdata);
         if (_gameEvents.ContainsKey(data.GameEventID) == true)
         {
             _gameEvents[data.GameEventID].OnGameEvent(data);

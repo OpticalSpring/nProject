@@ -31,8 +31,8 @@ public class CharacterContext : MonoBehaviourPunCallbacks
             0
         );
         
-        CamObject.GetComponent<GameCharacterDriver>().cam = CamObject.transform.GetChild(0);
-        CamObject.GetComponent<GameCharacterDriver>().character = character.GetComponent<GameCharacter>();
+        CamObject.GetComponent<GameCharacterDriver>().Cam = CamObject.transform.GetChild(0);
+        CamObject.GetComponent<GameCharacterDriver>().MyCharacter = character.GetComponent<GameCharacter>();
         CamObject.GetComponent<CameraControl>().camTarget = character;
 
     }
@@ -61,12 +61,8 @@ public class CharacterContext : MonoBehaviourPunCallbacks
     void CharacterMove(GameEvent data)
     {
         CharacterMoveEvent e = (CharacterMoveEvent)data;
-        GetSpotCharacter(e.Info.ID)?.CommentMovement(e.Forwad, e.Run);
+        GetSpotCharacter(e.Info.ID)?.MovementUpdate(e.Forwad, e.Run);
         
     }
 
-    private void TextFunc(GameEvent eventData)
-    {
-        Debug.Log("TestGood");
-    }
 }

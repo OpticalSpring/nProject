@@ -8,8 +8,6 @@ public class GameEvent
     [Serializable]
     public enum GameEventType
     {
-        Test,
-        Test2,
 
         //GameProcess
         InitCharacter,

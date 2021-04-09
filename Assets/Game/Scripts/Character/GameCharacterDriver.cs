@@ -5,24 +5,24 @@ using UnityEngine;
 
 public class GameCharacterDriver : MonoBehaviourPunCallbacks
 {
-    public GameCharacter character;
+    public GameCharacter MyCharacter;
     public int ID;
-    public Transform cam;
-    public Vector3 camForward;
-    Vector3 moveVector;
-
-    
-
-
+    public Transform Cam;
+    public Vector3 CamForward;
+    Vector3 SecondMoveVector;
+    bool SecondRunBool;
 
 
     void Update()
     {
-        if (character == null)
+        if (MyCharacter == null)
         {
             return;
         }
-
+        if (Cam == null)
+        {
+            return;
+        }
 
 
         // read inputs
@@ -31,18 +31,23 @@ public class GameCharacterDriver : MonoBehaviourPunCallbacks
 
         if (Mathf.Abs(h) + Mathf.Abs(v) == 0)
         {
-            return;
+            //return;
         }
         // calculate move direction to pass to character
-        if (cam != null)
-        {
-            // calculate camera relative direction Kto move:
-            camForward = Vector3.Scale(cam.forward, new Vector3(1, 0, 1)).normalized;
-            moveVector = v * camForward + h * cam.right;
-        }
+
+        // calculate camera relative direction Kto move:
+        CamForward = Vector3.Scale(Cam.forward, new Vector3(1, 0, 1)).normalized;
+        Vector3 moveVector = v * CamForward + h * Cam.right;
+
         bool run = Input.GetKey(KeyCode.LeftShift);
 
-        new CharacterMoveEvent(character, moveVector, run).Send();
+
+        if (SecondMoveVector != moveVector || SecondRunBool != run)
+        {
+            SecondMoveVector = moveVector;
+            SecondRunBool = run;
+            new CharacterMoveEvent(MyCharacter, SecondMoveVector, run).Send();
+        }
 
 
 
