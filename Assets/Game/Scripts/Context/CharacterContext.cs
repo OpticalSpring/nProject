@@ -42,6 +42,8 @@ public class CharacterContext : MonoBehaviourPunCallbacks
     public void RigisterCharacter(GameCharacter character)
     {
         GameCharacters.Add(character);
+        if (character.photonView.IsMine) return;
+
         GameObject tag = Instantiate(NameTagPrefab);
         tag.GetComponent<NameTag>().Cam = CamObject.transform.GetChild(0).GetChild(0).GetComponent<Camera>();
         tag.GetComponent<NameTag>().Target = character.gameObject;
