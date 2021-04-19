@@ -43,6 +43,7 @@ public class GameCharacter : MonoBehaviourPunCallbacks
         {
             return;
         }
+        gameObject.layer = 2;
         IngameChatManager.instance.playerName = PlayerName;
         IngameChatManager.instance.playerColor = PlayerColor;
     }
@@ -76,6 +77,11 @@ public class GameCharacter : MonoBehaviourPunCallbacks
         {
             Move(CurrentStatus.MoveSpeed);
         }
+    }
+
+    public void GetDamage(int damage)
+    {
+        CurrentStatus.HP_NOW = Mathf.Max(CurrentStatus.HP_NOW - damage, 0);
     }
 
     void Turn(Vector3 targetPoint)

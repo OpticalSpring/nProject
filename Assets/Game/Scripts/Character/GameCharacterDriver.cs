@@ -47,6 +47,18 @@ public class GameCharacterDriver : MonoBehaviourPunCallbacks
             new CharacterMoveEvent(MyCharacter, SecondMoveVector, run).Send();
         }
 
-
+        if (Input.GetMouseButtonDown(0))
+        {
+            GameObject target = GameCameraLogic.CheckObject(Cam.GetChild(0).gameObject);
+            if (target.GetComponent<GameCharacter>())
+            {
+                new CharacterFireEvent(MyCharacter, target.GetComponent<GameCharacter>(), 1).Send();
+            }
+            else
+            {
+                new CharacterFireEvent(MyCharacter, null, 1).Send();
+            }
+            Debug.Log(target);
+        }
     }
 }

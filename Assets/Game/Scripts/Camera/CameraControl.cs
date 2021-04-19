@@ -11,7 +11,7 @@ public class CameraControl : MonoBehaviour
     public Vector2 correctionPos;
     public float corDistance;
     public float camDistance;
-    GameObject mainCamera;
+    public GameObject mainCamera;
     GameObject cameraPivot;
     public Vector3 rotateValue;
 
@@ -60,37 +60,8 @@ public class CameraControl : MonoBehaviour
     //카메라가 주변 지형지물에 걸리는지 체크한다.
     void CheckDistance()
     {
-        RaycastHit rayHit;
 
-        
-        int mask = 1 << 2 | 1 << 8;
-        mask = ~mask;
-        if (Physics.Raycast(cameraPivot.transform.position+ new Vector3(0, correctionPos.y, 0), -mainCamera.transform.forward, out rayHit, maxDistance, mask))
-        {
-            Vector3 hitPoint = rayHit.point;
-
-            camDistance = Vector3.Distance(hitPoint, cameraPivot.transform.position + new Vector3(0, correctionPos.y, 0)) - 0.5f;
-        }
-        else
-        {
-            camDistance = maxDistance - 0.5f;
-        }
-
-        
-        
-
-        
-        //if (Physics.Raycast(cameraPivot.transform.position + new Vector3(0, correctionPos.y, 0), cameraPivot.transform.right, out rayHit, 3.0f, mask))
-        //{
-        //    Vector3 hitPoint = rayHit.point;
-        //    corDistance = Vector3.Distance(hitPoint, cameraPivot.transform.position + new Vector3(0, correctionPos.y, 0))-0.7f;
-        //    if (corDistance > correctionPos.x) corDistance = correctionPos.x;
-        //}
-        //else
-        //{
-        //    corDistance = correctionPos.x;
-        //}
-
+        camDistance = GameCameraLogic.CheckDistance(cameraPivot, mainCamera, correctionPos, maxDistance);
 
         Vector3 localPos = new Vector3(corDistance, correctionPos.y, -camDistance);
         mainCamera.transform.localPosition = Vector3.Lerp(mainCamera.transform.localPosition, localPos, Time.fixedDeltaTime * 10f);

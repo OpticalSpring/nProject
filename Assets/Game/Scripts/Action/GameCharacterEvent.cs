@@ -28,3 +28,18 @@ public class CharacterJumpEvent : GameEvent
         Info = caster.CharacterInfo;
     }
 }
+
+[Serializable]
+public class CharacterFireEvent : GameEvent
+{
+    public CharacterInfo Caster;
+    public CharacterInfo Target;
+    public int Damage;
+    public CharacterFireEvent(GameCharacter caster, GameCharacter target, int damage)
+    {
+        GameEventID = GameEventType.CharacterFire;
+        Caster = caster.CharacterInfo;
+        Damage = damage;
+        Target = target.CharacterInfo;
+    }
+}

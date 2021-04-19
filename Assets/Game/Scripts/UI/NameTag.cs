@@ -50,13 +50,10 @@ public class NameTag : MonoBehaviour
             return false;
         }
         
-        if(screenPos.z < 0)// || screenPos.x < 0 || screenPos.y < 0 || screenPos.x > Screen.width || screenPos.y > Screen.height)
+        if(screenPos.z < 0)
         {
             return false;
         }
-
-        
-
         return true;
     }
 

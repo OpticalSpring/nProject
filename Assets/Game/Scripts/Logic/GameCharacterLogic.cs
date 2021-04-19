@@ -61,10 +61,5 @@ public class GameCharacterLogic : MonoBehaviour
     }
 
 
-    static Vector3 CalcMovePosition(GameObject gameCharacter, float speed)
-    {
-        return Vector3.zero;
-    }
-
 
 }

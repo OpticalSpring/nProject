@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             0
         );
         
-        player.GetComponent<PlayerControl>().cam = camObject.transform.GetChild(0);
+        //player.GetComponent<PlayerControl>().cam = camObject.transform.GetChild(0);
         camObject.GetComponent<CameraControl>().camTarget = player;
         
     }

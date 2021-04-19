@@ -22,6 +22,7 @@ public class CharacterContext : MonoBehaviourPunCallbacks
         GameContext.Instance.RegisterObserver(GameEvent.GameEventType.InitCharacter, InitCharacter);
         GameContext.Instance.RegisterObserver(GameEvent.GameEventType.CharacterMove, CharacterMove);
         GameContext.Instance.RegisterObserver(GameEvent.GameEventType.CharacterJump, CharacterJump);
+        GameContext.Instance.RegisterObserver(GameEvent.GameEventType.CharacterFire, GetDamage);
     }
 
     public void InitCharacter(GameEvent data)
@@ -42,7 +43,7 @@ public class CharacterContext : MonoBehaviourPunCallbacks
     public void RigisterCharacter(GameCharacter character)
     {
         GameCharacters.Add(character);
-        if (character.photonView.IsMine) return;
+        //if (character.photonView.IsMine) return;
 
         GameObject tag = Instantiate(NameTagPrefab);
         tag.GetComponent<NameTag>().Cam = CamObject.transform.GetChild(0).GetChild(0).GetComponent<Camera>();
@@ -77,6 +78,13 @@ public class CharacterContext : MonoBehaviourPunCallbacks
     {
         CharacterJumpEvent e = (CharacterJumpEvent)data;
         GetSpotCharacter(e.Info.ID)?.Jump();
+
+    }
+
+    void GetDamage(GameEvent data)
+    {
+        CharacterFireEvent e = (CharacterFireEvent)data;
+        GetSpotCharacter(e.Target.ID)?.GetDamage(e.Damage);
 
     }
 
