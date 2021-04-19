@@ -40,6 +40,7 @@ public class CharacterFireEvent : GameEvent
         GameEventID = GameEventType.CharacterFire;
         Caster = caster.CharacterInfo;
         Damage = damage;
+        if (target == null) return;
         Target = target.CharacterInfo;
     }
 }

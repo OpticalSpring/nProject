@@ -30,6 +30,7 @@ public class NameTag : MonoBehaviour
             Root.SetActive(false);
         }
         FollowTarget();
+        UpdateHP(Target.GetComponent<GameCharacter>().CurrentStatus.HP_NOW, Target.GetComponent<GameCharacter>().CurrentStatus.HP_MAX);
     }
 
     public void UpdateHP(int curHP, int maxHP)

@@ -50,7 +50,7 @@ public class GameCharacterDriver : MonoBehaviourPunCallbacks
         if (Input.GetMouseButtonDown(0))
         {
             GameObject target = GameCameraLogic.CheckObject(Cam.GetChild(0).gameObject);
-            if (target.GetComponent<GameCharacter>())
+            if (target?.GetComponent<GameCharacter>())
             {
                 new CharacterFireEvent(MyCharacter, target.GetComponent<GameCharacter>(), 1).Send();
             }

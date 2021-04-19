@@ -15,6 +15,7 @@ public class GameProcess : MonoBehaviourPunCallbacks
     {
         GameContext.Instance.InitGameEvent();
         CharacterContext.Instance.SubscribeEvent();
+        UIContext.Instance.SubscribeEvent();
         StartCoroutine(GameStart());
     }
     IEnumerator GameStart()
