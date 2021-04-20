@@ -12,11 +12,11 @@ public class NameTag : MonoBehaviour
     public TextMeshProUGUI NameText;
     public TextMeshProUGUI HPNowText;
     public TextMeshProUGUI HPMaxText;
-
+    public float remainTimeNow;
+    public float remainTimeMax;
     private void Start()
     {
-        UpdateName(Target.GetComponent<GameCharacter>().PlayerName);
-        UpdateHP(Target.GetComponent<GameCharacter>().CurrentStatus.HP_NOW, Target.GetComponent<GameCharacter>().CurrentStatus.HP_MAX);
+        UIContext.Instance.RegisterUI(this);
     }
 
     private void Update()
@@ -33,19 +33,35 @@ public class NameTag : MonoBehaviour
         UpdateHP(Target.GetComponent<GameCharacter>().CurrentStatus.HP_NOW, Target.GetComponent<GameCharacter>().CurrentStatus.HP_MAX);
     }
 
-    public void UpdateHP(int curHP, int maxHP)
+    public void UpdateNameTag()
+    {
+        remainTimeNow = remainTimeMax;
+        UpdateName(Target.GetComponent<GameCharacter>().PlayerName);
+        UpdateHP(Target.GetComponent<GameCharacter>().CurrentStatus.HP_NOW, Target.GetComponent<GameCharacter>().CurrentStatus.HP_MAX);
+    }
+
+    void UpdateHP(int curHP, int maxHP)
     {
         HPNowText.text = curHP + "";
         HPMaxText.text = maxHP + "";
     }
 
-    public void UpdateName(string name)
+    void UpdateName(string name)
     {
         NameText.text = name;
     }
 
     bool IsVisible()
     {
+        if(remainTimeNow > 0)
+        {
+            remainTimeNow -= Time.deltaTime;
+        }
+        else
+        {
+            return false;
+        }
+
         if(Target == null || Target.activeSelf == false)
         {
             return false;

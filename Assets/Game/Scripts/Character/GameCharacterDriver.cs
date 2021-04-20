@@ -58,7 +58,6 @@ public class GameCharacterDriver : MonoBehaviourPunCallbacks
             {
                 new CharacterFireEvent(MyCharacter, null, 1).Send();
             }
-            Debug.Log(target);
         }
     }
 }

@@ -15,11 +15,11 @@ public class UIContext : MonoBehaviour
 
     public void SubscribeEvent()
     {
-        GameContext.Instance.RegisterObserver(GameEvent.GameEventType.CharacterFire, NameTagUpdateHP);
+        GameContext.Instance.RegisterObserver(GameEvent.GameEventType.CharacterFire, NameTagUpdate);
     }
 
 
-    public void RigisterUI(NameTag ui)
+    public void RegisterUI(NameTag ui)
     {
         UINameTags.Add(ui);
     }
@@ -40,8 +40,9 @@ public class UIContext : MonoBehaviour
         return null;
     }
 
-    void NameTagUpdateHP(GameEvent data)
+    void NameTagUpdate(GameEvent data)
     {
         CharacterFireEvent e = (CharacterFireEvent)data;
+        GetNameTag(e.Target.ID)?.UpdateNameTag();
     }
 }

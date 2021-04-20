@@ -25,7 +25,7 @@ public class GameCharacter : MonoBehaviourPunCallbacks
 
     void Init()
     {
-        CharacterContext.Instance.RigisterCharacter(this);
+        CharacterContext.Instance.RegisterCharacter(this);
         CharacterInfo = new CharacterInfo();
         CurrentStatus = new CharacterStatus();
         CharacterInfo.ID = GetComponent<PhotonView>().ViewID;

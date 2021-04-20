@@ -563,6 +563,8 @@ MonoBehaviour:
   NameText: {fileID: 463589396628855260}
   HPNowText: {fileID: 3714259546305185064}
   HPMaxText: {fileID: 5098914634129208072}
+  remainTimeNow: 0
+  remainTimeMax: 1
 --- !u!1 &7026234494239292605
 GameObject:
   m_ObjectHideFlags: 0

@@ -47,10 +47,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   camTarget: {fileID: 0}
   rotationSpeed: 60
-  maxDistance: 2
-  correctionPos: {x: 0, y: 0.5}
+  maxDistance: 3
+  correctionPos: {x: 0, y: 1}
   corDistance: 0
   camDistance: 0
+  mainCamera: {fileID: 0}
   rotateValue: {x: 0, y: 0, z: 0}
 --- !u!114 &1593092241962833420
 MonoBehaviour:
@@ -64,10 +65,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 185208db785720648a81c45af809c0a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  character: {fileID: 0}
+  MyCharacter: {fileID: 0}
   ID: 0
-  cam: {fileID: 0}
-  camForward: {x: 0, y: 0, z: 0}
+  Cam: {fileID: 0}
+  CamForward: {x: 0, y: 0, z: 0}
 --- !u!1 &3668193925749571244
 GameObject:
   m_ObjectHideFlags: 0
