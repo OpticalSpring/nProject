@@ -13,10 +13,11 @@ public class CharacterStatus
     public int HP_MAX = 1000;
     public float MoveSpeed = 3;
     public float MoveFastSpeed = 6;
-    public Vector3 ForwadVector;
+    public Vector3 ForwardVector;
+    public Vector3 CamVector;
     public bool RunState;
     public float Velocity;
-
+    public bool Aim;
 
     public CharacterStatus()
     {

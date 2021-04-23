@@ -22,7 +22,9 @@ public class CharacterContext : MonoBehaviourPunCallbacks
         GameContext.Instance.RegisterObserver(GameEvent.GameEventType.InitCharacter, InitCharacter);
         GameContext.Instance.RegisterObserver(GameEvent.GameEventType.CharacterMove, CharacterMove);
         GameContext.Instance.RegisterObserver(GameEvent.GameEventType.CharacterJump, CharacterJump);
-        GameContext.Instance.RegisterObserver(GameEvent.GameEventType.CharacterFire, GetDamage);
+        GameContext.Instance.RegisterObserver(GameEvent.GameEventType.CharacterFire, CharacterFire);
+        GameContext.Instance.RegisterObserver(GameEvent.GameEventType.CharacterAim, CharacterAim);
+        GameContext.Instance.RegisterObserver(GameEvent.GameEventType.CharacterAimOut, CharacterAimOut);
     }
 
     public void InitCharacter(GameEvent data)
@@ -70,7 +72,7 @@ public class CharacterContext : MonoBehaviourPunCallbacks
     void CharacterMove(GameEvent data)
     {
         CharacterMoveEvent e = (CharacterMoveEvent)data;
-        GetSpotCharacter(e.Info.ID)?.MovementUpdate(e.Forwad, e.Run);
+        GetSpotCharacter(e.Info.ID)?.MovementUpdate(e.Forward, e.Run);
         
     }
 
@@ -81,10 +83,25 @@ public class CharacterContext : MonoBehaviourPunCallbacks
 
     }
 
-    void GetDamage(GameEvent data)
+    void CharacterFire(GameEvent data)
     {
         CharacterFireEvent e = (CharacterFireEvent)data;
+        GetSpotCharacter(e.Caster.ID)?.Fire();
         GetSpotCharacter(e.Target.ID)?.GetDamage(e.Damage);
+
+    }
+
+    void CharacterAim(GameEvent data)
+    {
+        CharacterAimEvent e = (CharacterAimEvent)data;
+        GetSpotCharacter(e.Info.ID)?.Aim(e.Forward);
+
+    }
+
+    void CharacterAimOut(GameEvent data)
+    {
+        CharacterAimOutEvent e = (CharacterAimOutEvent)data;
+        GetSpotCharacter(e.Info.ID)?.AimOut();
 
     }
 

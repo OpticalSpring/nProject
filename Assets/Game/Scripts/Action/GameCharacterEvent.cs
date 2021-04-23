@@ -7,13 +7,13 @@ using UnityEngine;
 public class CharacterMoveEvent : GameEvent
 {
     public CharacterInfo Info;
-    public Vector3 Forwad;
+    public Vector3 Forward;
     public bool Run;
-    public CharacterMoveEvent(GameCharacter caster, Vector3 forwad, bool run)
+    public CharacterMoveEvent(GameCharacter caster, Vector3 forward, bool run)
     {
         GameEventID = GameEventType.CharacterMove;
         Info = caster.CharacterInfo;
-        Forwad = forwad;
+        Forward = forward;
         Run = run;
     }
 }
@@ -25,6 +25,30 @@ public class CharacterJumpEvent : GameEvent
     public CharacterJumpEvent(GameCharacter caster)
     {
         GameEventID = GameEventType.CharacterJump;
+        Info = caster.CharacterInfo;
+    }
+}
+
+[Serializable]
+public class CharacterAimEvent : GameEvent
+{
+    public CharacterInfo Info;
+    public Vector3 Forward;
+    public CharacterAimEvent(GameCharacter caster, Vector3 forward)
+    {
+        GameEventID = GameEventType.CharacterAim;
+        Info = caster.CharacterInfo;
+        Forward = forward;
+    }
+}
+
+[Serializable]
+public class CharacterAimOutEvent : GameEvent
+{
+    public CharacterInfo Info;
+    public CharacterAimOutEvent(GameCharacter caster)
+    {
+        GameEventID = GameEventType.CharacterAimOut;
         Info = caster.CharacterInfo;
     }
 }
@@ -44,3 +68,4 @@ public class CharacterFireEvent : GameEvent
         Target = target.CharacterInfo;
     }
 }
+

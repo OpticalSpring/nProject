@@ -19,7 +19,7 @@ public class GameCharacter : MonoBehaviourPunCallbacks
 
     private void Update()
     {
-        CommentMovement(CurrentStatus.ForwadVector, CurrentStatus.RunState);
+        CommentMovement();
         GravityProcess();
     }
 
@@ -55,28 +55,56 @@ public class GameCharacter : MonoBehaviourPunCallbacks
             mesh.material.color = color;
         }
     }
-
-    public void MovementUpdate(Vector3 forwad, bool run)
+    public void Aim(Vector3 forward)
     {
-        CurrentStatus.ForwadVector = forwad;
+        CurrentStatus.Aim = true;
+        CurrentStatus.CamVector = forward;
+        GetComponent<GameCharacterAnim>().FireStateUpdate(true);
+        GetComponent<GameCharacterAnim>().MoveStateUpdate(0, false);
+    }
+
+    public void AimOut()
+    {
+        CurrentStatus.Aim = false;
+        GetComponent<GameCharacterAnim>().FireStateUpdate(false);
+    }
+
+    public void MovementUpdate(Vector3 forward, bool run)
+    {
+        CurrentStatus.ForwardVector = forward;
         CurrentStatus.RunState = run;
     }
-    public void CommentMovement(Vector3 forwad, bool run)
+    public void CommentMovement()
     {
-        GetComponent<GameCharacterAnim>().MoveStateUpdate(forwad.magnitude, run);
-        if(forwad.magnitude == 0)
+        if (CurrentStatus.Aim == true)
         {
-            return;
-        }
-        Turn(forwad);
-        if (run == true)
-        {
-            Move(CurrentStatus.MoveFastSpeed);
+            Turn(CurrentStatus.CamVector);
         }
         else
         {
-            Move(CurrentStatus.MoveSpeed);
+            GetComponent<GameCharacterAnim>().MoveStateUpdate(CurrentStatus.ForwardVector.magnitude, CurrentStatus.RunState);
+
+            if (CurrentStatus.ForwardVector.magnitude == 0)
+            {
+                return;
+            }
+
+            Turn(CurrentStatus.ForwardVector);
+
+            if (CurrentStatus.RunState == true)
+            {
+                Move(CurrentStatus.MoveFastSpeed);
+            }
+            else
+            {
+                Move(CurrentStatus.MoveSpeed);
+            }
         }
+    }
+
+    public void Fire()
+    {
+        GetComponent<GameCharacterAnim>().Fire();
     }
 
     public void GetDamage(int damage)

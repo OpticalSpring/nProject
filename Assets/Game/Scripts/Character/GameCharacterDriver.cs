@@ -9,6 +9,7 @@ public class GameCharacterDriver : MonoBehaviourPunCallbacks
     public int ID;
     public Transform Cam;
     public Vector3 CamForward;
+    Vector3 SecondCamForward;
     Vector3 SecondMoveVector;
     bool SecondRunBool;
 
@@ -39,7 +40,6 @@ public class GameCharacterDriver : MonoBehaviourPunCallbacks
 
         bool run = Input.GetKey(KeyCode.LeftShift);
 
-
         if (SecondMoveVector != moveVector || SecondRunBool != run)
         {
             SecondMoveVector = moveVector;
@@ -47,7 +47,18 @@ public class GameCharacterDriver : MonoBehaviourPunCallbacks
             new CharacterMoveEvent(MyCharacter, SecondMoveVector, run).Send();
         }
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButton(1) && SecondCamForward != CamForward)
+        {
+            SecondCamForward = CamForward;
+            new CharacterAimEvent(MyCharacter, CamForward).Send();
+        }
+
+        if (Input.GetMouseButtonUp(1))
+        {
+            new CharacterAimOutEvent(MyCharacter).Send();
+        }
+
+        if (Input.GetMouseButton(1) && Input.GetMouseButtonDown(0))
         {
             GameObject target = GameCameraLogic.CheckObject(Cam.GetChild(0).gameObject);
             if (target?.GetComponent<GameCharacter>())
@@ -59,5 +70,8 @@ public class GameCharacterDriver : MonoBehaviourPunCallbacks
                 new CharacterFireEvent(MyCharacter, null, 1).Send();
             }
         }
+
+
+
     }
 }
