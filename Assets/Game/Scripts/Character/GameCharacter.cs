@@ -10,6 +10,8 @@ public class GameCharacter : MonoBehaviourPunCallbacks
     public CharacterInfo CharacterInfo;
     public CharacterStatus CurrentStatus;
     public List<SkinnedMeshRenderer> SkinnedMeshes;
+    public GameObject Muzzle;
+    public GameObject FireEffect;
 
 
     private void Awake()
@@ -111,6 +113,11 @@ public class GameCharacter : MonoBehaviourPunCallbacks
     public void Fire()
     {
         GetComponent<GameCharacterAnim>().Fire();
+        GameObject effect = Instantiate(FireEffect);
+        effect.transform.parent = Muzzle.transform;
+        effect.transform.localPosition = Vector3.zero;
+        effect.transform.localEulerAngles = Vector3.zero;
+        Destroy(effect, 0.2f);
     }
 
     public void GetDamage(int damage)
