@@ -15,6 +15,7 @@ public class CharacterStatus
     public float MoveFastSpeed = 6;
     public Vector3 DirectionVector;
     public Vector3 CamVector;
+    public float RootRotation;
     public Vector2 InputVector;
     public bool RunState;
     public float Velocity;

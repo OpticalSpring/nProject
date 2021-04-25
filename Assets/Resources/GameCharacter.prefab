@@ -86,9 +86,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94faf6975d3a40f459903e7ae8159553, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anim: {fileID: 7522069920782048429}
+  Anim: {fileID: 7522069920782048429}
+  RootBone: {fileID: 7580792283223325305}
   Move: 0
+  Walk8Way: {x: 0, y: 0}
   Run: 0
+  RootRotation: 0
 --- !u!114 &6089878446693534131
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -485,6 +488,12 @@ Transform:
 --- !u!95 &7522069920782048429 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 95028430175513588, guid: 0814aba0a5f87494cb000251ab82361f,
+    type: 3}
+  m_PrefabInstance: {fileID: 7580219425290319705}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7580792283223325305 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1753778600381728, guid: 0814aba0a5f87494cb000251ab82361f,
     type: 3}
   m_PrefabInstance: {fileID: 7580219425290319705}
   m_PrefabAsset: {fileID: 0}

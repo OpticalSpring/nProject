@@ -50,7 +50,7 @@ public class GameCharacterDriver : MonoBehaviourPunCallbacks
         if (Input.GetMouseButton(1) && SecondCamForward != CamForward)
         {
             SecondCamForward = CamForward;
-            new CharacterAimEvent(MyCharacter, CamForward).Send();
+            new CharacterAimEvent(MyCharacter, CamForward, Cam.transform.localEulerAngles.x).Send();
         }
 
         if (Input.GetMouseButtonUp(1))

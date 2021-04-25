@@ -94,7 +94,7 @@ public class CharacterContext : MonoBehaviourPunCallbacks
     void CharacterAim(GameEvent data)
     {
         CharacterAimEvent e = (CharacterAimEvent)data;
-        GetSpotCharacter(e.Info.ID)?.Aim(e.Forward);
+        GetSpotCharacter(e.Info.ID)?.Aim(e.Forward, e.RootRatation);
 
     }
 

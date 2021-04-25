@@ -55,10 +55,11 @@ public class GameCharacter : MonoBehaviourPunCallbacks
             mesh.material.color = color;
         }
     }
-    public void Aim(Vector3 forward)
+    public void Aim(Vector3 forward, float rootRotation)
     {
         CurrentStatus.Aim = true;
         CurrentStatus.CamVector = forward;
+        CurrentStatus.RootRotation = rootRotation;
         GetComponent<GameCharacterAnim>().FireStateUpdate(true);
         GetComponent<GameCharacterAnim>().MoveStateUpdate(0, false);
     }
@@ -82,11 +83,13 @@ public class GameCharacter : MonoBehaviourPunCallbacks
             Turn(CurrentStatus.CamVector);
             Move(CurrentStatus.DirectionVector, CurrentStatus.MoveSpeed);
             GetComponent<GameCharacterAnim>().Walk8WayStateUpdate(CurrentStatus.InputVector);
+            GetComponent<GameCharacterAnim>().RootBoneUpdate(CurrentStatus.RootRotation);
+
         }
         else
         {
             GetComponent<GameCharacterAnim>().MoveStateUpdate(CurrentStatus.DirectionVector.magnitude, CurrentStatus.RunState);
-
+            GetComponent<GameCharacterAnim>().RootBoneUpdate(0);
             if (CurrentStatus.DirectionVector.magnitude == 0)
             {
                 return;
@@ -129,7 +132,7 @@ public class GameCharacter : MonoBehaviourPunCallbacks
     {
         if (GameCharacterLogic.CheckObstacle(gameObject, directionVector) == false)
         {
-            gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, gameObject.transform.position+ directionVector, speed * Time.deltaTime);
+            gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, gameObject.transform.position + directionVector, speed * Time.deltaTime);
         }
         else
         {

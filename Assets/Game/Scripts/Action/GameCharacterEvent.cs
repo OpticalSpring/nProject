@@ -37,11 +37,13 @@ public class CharacterAimEvent : GameEvent
 {
     public CharacterInfo Info;
     public Vector3 Forward;
-    public CharacterAimEvent(GameCharacter caster, Vector3 forward)
+    public float RootRatation;
+    public CharacterAimEvent(GameCharacter caster, Vector3 forward, float rootRatation)
     {
         GameEventID = GameEventType.CharacterAim;
         Info = caster.CharacterInfo;
         Forward = forward;
+        RootRatation = rootRatation;
     }
 }
 
