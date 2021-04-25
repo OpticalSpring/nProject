@@ -69,9 +69,10 @@ public class GameCharacter : MonoBehaviourPunCallbacks
         GetComponent<GameCharacterAnim>().FireStateUpdate(false);
     }
 
-    public void MovementUpdate(Vector3 forward, bool run)
+    public void MovementUpdate(Vector3 direction, Vector2 input, bool run)
     {
-        CurrentStatus.ForwardVector = forward;
+        CurrentStatus.DirectionVector = direction;
+        CurrentStatus.InputVector = input;
         CurrentStatus.RunState = run;
     }
     public void CommentMovement()
@@ -79,25 +80,27 @@ public class GameCharacter : MonoBehaviourPunCallbacks
         if (CurrentStatus.Aim == true)
         {
             Turn(CurrentStatus.CamVector);
+            Move(CurrentStatus.DirectionVector, CurrentStatus.MoveSpeed);
+            GetComponent<GameCharacterAnim>().Walk8WayStateUpdate(CurrentStatus.InputVector);
         }
         else
         {
-            GetComponent<GameCharacterAnim>().MoveStateUpdate(CurrentStatus.ForwardVector.magnitude, CurrentStatus.RunState);
+            GetComponent<GameCharacterAnim>().MoveStateUpdate(CurrentStatus.DirectionVector.magnitude, CurrentStatus.RunState);
 
-            if (CurrentStatus.ForwardVector.magnitude == 0)
+            if (CurrentStatus.DirectionVector.magnitude == 0)
             {
                 return;
             }
 
-            Turn(CurrentStatus.ForwardVector);
+            Turn(CurrentStatus.DirectionVector);
 
             if (CurrentStatus.RunState == true)
             {
-                Move(CurrentStatus.MoveFastSpeed);
+                Move(CurrentStatus.DirectionVector, CurrentStatus.MoveFastSpeed);
             }
             else
             {
-                Move(CurrentStatus.MoveSpeed);
+                Move(CurrentStatus.DirectionVector, CurrentStatus.MoveSpeed);
             }
         }
     }
@@ -122,19 +125,15 @@ public class GameCharacter : MonoBehaviourPunCallbacks
         gameObject.transform.rotation = Quaternion.Lerp(gameObject.transform.rotation, Quaternion.Euler(0, rotateDegree, 0), 10 * Time.deltaTime);
 
     }
-    void Move(float speed)
+    void Move(Vector3 directionVector, float speed)
     {
-        RaycastHit rayHit;
-        int mask = 1 << 2;
-        mask = ~mask;
-
-        if (GameCharacterLogic.CheckObstacle(gameObject) == false)
+        if (GameCharacterLogic.CheckObstacle(gameObject, directionVector) == false)
         {
-            gameObject.transform.Translate(Vector3.forward * speed * Time.deltaTime);
+            gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, gameObject.transform.position+ directionVector, speed * Time.deltaTime);
         }
         else
         {
-            gameObject.transform.position = GameCharacterLogic.GetSlidingVector(gameObject, speed);
+            gameObject.transform.position = GameCharacterLogic.GetSlidingVector(gameObject, directionVector, speed);
         }
     }
     float jumpTime;

@@ -7,16 +7,19 @@ using UnityEngine;
 public class CharacterMoveEvent : GameEvent
 {
     public CharacterInfo Info;
-    public Vector3 Forward;
+    public Vector3 Direction;
+    public Vector2 Input;
     public bool Run;
-    public CharacterMoveEvent(GameCharacter caster, Vector3 forward, bool run)
+    public CharacterMoveEvent(GameCharacter caster, Vector3 direction,Vector2 input, bool run)
     {
         GameEventID = GameEventType.CharacterMove;
         Info = caster.CharacterInfo;
-        Forward = forward;
+        Direction = direction;
+        Input = input;
         Run = run;
     }
 }
+
 
 [Serializable]
 public class CharacterJumpEvent : GameEvent

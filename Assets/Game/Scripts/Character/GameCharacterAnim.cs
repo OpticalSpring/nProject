@@ -7,6 +7,8 @@ public class GameCharacterAnim : MonoBehaviour
     public Animator anim;
     public float Move;
     float movement;
+    Vector2 movementWalk8Way;
+    public Vector2 Walk8Way;
     public bool Run;
     // Start is called before the first frame update
     void Start()
@@ -17,11 +19,14 @@ public class GameCharacterAnim : MonoBehaviour
     private void Update()
     {
         movement = Mathf.Lerp(movement, Move, Time.deltaTime * 10);
+        movementWalk8Way = Vector2.Lerp(movementWalk8Way, Walk8Way, Time.deltaTime * 10);
     }
     // Update is called once per frame
     void LateUpdate()
     {
         anim.SetFloat("Move", movement);
+        anim.SetFloat("XVelocity", movementWalk8Way.x);
+        anim.SetFloat("YVelocity", movementWalk8Way.y);
     }
 
     public void MoveStateUpdate(float move, bool run)
@@ -38,6 +43,11 @@ public class GameCharacterAnim : MonoBehaviour
         {
             Move = 0;
         }
+    }
+
+    public void Walk8WayStateUpdate(Vector2 walk8Way)
+    {
+        Walk8Way = walk8Way;
     }
 
     public void FireStateUpdate(bool aim)

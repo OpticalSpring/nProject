@@ -44,7 +44,7 @@ public class GameCharacterDriver : MonoBehaviourPunCallbacks
         {
             SecondMoveVector = moveVector;
             SecondRunBool = run;
-            new CharacterMoveEvent(MyCharacter, SecondMoveVector, run).Send();
+            new CharacterMoveEvent(MyCharacter, moveVector, new Vector2(h,v), run).Send();
         }
 
         if (Input.GetMouseButton(1) && SecondCamForward != CamForward)

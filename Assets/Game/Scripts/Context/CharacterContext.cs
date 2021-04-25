@@ -72,7 +72,7 @@ public class CharacterContext : MonoBehaviourPunCallbacks
     void CharacterMove(GameEvent data)
     {
         CharacterMoveEvent e = (CharacterMoveEvent)data;
-        GetSpotCharacter(e.Info.ID)?.MovementUpdate(e.Forward, e.Run);
+        GetSpotCharacter(e.Info.ID)?.MovementUpdate(e.Direction, e.Input, e.Run);
         
     }
 
