@@ -1,6 +1,7 @@
 ﻿using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class CharacterContext : MonoBehaviourPunCallbacks
@@ -30,7 +31,7 @@ public class CharacterContext : MonoBehaviourPunCallbacks
     public void InitCharacter(GameEvent data)
     {
         GameObject character = PhotonNetwork.Instantiate(
-            CharacterPrefab.name,
+            Path.Combine("Game", CharacterPrefab.name),
             gameObject.transform.position,
             Quaternion.identity,
             0
