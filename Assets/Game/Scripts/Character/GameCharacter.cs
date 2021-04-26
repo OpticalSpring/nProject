@@ -12,6 +12,7 @@ public class GameCharacter : MonoBehaviourPunCallbacks
     public List<SkinnedMeshRenderer> SkinnedMeshes;
     public GameObject Muzzle;
     public GameObject FireEffect;
+    public GameObject HitEffect;
 
 
     private void Awake()
@@ -131,6 +132,13 @@ public class GameCharacter : MonoBehaviourPunCallbacks
             new CharacterDamageEvent(CharacterInfo, rayHit.collider.gameObject.GetComponent<GameCharacter>().CharacterInfo, 10).Send();
         }
 
+        if(rayHit.collider?.gameObject)
+        {
+            GameObject effect2 = Instantiate(HitEffect);
+            effect2.transform.position = rayHit.point;
+            effect2.transform.eulerAngles = rayHit.normal;
+            Destroy(effect2, 1f);
+        }
     }
 
     public void GetDamage(int damage)

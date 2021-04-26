@@ -106,6 +106,7 @@ MonoBehaviour:
   - {fileID: 7554030820171614507}
   Muzzle: {fileID: 5699037526621420964}
   FireEffect: {fileID: 100006, guid: 30b4cc2728d8cec499fad63ba93785a4, type: 3}
+  HitEffect: {fileID: 100002, guid: 00fedc70b62a31e448e8ccc298257b56, type: 3}
 --- !u!114 &6932798183393069361
 MonoBehaviour:
   m_ObjectHideFlags: 0
