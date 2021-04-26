@@ -23,19 +23,11 @@ public class GameCameraLogic : MonoBehaviour
 
     }
 
-    public static GameObject CheckObject(GameObject camMain)
+    public static void CheckObject(GameObject camMain, out RaycastHit rayHit)
     {
-        RaycastHit rayHit;
 
         int mask = 1 << 2;
         mask = ~mask;
-        if (Physics.Raycast(camMain.transform.position, camMain.transform.forward, out rayHit, 100, mask))
-        {
-            return rayHit.collider.gameObject;
-        }
-        else
-        {
-            return null;
-        }
+        Physics.Raycast(camMain.transform.position, camMain.transform.forward, out rayHit, 100, mask);
     }
 }

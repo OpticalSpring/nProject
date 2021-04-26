@@ -18,6 +18,7 @@ public class GameEvent
         CharacterAim,
         CharacterAimOut,
         CharacterFire,
+        CharacterDamage,
         CharacterTake,
 
         //DamageLogic
@@ -87,6 +88,8 @@ public class EventJsonUtility
                 return UnityEngine.JsonUtility.FromJson<CharacterJumpEvent>(eventString);
             case GameEvent.GameEventType.CharacterFire:
                 return UnityEngine.JsonUtility.FromJson<CharacterFireEvent>(eventString);
+            case GameEvent.GameEventType.CharacterDamage:
+                return UnityEngine.JsonUtility.FromJson<CharacterDamageEvent>(eventString);
             case GameEvent.GameEventType.CharacterAim:
                 return UnityEngine.JsonUtility.FromJson<CharacterAimEvent>(eventString);
             case GameEvent.GameEventType.CharacterAimOut:

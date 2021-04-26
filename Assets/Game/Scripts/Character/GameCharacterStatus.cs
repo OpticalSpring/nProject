@@ -27,3 +27,12 @@ public class CharacterStatus
         Velocity = 0;
     }
 }
+
+
+[Serializable]
+public struct ShotResult
+{
+    public CharacterInfo Caster;
+    public CharacterInfo Target;
+    public int Damage;
+}

@@ -7,7 +7,7 @@ public class GameCharacterLogic : MonoBehaviour
     public static bool CheckObstacle(GameObject gameCharacter, Vector3 directionVector)
     {
         RaycastHit rayHit;
-        int mask = 1 << 2;
+        int mask = 1 << 2 | 1 << 8;
         mask = ~mask;
 
         if (Physics.SphereCast(gameCharacter.transform.position + new Vector3(0, 1, 0), 0.2f, directionVector, out rayHit, 0.5f, mask))

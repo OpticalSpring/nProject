@@ -6,14 +6,14 @@ using UnityEngine;
 [Serializable]
 public class CharacterMoveEvent : GameEvent
 {
-    public CharacterInfo Info;
+    public CharacterInfo Caster;
     public Vector3 Direction;
     public Vector2 Input;
     public bool Run;
-    public CharacterMoveEvent(GameCharacter caster, Vector3 direction,Vector2 input, bool run)
+    public CharacterMoveEvent(CharacterInfo caster, Vector3 direction,Vector2 input, bool run)
     {
         GameEventID = GameEventType.CharacterMove;
-        Info = caster.CharacterInfo;
+        Caster = caster;
         Direction = direction;
         Input = input;
         Run = run;
@@ -24,24 +24,24 @@ public class CharacterMoveEvent : GameEvent
 [Serializable]
 public class CharacterJumpEvent : GameEvent
 {
-    public CharacterInfo Info;
-    public CharacterJumpEvent(GameCharacter caster)
+    public CharacterInfo Caster;
+    public CharacterJumpEvent(CharacterInfo caster)
     {
         GameEventID = GameEventType.CharacterJump;
-        Info = caster.CharacterInfo;
+        Caster = caster;
     }
 }
 
 [Serializable]
 public class CharacterAimEvent : GameEvent
 {
-    public CharacterInfo Info;
+    public CharacterInfo Caster;
     public Vector3 Forward;
     public float RootRatation;
-    public CharacterAimEvent(GameCharacter caster, Vector3 forward, float rootRatation)
+    public CharacterAimEvent(CharacterInfo caster, Vector3 forward, float rootRatation)
     {
         GameEventID = GameEventType.CharacterAim;
-        Info = caster.CharacterInfo;
+        Caster = caster;
         Forward = forward;
         RootRatation = rootRatation;
     }
@@ -50,11 +50,11 @@ public class CharacterAimEvent : GameEvent
 [Serializable]
 public class CharacterAimOutEvent : GameEvent
 {
-    public CharacterInfo Info;
-    public CharacterAimOutEvent(GameCharacter caster)
+    public CharacterInfo Caster;
+    public CharacterAimOutEvent(CharacterInfo caster)
     {
         GameEventID = GameEventType.CharacterAimOut;
-        Info = caster.CharacterInfo;
+        Caster = caster;
     }
 }
 
@@ -62,15 +62,25 @@ public class CharacterAimOutEvent : GameEvent
 public class CharacterFireEvent : GameEvent
 {
     public CharacterInfo Caster;
-    public CharacterInfo Target;
-    public int Damage;
-    public CharacterFireEvent(GameCharacter caster, GameCharacter target, int damage)
+    public CharacterFireEvent(CharacterInfo caster)
     {
         GameEventID = GameEventType.CharacterFire;
-        Caster = caster.CharacterInfo;
+        Caster = caster;
+    }
+}
+
+[Serializable]
+public class CharacterDamageEvent : GameEvent
+{
+    public CharacterInfo Caster;
+    public CharacterInfo Target;
+    public int Damage;
+    public CharacterDamageEvent(CharacterInfo caster, CharacterInfo target, int damage)
+    {
+        GameEventID = GameEventType.CharacterDamage;
+        Caster = caster;
+        Target = target;
         Damage = damage;
-        if (target == null) return;
-        Target = target.CharacterInfo;
     }
 }
 

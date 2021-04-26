@@ -41,7 +41,7 @@ public class MatchMaker : MonoBehaviourPunCallbacks
             0
         );
         //player.GetComponent<PlayerControl>().cam = camObject.transform.GetChild(0);
-        camObject.GetComponent<CameraControl>().camTarget = player;
+        camObject.GetComponent<CameraControl>().CamTarget = player;
 
 
     }

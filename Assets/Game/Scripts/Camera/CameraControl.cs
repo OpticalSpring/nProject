@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class CameraControl : MonoBehaviour
 {
-    
-    public GameObject camTarget;
+    public static CameraControl Instance;
+    private void Awake()
+    {
+        Instance = this;
+    }
+    public GameObject CamTarget;
     public float rotationSpeed;
     public float maxDistance;
     public Vector2 correctionPos;
     public float corDistance;
     public float camDistance;
-    public GameObject mainCamera;
-    GameObject cameraPivot;
+    public GameObject MainCamera;
+    public GameObject CamPivot;
     public Vector3 rotateValue;
 
 
@@ -20,14 +24,14 @@ public class CameraControl : MonoBehaviour
     void Start()
     {
 
-        mainCamera = gameObject.transform.GetChild(0).GetChild(0).gameObject;
-        cameraPivot = gameObject.transform.GetChild(0).gameObject;
+        MainCamera = gameObject.transform.GetChild(0).GetChild(0).gameObject;
+        CamPivot = gameObject.transform.GetChild(0).gameObject;
     }
 
     // Update is called once per frame
     void LateUpdate()
     {
-        if(camTarget == null)
+        if(CamTarget == null)
         {
             return;
         }
@@ -39,7 +43,7 @@ public class CameraControl : MonoBehaviour
     //카메라가 타겟을 따라간다.
     void FollowCam()
     {
-        gameObject.transform.position = camTarget.transform.position;
+        gameObject.transform.position = CamTarget.transform.position;
     }
 
     //카메라를 회전시킨다.
@@ -52,7 +56,7 @@ public class CameraControl : MonoBehaviour
         rotateValue.x = Mathf.Clamp(rotateValue.x, -30f, 30f);
         targetRotation = Quaternion.Euler(rotateValue);
 
-        cameraPivot.transform.rotation = targetRotation;
+        CamPivot.transform.rotation = targetRotation;
     }
 
     
@@ -61,10 +65,10 @@ public class CameraControl : MonoBehaviour
     void CheckDistance()
     {
 
-        camDistance = GameCameraLogic.CheckDistance(cameraPivot, mainCamera, correctionPos, maxDistance);
+        camDistance = GameCameraLogic.CheckDistance(CamPivot, MainCamera, correctionPos, maxDistance);
 
         Vector3 localPos = new Vector3(corDistance, correctionPos.y, -camDistance);
-        mainCamera.transform.localPosition = Vector3.Lerp(mainCamera.transform.localPosition, localPos, Time.fixedDeltaTime * 10f);
+        MainCamera.transform.localPosition = Vector3.Lerp(MainCamera.transform.localPosition, localPos, Time.fixedDeltaTime * 10f);
        
     }
 

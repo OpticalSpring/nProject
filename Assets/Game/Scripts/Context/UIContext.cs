@@ -15,7 +15,7 @@ public class UIContext : MonoBehaviour
 
     public void SubscribeEvent()
     {
-        GameContext.Instance.RegisterObserver(GameEvent.GameEventType.CharacterFire, NameTagUpdate);
+        GameContext.Instance.RegisterObserver(GameEvent.GameEventType.CharacterDamage, NameTagUpdate);
     }
 
 
@@ -42,7 +42,7 @@ public class UIContext : MonoBehaviour
 
     void NameTagUpdate(GameEvent data)
     {
-        CharacterFireEvent e = (CharacterFireEvent)data;
+        CharacterDamageEvent e = (CharacterDamageEvent)data;
         GetNameTag(e.Target.ID)?.UpdateNameTag();
     }
 }

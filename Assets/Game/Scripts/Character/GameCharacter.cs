@@ -118,6 +118,19 @@ public class GameCharacter : MonoBehaviourPunCallbacks
         effect.transform.localPosition = Vector3.zero;
         effect.transform.localEulerAngles = Vector3.zero;
         Destroy(effect, 0.2f);
+
+        if (!photonView.IsMine)
+        {
+            return;
+        }
+        RaycastHit rayHit;
+        GameCameraLogic.CheckObject(CameraControl.Instance.MainCamera, out rayHit);
+        
+        if (rayHit.collider?.gameObject?.GetComponent<GameCharacter>())
+        {
+            new CharacterDamageEvent(CharacterInfo, rayHit.collider.gameObject.GetComponent<GameCharacter>().CharacterInfo, 10).Send();
+        }
+
     }
 
     public void GetDamage(int damage)

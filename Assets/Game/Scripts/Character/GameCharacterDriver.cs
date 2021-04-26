@@ -7,7 +7,6 @@ public class GameCharacterDriver : MonoBehaviourPunCallbacks
 {
     public GameCharacter MyCharacter;
     public int ID;
-    public Transform Cam;
     public Vector3 CamForward;
     Vector3 SecondCamForward;
     Vector3 SecondMoveVector;
@@ -20,14 +19,10 @@ public class GameCharacterDriver : MonoBehaviourPunCallbacks
         {
             return;
         }
-        if (Cam == null)
-        {
-            return;
-        }
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            new CharacterJumpEvent(MyCharacter).Send();
+            new CharacterJumpEvent(MyCharacter.CharacterInfo).Send();
         }
 
         // read inputs
@@ -35,8 +30,8 @@ public class GameCharacterDriver : MonoBehaviourPunCallbacks
         float v = Input.GetAxis("Vertical");
 
        
-        CamForward = Vector3.Scale(Cam.forward, new Vector3(1, 0, 1)).normalized;
-        Vector3 moveVector = v * CamForward + h * Cam.right;
+        CamForward = Vector3.Scale(CameraControl.Instance.CamPivot.transform.forward, new Vector3(1, 0, 1)).normalized;
+        Vector3 moveVector = v * CamForward + h * CameraControl.Instance.CamPivot.transform.right;
 
         bool run = Input.GetKey(KeyCode.LeftShift);
 
@@ -44,31 +39,24 @@ public class GameCharacterDriver : MonoBehaviourPunCallbacks
         {
             SecondMoveVector = moveVector;
             SecondRunBool = run;
-            new CharacterMoveEvent(MyCharacter, moveVector, new Vector2(h,v), run).Send();
+            new CharacterMoveEvent(MyCharacter.CharacterInfo, moveVector, new Vector2(h,v), run).Send();
         }
 
         if (Input.GetMouseButton(1) && SecondCamForward != CamForward)
         {
             SecondCamForward = CamForward;
-            new CharacterAimEvent(MyCharacter, CamForward, Cam.transform.localEulerAngles.x).Send();
+            new CharacterAimEvent(MyCharacter.CharacterInfo, CamForward, CameraControl.Instance.CamPivot.transform.localEulerAngles.x).Send();
         }
 
         if (Input.GetMouseButtonUp(1))
         {
-            new CharacterAimOutEvent(MyCharacter).Send();
+            new CharacterAimOutEvent(MyCharacter.CharacterInfo).Send();
         }
 
         if (Input.GetMouseButton(1) && Input.GetMouseButtonDown(0))
         {
-            GameObject target = GameCameraLogic.CheckObject(Cam.GetChild(0).gameObject);
-            if (target?.GetComponent<GameCharacter>())
-            {
-                new CharacterFireEvent(MyCharacter, target.GetComponent<GameCharacter>(), 1).Send();
-            }
-            else
-            {
-                new CharacterFireEvent(MyCharacter, null, 1).Send();
-            }
+            new CharacterFireEvent(MyCharacter.CharacterInfo).Send();
+            
         }
 
 

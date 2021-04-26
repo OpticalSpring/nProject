@@ -24,6 +24,7 @@ public class CharacterContext : MonoBehaviourPunCallbacks
         GameContext.Instance.RegisterObserver(GameEvent.GameEventType.CharacterMove, CharacterMove);
         GameContext.Instance.RegisterObserver(GameEvent.GameEventType.CharacterJump, CharacterJump);
         GameContext.Instance.RegisterObserver(GameEvent.GameEventType.CharacterFire, CharacterFire);
+        GameContext.Instance.RegisterObserver(GameEvent.GameEventType.CharacterDamage, CharacterDamage);
         GameContext.Instance.RegisterObserver(GameEvent.GameEventType.CharacterAim, CharacterAim);
         GameContext.Instance.RegisterObserver(GameEvent.GameEventType.CharacterAimOut, CharacterAimOut);
     }
@@ -37,9 +38,8 @@ public class CharacterContext : MonoBehaviourPunCallbacks
             0
         );
         
-        CamObject.GetComponent<GameCharacterDriver>().Cam = CamObject.transform.GetChild(0);
         CamObject.GetComponent<GameCharacterDriver>().MyCharacter = character.GetComponent<GameCharacter>();
-        CamObject.GetComponent<CameraControl>().camTarget = character;
+        CamObject.GetComponent<CameraControl>().CamTarget = character;
 
     }
 
@@ -73,14 +73,14 @@ public class CharacterContext : MonoBehaviourPunCallbacks
     void CharacterMove(GameEvent data)
     {
         CharacterMoveEvent e = (CharacterMoveEvent)data;
-        GetSpotCharacter(e.Info.ID)?.MovementUpdate(e.Direction, e.Input, e.Run);
+        GetSpotCharacter(e.Caster.ID)?.MovementUpdate(e.Direction, e.Input, e.Run);
         
     }
 
     void CharacterJump(GameEvent data)
     {
         CharacterJumpEvent e = (CharacterJumpEvent)data;
-        GetSpotCharacter(e.Info.ID)?.Jump();
+        GetSpotCharacter(e.Caster.ID)?.Jump();
 
     }
 
@@ -88,21 +88,25 @@ public class CharacterContext : MonoBehaviourPunCallbacks
     {
         CharacterFireEvent e = (CharacterFireEvent)data;
         GetSpotCharacter(e.Caster.ID)?.Fire();
-        GetSpotCharacter(e.Target.ID)?.GetDamage(e.Damage);
+    }
 
+    void CharacterDamage(GameEvent data)
+    {
+        CharacterDamageEvent e = (CharacterDamageEvent)data;
+        GetSpotCharacter(e.Target.ID)?.GetDamage(e.Damage);
     }
 
     void CharacterAim(GameEvent data)
     {
         CharacterAimEvent e = (CharacterAimEvent)data;
-        GetSpotCharacter(e.Info.ID)?.Aim(e.Forward, e.RootRatation);
+        GetSpotCharacter(e.Caster.ID)?.Aim(e.Forward, e.RootRatation);
 
     }
 
     void CharacterAimOut(GameEvent data)
     {
         CharacterAimOutEvent e = (CharacterAimOutEvent)data;
-        GetSpotCharacter(e.Info.ID)?.AimOut();
+        GetSpotCharacter(e.Caster.ID)?.AimOut();
 
     }
 
