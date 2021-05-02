@@ -84,3 +84,26 @@ public class CharacterDamageEvent : GameEvent
     }
 }
 
+[Serializable]
+public class CharacterTryConsumeEvent : GameEvent
+{
+    public CharacterInfo Caster;
+    public CharacterTryConsumeEvent(CharacterInfo caster)
+    {
+        GameEventID = GameEventType.CharacterTryConsume;
+        Caster = caster;
+    }
+}
+
+[Serializable]
+public class CharacterConsumeEvent : GameEvent
+{
+    public CharacterInfo Caster;
+    public CharacterInfo Target;
+    public CharacterConsumeEvent(CharacterInfo caster, CharacterInfo target)
+    {
+        GameEventID = GameEventType.CharacterConsume;
+        Caster = caster;
+        Target = target;
+    }
+}

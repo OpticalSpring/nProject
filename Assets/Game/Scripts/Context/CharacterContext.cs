@@ -27,6 +27,8 @@ public class CharacterContext : MonoBehaviourPunCallbacks
         GameContext.Instance.RegisterObserver(GameEvent.GameEventType.CharacterDamage, CharacterDamage);
         GameContext.Instance.RegisterObserver(GameEvent.GameEventType.CharacterAim, CharacterAim);
         GameContext.Instance.RegisterObserver(GameEvent.GameEventType.CharacterAimOut, CharacterAimOut);
+        GameContext.Instance.RegisterObserver(GameEvent.GameEventType.CharacterTryConsume, CharacterTryConsume);
+        GameContext.Instance.RegisterObserver(GameEvent.GameEventType.CharacterConsume, CharacterConsume);
     }
 
     public void InitCharacter(GameEvent data)
@@ -110,4 +112,17 @@ public class CharacterContext : MonoBehaviourPunCallbacks
 
     }
 
+    void CharacterTryConsume(GameEvent data)
+    {
+        CharacterTryConsumeEvent e = (CharacterTryConsumeEvent)data;
+        GetSpotCharacter(e.Caster.ID)?.TryConsume();
+
+    }
+
+    void CharacterConsume(GameEvent data)
+    {
+        CharacterConsumeEvent e = (CharacterConsumeEvent)data;
+        GetSpotCharacter(e.Caster.ID)?.ConsumeCaster(GetSpotCharacter(e.Target.ID));
+        GetSpotCharacter(e.Target.ID)?.ConsumeTarget();
+    }
 }

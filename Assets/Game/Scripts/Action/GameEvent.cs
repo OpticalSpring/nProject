@@ -19,7 +19,8 @@ public class GameEvent
         CharacterAimOut,
         CharacterFire,
         CharacterDamage,
-        CharacterTake,
+        CharacterTryConsume,
+        CharacterConsume,
 
         //DamageLogic
         HitAttack,
@@ -94,6 +95,10 @@ public class EventJsonUtility
                 return UnityEngine.JsonUtility.FromJson<CharacterAimEvent>(eventString);
             case GameEvent.GameEventType.CharacterAimOut:
                 return UnityEngine.JsonUtility.FromJson<CharacterAimOutEvent>(eventString);
+            case GameEvent.GameEventType.CharacterTryConsume:
+                return UnityEngine.JsonUtility.FromJson<CharacterTryConsumeEvent>(eventString);
+            case GameEvent.GameEventType.CharacterConsume:
+                return UnityEngine.JsonUtility.FromJson<CharacterConsumeEvent>(eventString);
         }
 
         return UnityEngine.JsonUtility.FromJson<GameEvent>(eventString);

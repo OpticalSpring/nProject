@@ -30,6 +30,6 @@ public class CharacterStatus
 
 public class CharacterCondition
 {
-
+    
 }
 

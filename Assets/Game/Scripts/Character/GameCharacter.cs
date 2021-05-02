@@ -35,8 +35,7 @@ public class GameCharacter : MonoBehaviourPunCallbacks
 
         PlayerName = photonView.Owner.NickName;
         int a = ColorManager.GetPlayerNameToCol(PlayerName);
-        PlayerColor = ColorManager.NumToCol(a);
-        SetPlayerColor(PlayerColor);
+        SetPlayerColor(ColorManager.NumToCol(a));
         PlayerName = ColorManager.SetPlayerNameToCol(PlayerName);
         gameObject.name = PlayerName;
 
@@ -53,6 +52,7 @@ public class GameCharacter : MonoBehaviourPunCallbacks
 
     public void SetPlayerColor(Color color)
     {
+        PlayerColor = color;
         foreach (SkinnedMeshRenderer mesh in SkinnedMeshes)
         {
             mesh.material.color = color;
@@ -141,6 +141,7 @@ public class GameCharacter : MonoBehaviourPunCallbacks
         }
     }
 
+
     public void GetDamage(int damage)
     {
         CurrentStatus.HP_NOW = Mathf.Max(CurrentStatus.HP_NOW - damage, 0);
@@ -194,5 +195,39 @@ public class GameCharacter : MonoBehaviourPunCallbacks
             gameObject.transform.position = newPos;
             jumpTime -= Time.deltaTime;
         }
+    }
+
+    public void TryConsume()
+    {
+
+        if (!photonView.IsMine)
+        {
+            return;
+        }
+        RaycastHit rayHit;
+        GameCameraLogic.CheckObject(CameraControl.Instance.MainCamera, out rayHit);
+
+        if (rayHit.collider?.gameObject?.GetComponent<GameCharacter>())
+        {
+            new CharacterConsumeEvent(CharacterInfo, rayHit.collider.gameObject.GetComponent<GameCharacter>().CharacterInfo).Send();
+        }
+    }
+
+    public void ConsumeCaster(GameCharacter target)
+    {
+        SetPlayerColor(target.PlayerColor);
+        PlayerName = target.PlayerName;
+
+        if (!photonView.IsMine)
+        {
+            return;
+        }
+        IngameChatManager.instance.playerName = PlayerName;
+        IngameChatManager.instance.playerColor = PlayerColor;
+    }
+
+    public void ConsumeTarget()
+    {
+
     }
 }

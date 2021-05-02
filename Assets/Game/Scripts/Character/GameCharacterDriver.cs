@@ -56,10 +56,12 @@ public class GameCharacterDriver : MonoBehaviourPunCallbacks
         if (Input.GetMouseButton(1) && Input.GetMouseButtonDown(0))
         {
             new CharacterFireEvent(MyCharacter.CharacterInfo).Send();
-            
         }
 
-
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            new CharacterTryConsumeEvent(MyCharacter.CharacterInfo).Send();
+        }
 
     }
 }
