@@ -39,7 +39,7 @@ public class CharacterContext : MonoBehaviourPunCallbacks
             Quaternion.identity,
             0
         );
-        
+
         CamObject.GetComponent<GameCharacterDriver>().MyCharacter = character.GetComponent<GameCharacter>();
         CamObject.GetComponent<CameraControl>().CamTarget = character;
 
@@ -48,15 +48,27 @@ public class CharacterContext : MonoBehaviourPunCallbacks
     public void RegisterCharacter(GameCharacter character)
     {
         GameCharacters.Add(character);
-        if (character.photonView.IsMine) return;
-
-        GameObject tag = Instantiate(NameTagPrefab);
-        tag.GetComponent<NameTag>().Cam = CamObject.transform.GetChild(0).GetChild(0).GetComponent<Camera>();
-        tag.GetComponent<NameTag>().Target = character.gameObject;
-        tag.transform.parent = UITagGroup.transform;
+        if (character.photonView.IsMine)
+        {
+            UIContext.Instance.HUD.Target = character.gameObject;
+            UIContext.Instance.HUD.UpdateNameTag();
+        }
+        else
+        {
+            GameObject tag = Instantiate(NameTagPrefab);
+            tag.GetComponent<NameTag>().Cam = CamObject.transform.GetChild(0).GetChild(0).GetComponent<Camera>();
+            tag.GetComponent<NameTag>().Target = character.gameObject;
+            tag.transform.parent = UITagGroup.transform;
+        }
     }
 
-    public bool FindGameCharacter(int entityID, out GameCharacter character)
+    public void RemoveCharacter(GameCharacter character)
+    {
+        GameCharacters.Remove(character);
+        Destroy(character.gameObject);
+    }
+
+    bool FindGameCharacter(int entityID, out GameCharacter character)
     {
         character = GameCharacters.Find(x => x.CharacterInfo.ID == entityID);
         return (character != null);
@@ -76,7 +88,7 @@ public class CharacterContext : MonoBehaviourPunCallbacks
     {
         CharacterMoveEvent e = (CharacterMoveEvent)data;
         GetSpotCharacter(e.Caster.ID)?.MovementUpdate(e.Direction, e.Input, e.Run);
-        
+
     }
 
     void CharacterJump(GameEvent data)

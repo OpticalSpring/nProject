@@ -26,9 +26,13 @@ public class GameCharacter : MonoBehaviourPunCallbacks
         GravityProcess();
     }
 
+
+    private void OnDestroy()
+    {
+        CharacterContext.Instance.RemoveCharacter(this);
+    }
     void Init()
     {
-        CharacterContext.Instance.RegisterCharacter(this);
         CharacterInfo = new CharacterInfo();
         CurrentStatus = new CharacterStatus();
         CharacterInfo.ID = GetComponent<PhotonView>().ViewID;
@@ -38,6 +42,7 @@ public class GameCharacter : MonoBehaviourPunCallbacks
         SetPlayerColor(ColorManager.NumToCol(a));
         PlayerName = ColorManager.SetPlayerNameToCol(PlayerName);
         gameObject.name = PlayerName;
+        CharacterContext.Instance.RegisterCharacter(this);
 
 
 
@@ -147,7 +152,7 @@ public class GameCharacter : MonoBehaviourPunCallbacks
         CurrentStatus.HP_NOW = Mathf.Max(CurrentStatus.HP_NOW - damage, 0);
         if(CurrentStatus.HP_NOW == 0)
         {
-            Destroy(gameObject);
+            CharacterContext.Instance.RemoveCharacter(this);
         }
     }
 
@@ -179,7 +184,7 @@ public class GameCharacter : MonoBehaviourPunCallbacks
         if (!GameCharacterLogic.CheckGround(gameObject, out pos)) return;
 
 
-        CurrentStatus.Velocity = -0.12f;
+        CurrentStatus.Velocity = -0.11f;
         jumpTime = 0.1f;
     }
 
@@ -228,10 +233,11 @@ public class GameCharacter : MonoBehaviourPunCallbacks
         }
         IngameChatManager.instance.playerName = PlayerName;
         IngameChatManager.instance.playerColor = PlayerColor;
+        UIContext.Instance.HUD.UpdateNameTag();
     }
 
     public void ConsumeTarget()
     {
-        Destroy(gameObject);
+        CharacterContext.Instance.RemoveCharacter(this);
     }
 }

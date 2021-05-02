@@ -21,7 +21,11 @@ public class NameTag : MonoBehaviour
 
     private void Update()
     {
-        if (Target == null) Destroy(gameObject);
+        if (Target == null)
+        {
+            UIContext.Instance.RemoveUI(this);
+            return;
+        }
         if (IsVisible())
         {
             Root.SetActive(true);

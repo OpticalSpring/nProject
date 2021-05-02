@@ -20,13 +20,13 @@ public class GameProcess : MonoBehaviourPunCallbacks
     }
     IEnumerator GameStart()
     {
-        Debug.Log("Enter Scene");
+        Debug.LogWarning("Enter Scene");
         yield return new WaitForSeconds(1);
         if (!PhotonNetwork.IsMasterClient)
         {
             yield break;
         }
-        Debug.Log("Init Character");
+        Debug.LogWarning("Init Character");
         new InitCharacterEvent().Send();
     }
 

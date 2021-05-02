@@ -12,7 +12,7 @@ public class UIContext : MonoBehaviour
     }
 
     public List<NameTag> UINameTags;
-
+    public HUDControl HUD;
     public void SubscribeEvent()
     {
         GameContext.Instance.RegisterObserver(GameEvent.GameEventType.CharacterDamage, NameTagUpdate);
@@ -24,9 +24,15 @@ public class UIContext : MonoBehaviour
         UINameTags.Add(ui);
     }
 
+    public void RemoveUI(NameTag ui)
+    {
+        UINameTags.Remove(ui);
+        Destroy(ui.gameObject);
+    }
+
     public bool FindNameTag(int entityID, out NameTag ui)
     {
-        ui = UINameTags.Find(x => x.Target.GetComponent<GameCharacter>().CharacterInfo.ID == entityID);
+        ui = UINameTags.Find(x => x?.Target?.GetComponent<GameCharacter>().CharacterInfo.ID == entityID);
         return (ui != null);
     }
 
@@ -44,5 +50,9 @@ public class UIContext : MonoBehaviour
     {
         CharacterDamageEvent e = (CharacterDamageEvent)data;
         GetNameTag(e.Target.ID)?.UpdateNameTag();
+        if(CharacterContext.Instance.GetSpotCharacter(e.Target.ID).photonView.IsMine)
+        {
+            HUD.UpdateNameTag();
+        }
     }
 }
