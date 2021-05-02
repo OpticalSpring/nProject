@@ -145,6 +145,10 @@ public class GameCharacter : MonoBehaviourPunCallbacks
     public void GetDamage(int damage)
     {
         CurrentStatus.HP_NOW = Mathf.Max(CurrentStatus.HP_NOW - damage, 0);
+        if(CurrentStatus.HP_NOW == 0)
+        {
+            Destroy(gameObject);
+        }
     }
 
     void Turn(Vector3 targetPoint)
@@ -228,6 +232,6 @@ public class GameCharacter : MonoBehaviourPunCallbacks
 
     public void ConsumeTarget()
     {
-
+        Destroy(gameObject);
     }
 }

@@ -21,7 +21,8 @@ public class NameTag : MonoBehaviour
 
     private void Update()
     {
-        if(IsVisible())
+        if (Target == null) Destroy(gameObject);
+        if (IsVisible())
         {
             Root.SetActive(true);
         }
