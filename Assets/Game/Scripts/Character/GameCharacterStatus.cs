@@ -28,11 +28,8 @@ public class CharacterStatus
     }
 }
 
-
-[Serializable]
-public struct ShotResult
+public class CharacterCondition
 {
-    public CharacterInfo Caster;
-    public CharacterInfo Target;
-    public int Damage;
+
 }
+

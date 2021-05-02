@@ -170,6 +170,10 @@ public class GameCharacter : MonoBehaviourPunCallbacks
     float jumpTime;
     public void Jump()
     {
+        Vector3 pos;
+        if (!GameCharacterLogic.CheckGround(gameObject, out pos)) return;
+
+
         CurrentStatus.Velocity = -0.12f;
         jumpTime = 0.1f;
     }
