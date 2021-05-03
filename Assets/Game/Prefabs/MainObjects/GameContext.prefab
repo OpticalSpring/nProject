@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 9120135293882992228}
   - component: {fileID: 9120135293882992227}
   - component: {fileID: 4931642591972650191}
+  - component: {fileID: 8325026892968187138}
   - component: {fileID: 1614864172406308141}
   m_Layer: 0
   m_Name: GameContext
@@ -91,6 +92,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UINameTags: []
+  HUD: {fileID: 0}
+--- !u!114 &8325026892968187138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9120135293882992226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6ca9321b5b8c6640b5bb50a74d7d388, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1614864172406308141
 MonoBehaviour:
   m_ObjectHideFlags: 0

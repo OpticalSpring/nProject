@@ -107,3 +107,18 @@ public class CharacterConsumeEvent : GameEvent
         Target = target;
     }
 }
+
+[Serializable] 
+public class SpawnFXEvent : GameEvent
+{
+    public string Prefab;
+    public Vector3 Position;
+    public Quaternion Rotation;
+    public SpawnFXEvent(string prefab, Vector3 position, Quaternion rotation)
+    {
+        GameEventID = GameEventType.SpawnFX;
+        Prefab = prefab;
+        Position = position;
+        Rotation = rotation;
+    }
+}

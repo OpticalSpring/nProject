@@ -119,12 +119,7 @@ public class GameCharacter : MonoBehaviourPunCallbacks
     public void Fire()
     {
         GetComponent<GameCharacterAnim>().Fire();
-        GameObject effect = Instantiate(FireEffect);
-        effect.transform.parent = Muzzle.transform;
-        effect.transform.localPosition = Vector3.zero;
-        effect.transform.localEulerAngles = Vector3.zero;
-        Destroy(effect, 0.2f);
-
+        new SpawnFXEvent(FireEffect.name, Muzzle.transform.position, Muzzle.transform.rotation).Send();
         if (!photonView.IsMine)
         {
             return;
@@ -132,18 +127,15 @@ public class GameCharacter : MonoBehaviourPunCallbacks
         RaycastHit rayHit;
         GameCameraLogic.CheckObject(CameraControl.Instance.MainCamera, out rayHit);
         
+        if(rayHit.collider?.gameObject)
+        {
+            new SpawnFXEvent(HitEffect.name, rayHit.point, Quaternion.Euler(rayHit.normal)).Send();
+        }
         if (rayHit.collider?.gameObject?.GetComponent<GameCharacter>())
         {
             new CharacterDamageEvent(CharacterInfo, rayHit.collider.gameObject.GetComponent<GameCharacter>().CharacterInfo, 10).Send();
         }
 
-        if(rayHit.collider?.gameObject)
-        {
-            GameObject effect2 = Instantiate(HitEffect);
-            effect2.transform.position = rayHit.point;
-            effect2.transform.eulerAngles = rayHit.normal;
-            Destroy(effect2, 1f);
-        }
     }
 
 

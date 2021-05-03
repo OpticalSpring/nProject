@@ -22,8 +22,9 @@ public class GameEvent
         CharacterTryConsume,
         CharacterConsume,
 
-        //DamageLogic
-        HitAttack,
+
+        //FX
+        SpawnFX,
     }
 
     public GameEventType GameEventID;
@@ -99,6 +100,8 @@ public class EventJsonUtility
                 return UnityEngine.JsonUtility.FromJson<CharacterTryConsumeEvent>(eventString);
             case GameEvent.GameEventType.CharacterConsume:
                 return UnityEngine.JsonUtility.FromJson<CharacterConsumeEvent>(eventString);
+            case GameEvent.GameEventType.SpawnFX:
+                return UnityEngine.JsonUtility.FromJson<SpawnFXEvent>(eventString);
         }
 
         return UnityEngine.JsonUtility.FromJson<GameEvent>(eventString);
