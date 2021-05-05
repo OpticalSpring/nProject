@@ -33335,6 +33335,12 @@ PrefabInstance:
       propertyPath: UITagGroup
       value: 
       objectReference: {fileID: 530267617}
+    - target: {fileID: 9120135293882992227, guid: 8d86eeabc82bec649b3f798cc90d0511,
+        type: 3}
+      propertyPath: CharacterPrefab
+      value: 
+      objectReference: {fileID: 7817693550642248014, guid: d4917402cfdc55d4787a18e999fb3f7b,
+        type: 3}
     - target: {fileID: 9120135293882992229, guid: 8d86eeabc82bec649b3f798cc90d0511,
         type: 3}
       propertyPath: m_RootOrder

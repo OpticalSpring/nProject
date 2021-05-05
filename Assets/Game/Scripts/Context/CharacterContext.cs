@@ -34,7 +34,7 @@ public class CharacterContext : MonoBehaviourPunCallbacks
     public void InitCharacter(GameEvent data)
     {
         GameObject character = PhotonNetwork.Instantiate(
-            Path.Combine("Game", CharacterPrefab.name),
+            CharacterPrefab.name,
             gameObject.transform.position,
             Quaternion.identity,
             0

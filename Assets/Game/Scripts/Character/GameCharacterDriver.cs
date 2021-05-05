@@ -20,10 +20,6 @@ public class GameCharacterDriver : MonoBehaviourPunCallbacks
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            new CharacterJumpEvent(MyCharacter.CharacterInfo).Send();
-        }
 
         // read inputs
         float h = Input.GetAxis("Horizontal");
@@ -35,12 +31,6 @@ public class GameCharacterDriver : MonoBehaviourPunCallbacks
 
         bool run = Input.GetKey(KeyCode.LeftShift);
 
-        if (SecondMoveVector != moveVector || SecondRunBool != run)
-        {
-            SecondMoveVector = moveVector;
-            SecondRunBool = run;
-            new CharacterMoveEvent(MyCharacter.CharacterInfo, moveVector, new Vector2(h,v), run).Send();
-        }
 
         if (Input.GetMouseButton(1) && SecondCamForward != CamForward)
         {
@@ -58,10 +48,33 @@ public class GameCharacterDriver : MonoBehaviourPunCallbacks
             new CharacterFireEvent(MyCharacter.CharacterInfo).Send();
         }
 
+        if(IngameChatManager.Instance.ChatEnabled == true)
+        {
+            moveVector = Vector3.zero;
+            run = false;
+        }
+
+        if (SecondMoveVector != moveVector || SecondRunBool != run)
+        {
+            SecondMoveVector = moveVector;
+            SecondRunBool = run;
+            new CharacterMoveEvent(MyCharacter.CharacterInfo, moveVector, new Vector2(h,v), run).Send();
+        }
+
+        if (IngameChatManager.Instance.ChatEnabled == true)
+        {
+            return;
+        }
+
+
         if (Input.GetKeyDown(KeyCode.C))
         {
             new CharacterTryConsumeEvent(MyCharacter.CharacterInfo).Send();
         }
 
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            new CharacterJumpEvent(MyCharacter.CharacterInfo).Send();
+        }
     }
 }

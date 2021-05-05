@@ -6,18 +6,18 @@ using Photon.Pun;
 
 public class IngameChatManager : MonoBehaviourPunCallbacks
 {
-    public static IngameChatManager instance = null;
+    public static IngameChatManager Instance = null;
     void Awake()
     {
-        if (null == instance)
+        if (null == Instance)
         {
-            instance = this;
+            Instance = this;
         }
     }
 
     public Text mainText;
     public InputField chatField;
-    bool chatEnabled;
+    public bool ChatEnabled;
     public Color playerColor;
     public string playerName;
 
@@ -30,17 +30,17 @@ public class IngameChatManager : MonoBehaviourPunCallbacks
     {
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            if (chatEnabled)
+            if (ChatEnabled)
             {
                 Chat();
                 chatField.gameObject.SetActive(false);
-                chatEnabled = false;
+                ChatEnabled = false;
             }
             else
             {
                 chatField.gameObject.SetActive(true);
                 chatField.ActivateInputField();
-                chatEnabled = true;
+                ChatEnabled = true;
             }
         }
 

@@ -22,6 +22,8 @@ public class GameProcess : MonoBehaviourPunCallbacks
     IEnumerator GameStart()
     {
         Debug.LogWarning("Enter Scene");
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
         yield return new WaitForSeconds(1);
         if (!PhotonNetwork.IsMasterClient)
         {

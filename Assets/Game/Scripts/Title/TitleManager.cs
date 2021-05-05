@@ -203,13 +203,13 @@ public class TitleManager : MonoBehaviourPunCallbacks
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
-        IngameChatManager.instance.SendChatMessage(otherPlayer.NickName + "님이 퇴장했습니다.");
+        IngameChatManager.Instance.SendChatMessage(otherPlayer.NickName + "님이 퇴장했습니다.");
 
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-        IngameChatManager.instance.SendChatMessage(newPlayer.NickName + "님이 입장했습니다.");
+        IngameChatManager.Instance.SendChatMessage(newPlayer.NickName + "님이 입장했습니다.");
 
     }
     void OnDisconnectedFromServer()

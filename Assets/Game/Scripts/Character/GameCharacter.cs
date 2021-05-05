@@ -51,8 +51,8 @@ public class GameCharacter : MonoBehaviourPunCallbacks
             return;
         }
         gameObject.layer = 2;
-        IngameChatManager.instance.playerName = PlayerName;
-        IngameChatManager.instance.playerColor = PlayerColor;
+        IngameChatManager.Instance.playerName = PlayerName;
+        IngameChatManager.Instance.playerColor = PlayerColor;
     }
 
     public void SetPlayerColor(Color color)
@@ -96,6 +96,7 @@ public class GameCharacter : MonoBehaviourPunCallbacks
         }
         else
         {
+            GetComponent<GameCharacterAnim>().Walk8WayStateUpdate(Vector2.zero);
             GetComponent<GameCharacterAnim>().MoveStateUpdate(CurrentStatus.DirectionVector.magnitude, CurrentStatus.RunState);
             GetComponent<GameCharacterAnim>().RootBoneUpdate(0);
             if (CurrentStatus.DirectionVector.magnitude == 0)
@@ -223,8 +224,8 @@ public class GameCharacter : MonoBehaviourPunCallbacks
         {
             return;
         }
-        IngameChatManager.instance.playerName = PlayerName;
-        IngameChatManager.instance.playerColor = PlayerColor;
+        IngameChatManager.Instance.playerName = PlayerName;
+        IngameChatManager.Instance.playerColor = PlayerColor;
         UIContext.Instance.HUD.UpdateNameTag();
     }
 
