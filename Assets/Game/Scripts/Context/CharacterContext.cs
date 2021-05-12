@@ -24,7 +24,7 @@ public class CharacterContext : MonoBehaviourPunCallbacks
         GameContext.Instance.RegisterObserver(GameEvent.GameEventType.CharacterMove, CharacterMove);
         GameContext.Instance.RegisterObserver(GameEvent.GameEventType.CharacterJump, CharacterJump);
         GameContext.Instance.RegisterObserver(GameEvent.GameEventType.CharacterFire, CharacterFire);
-        GameContext.Instance.RegisterObserver(GameEvent.GameEventType.CharacterDamage, CharacterDamage);
+        GameContext.Instance.RegisterObserver(GameEvent.GameEventType.CharacterShot, CharacterDamage);
         GameContext.Instance.RegisterObserver(GameEvent.GameEventType.CharacterAim, CharacterAim);
         GameContext.Instance.RegisterObserver(GameEvent.GameEventType.CharacterAimOut, CharacterAimOut);
         GameContext.Instance.RegisterObserver(GameEvent.GameEventType.CharacterTryConsume, CharacterTryConsume);
@@ -34,7 +34,7 @@ public class CharacterContext : MonoBehaviourPunCallbacks
     public void InitCharacter(GameEvent data)
     {
         GameObject character = PhotonNetwork.Instantiate(
-            CharacterPrefab.name,
+            Path.Combine("Game", CharacterPrefab.name),
             gameObject.transform.position,
             Quaternion.identity,
             0
@@ -106,7 +106,7 @@ public class CharacterContext : MonoBehaviourPunCallbacks
 
     void CharacterDamage(GameEvent data)
     {
-        CharacterDamageEvent e = (CharacterDamageEvent)data;
+        CharacterShotEvent e = (CharacterShotEvent)data;
         GetSpotCharacter(e.Target.ID)?.GetDamage(e.Damage);
     }
 

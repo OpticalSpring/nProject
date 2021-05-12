@@ -15,7 +15,7 @@ public class UIContext : MonoBehaviour
     public HUDControl HUD;
     public void SubscribeEvent()
     {
-        GameContext.Instance.RegisterObserver(GameEvent.GameEventType.CharacterDamage, NameTagUpdate);
+        GameContext.Instance.RegisterObserver(GameEvent.GameEventType.CharacterShot, NameTagUpdate);
     }
 
 
@@ -48,11 +48,17 @@ public class UIContext : MonoBehaviour
 
     void NameTagUpdate(GameEvent data)
     {
-        CharacterDamageEvent e = (CharacterDamageEvent)data;
+        CharacterShotEvent e = (CharacterShotEvent)data;
         GetNameTag(e.Target.ID)?.UpdateNameTag();
-        if(CharacterContext.Instance.GetSpotCharacter(e.Target.ID).photonView.IsMine)
+        var target = CharacterContext.Instance.GetSpotCharacter(e.Target.ID);
+        if (target != null && target.photonView.IsMine)
         {
             HUD.UpdateNameTag();
+        }
+        var caster = CharacterContext.Instance.GetSpotCharacter(e.Caster.ID);
+        if (caster != null && caster.photonView.IsMine)
+        {
+            HUD.UpdateAmmo();
         }
     }
 }

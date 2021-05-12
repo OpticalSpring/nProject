@@ -119,6 +119,8 @@ public class GameCharacter : MonoBehaviourPunCallbacks
 
     public void Fire()
     {
+        if (CurrentStatus.Ammo <= 0) return;
+        CurrentStatus.Ammo--;
         GetComponent<GameCharacterAnim>().Fire();
         new SpawnFXEvent(FireEffect.name, Muzzle.transform.position, Muzzle.transform.rotation).Send();
         if (!photonView.IsMine)
@@ -132,10 +134,12 @@ public class GameCharacter : MonoBehaviourPunCallbacks
         {
             new SpawnFXEvent(HitEffect.name, rayHit.point, Quaternion.Euler(rayHit.normal)).Send();
         }
+        CharacterInfo target = new CharacterInfo();
         if (rayHit.collider?.gameObject?.GetComponent<GameCharacter>())
         {
-            new CharacterDamageEvent(CharacterInfo, rayHit.collider.gameObject.GetComponent<GameCharacter>().CharacterInfo, 10).Send();
+            target = rayHit.collider.gameObject.GetComponent<GameCharacter>().CharacterInfo;
         }
+        new CharacterShotEvent(CharacterInfo, target, 10).Send();
 
     }
 

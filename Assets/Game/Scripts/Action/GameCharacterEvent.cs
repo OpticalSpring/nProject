@@ -70,14 +70,14 @@ public class CharacterFireEvent : GameEvent
 }
 
 [Serializable]
-public class CharacterDamageEvent : GameEvent
+public class CharacterShotEvent : GameEvent
 {
     public CharacterInfo Caster;
     public CharacterInfo Target;
     public int Damage;
-    public CharacterDamageEvent(CharacterInfo caster, CharacterInfo target, int damage)
+    public CharacterShotEvent(CharacterInfo caster, CharacterInfo target, int damage)
     {
-        GameEventID = GameEventType.CharacterDamage;
+        GameEventID = GameEventType.CharacterShot;
         Caster = caster;
         Target = target;
         Damage = damage;

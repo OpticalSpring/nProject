@@ -20,11 +20,12 @@ public class CharacterStatus
     public bool RunState;
     public float Velocity;
     public bool Aim;
-
+    public int Ammo;
     public CharacterStatus()
     {
         HP_NOW = HP_MAX;
         Velocity = 0;
+        Ammo = 60;
     }
 }
 

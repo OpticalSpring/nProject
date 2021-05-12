@@ -10,6 +10,7 @@ public class HUDControl : MonoBehaviour
     public TextMeshProUGUI NameText;
     public TextMeshProUGUI HPNowText;
     public TextMeshProUGUI HPMaxText;
+    public TextMeshProUGUI AmmoText;
     // Start is called before the first frame update
     void Start()
     {
@@ -46,12 +47,17 @@ public class HUDControl : MonoBehaviour
 
     void UpdateHP(int curHP, int maxHP)
     {
-        HPNowText.text = curHP + "";
-        HPMaxText.text = maxHP + "";
+        HPNowText.text = curHP.ToString();
+        HPMaxText.text = maxHP.ToString();
     }
 
     void UpdateName(string name)
     {
         NameText.text = name;
+    }
+
+    public void UpdateAmmo()
+    {
+        AmmoText.text = Target.GetComponent<GameCharacter>().CurrentStatus.Ammo.ToString();
     }
 }
