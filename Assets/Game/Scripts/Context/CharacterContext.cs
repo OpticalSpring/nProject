@@ -64,6 +64,10 @@ public class CharacterContext : MonoBehaviourPunCallbacks
 
     public void RemoveCharacter(GameCharacter character)
     {
+        if (character.photonView.IsMine)
+        {
+            IngameChatManager.Instance.ChatLevel = 2;
+        }
         GameCharacters.Remove(character);
         Destroy(character.gameObject);
     }
@@ -119,7 +123,7 @@ public class CharacterContext : MonoBehaviourPunCallbacks
     void CharacterDamage(GameEvent data)
     {
         CharacterShotEvent e = (CharacterShotEvent)data;
-        GetGameCharacter(e.Target.ID)?.GetDamage(e.Damage);
+        GetGameCharacter(e.Target.ID)?.GetDamage(e.Caster, e.Damage);
     }
 
     void CharacterAim(GameEvent data)
@@ -148,5 +152,6 @@ public class CharacterContext : MonoBehaviourPunCallbacks
         CharacterConsumeEvent e = (CharacterConsumeEvent)data;
         GetGameCharacter(e.Caster.ID)?.ConsumeCaster(GetGameCharacter(e.Target.ID));
         GetGameCharacter(e.Target.ID)?.ConsumeTarget();
+        new CharacterDeadEvent(e.Caster, e.Target, DeadCause.Consume).Send();
     }
 }

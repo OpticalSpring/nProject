@@ -21,7 +21,7 @@ public class GameEvent
         CharacterShot,
         CharacterTryConsume,
         CharacterConsume,
-
+        CharacterDead,
 
         //FX
         SpawnFX,
@@ -100,6 +100,8 @@ public class EventJsonUtility
                 return UnityEngine.JsonUtility.FromJson<CharacterTryConsumeEvent>(eventString);
             case GameEvent.GameEventType.CharacterConsume:
                 return UnityEngine.JsonUtility.FromJson<CharacterConsumeEvent>(eventString);
+            case GameEvent.GameEventType.CharacterDead:
+                return UnityEngine.JsonUtility.FromJson<CharacterDeadEvent>(eventString);
             case GameEvent.GameEventType.SpawnFX:
                 return UnityEngine.JsonUtility.FromJson<SpawnFXEvent>(eventString);
         }

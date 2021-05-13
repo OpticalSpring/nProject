@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ColorManager : MonoBehaviour
 {
-    
-    static public Color NumToCol(int n)
+
+    public static Color NumToCol(int n)
     {
         Color c = Color.gray;
         switch (n)
@@ -53,7 +53,7 @@ public class ColorManager : MonoBehaviour
         return c;
     }
 
-    static public string SetPlayerColToName(string name, int col)
+    public static string SetPlayerColToName(string name, int col)
     {
         string str = name;
         if (str.IndexOf("#") != -1)
@@ -71,13 +71,22 @@ public class ColorManager : MonoBehaviour
         }
         return str;
     }
-    static public int GetPlayerNameToCol(string name)
+    public static int GetPlayerNameToCol(string name)
     {
         return int.Parse(name.Substring(name.IndexOf("#") + 1, 2));
     }
-    static public string SetPlayerNameToCol(string name)
+    public static string SetPlayerNameToCol(string name)
     {
         return name.Substring(0, name.IndexOf("#"));
     }
-    
+
+    public static string ColToStr(Color color)
+    {
+        string r = ((int)(color.r * 255)).ToString("X2");
+        string g = ((int)(color.g * 255)).ToString("X2");
+        string b = ((int)(color.b * 255)).ToString("X2");
+        string a = ((int)(color.a * 255)).ToString("X2");
+        string result = string.Format("{0}{1}{2}{3}", r, g, b, a);
+        return result;
+    }
 }

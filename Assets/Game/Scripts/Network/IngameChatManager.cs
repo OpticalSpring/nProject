@@ -20,6 +20,7 @@ public class IngameChatManager : MonoBehaviourPunCallbacks
     public bool ChatEnabled;
     public Color playerColor;
     public string playerName;
+    public int ChatLevel = 1;
 
     void Start()
     {
@@ -47,15 +48,7 @@ public class IngameChatManager : MonoBehaviourPunCallbacks
     }
 
 
-    public static string ColorToStr(Color color)
-    {
-        string r = ((int)(color.r * 255)).ToString("X2");
-        string g = ((int)(color.g * 255)).ToString("X2");
-        string b = ((int)(color.b * 255)).ToString("X2");
-        string a = ((int)(color.a * 255)).ToString("X2");
-        string result = string.Format("{0}{1}{2}{3}", r, g, b, a);
-        return result;
-    }
+    
 
 
     void Chat()
@@ -69,16 +62,17 @@ public class IngameChatManager : MonoBehaviourPunCallbacks
         {
             c = c.Substring(0, 20);
         }
-        string result = string.Format("<color=#{0}>[{1}]</color> ", ColorToStr(playerColor), playerName);
+        string result = string.Format("<color=#{0}>[{1}]</color> ", ChatLevel == 2 ? ColorManager.ColToStr(ColorManager.NumToCol(0)) : ColorManager.ColToStr(playerColor), playerName);
         result += c;
         PhotonView photonView = PhotonView.Get(this);
-        photonView.RPC("SendChatMessage", RpcTarget.All, result);
+        photonView.RPC("SendChatMessage", RpcTarget.All, result, ChatLevel);
         chatField.text = "";
     }
 
     [PunRPC]
-    public void SendChatMessage(string inputLine)
+    public void SendChatMessage(string inputLine, int level = 1)
     {
+        if (ChatLevel < level) return;
         if (string.IsNullOrEmpty(inputLine))
         {
             return;

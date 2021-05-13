@@ -139,17 +139,18 @@ public class GameCharacter : MonoBehaviourPunCallbacks
         {
             target = rayHit.collider.gameObject.GetComponent<GameCharacter>().CharacterInfo;
         }
-        new CharacterShotEvent(CharacterInfo, target, 10).Send();
+        new CharacterShotEvent(CharacterInfo, target, 100).Send();
 
     }
 
 
-    public void GetDamage(int damage)
+    public void GetDamage(CharacterInfo caster, int damage)
     {
         CurrentStatus.HP_NOW = Mathf.Max(CurrentStatus.HP_NOW - damage, 0);
         if(CurrentStatus.HP_NOW == 0)
         {
             CharacterContext.Instance.RemoveCharacter(this);
+            new CharacterDeadEvent(caster, CharacterInfo, DeadCause.Shot).Send();
         }
     }
 

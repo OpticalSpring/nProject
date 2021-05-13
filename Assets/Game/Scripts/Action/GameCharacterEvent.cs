@@ -108,6 +108,21 @@ public class CharacterConsumeEvent : GameEvent
     }
 }
 
+[Serializable]
+public class CharacterDeadEvent : GameEvent
+{
+    public CharacterInfo Caster;
+    public CharacterInfo Target;
+    public DeadCause DeadResult;
+    public CharacterDeadEvent(CharacterInfo caster, CharacterInfo target, DeadCause deadResult)
+    {
+        GameEventID = GameEventType.CharacterDead;
+        Caster = caster;
+        Target = target;
+        DeadResult = deadResult;
+    }
+}
+
 [Serializable] 
 public class SpawnFXEvent : GameEvent
 {
@@ -121,4 +136,11 @@ public class SpawnFXEvent : GameEvent
         Position = position;
         Rotation = rotation;
     }
+}
+
+[Serializable]
+public enum DeadCause
+{
+    Shot,
+    Consume
 }
