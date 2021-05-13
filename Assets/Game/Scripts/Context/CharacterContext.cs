@@ -74,7 +74,7 @@ public class CharacterContext : MonoBehaviourPunCallbacks
         return (character != null);
     }
 
-    public GameCharacter GetSpotCharacter(int cid)
+    public GameCharacter GetGameCharacter(int cid)
     {
         if (FindGameCharacter(cid, out GameCharacter character))
         {
@@ -84,57 +84,69 @@ public class CharacterContext : MonoBehaviourPunCallbacks
         return null;
     }
 
+    public int GetAlliveCount()
+    {
+        return GameCharacters.Count;
+    }
+    
+    public GameCharacter GetAlliveGameCharacter(int index)
+    {
+        index = Mathf.Clamp(index, 0, GameCharacters.Count - 1);
+        return GameCharacters[index];
+    }
+
+
     void CharacterMove(GameEvent data)
     {
         CharacterMoveEvent e = (CharacterMoveEvent)data;
-        GetSpotCharacter(e.Caster.ID)?.MovementUpdate(e.Direction, e.Input, e.Run);
+        GetGameCharacter(e.Caster.ID)?.MovementUpdate(e.Direction, e.Input, e.Run);
 
     }
 
     void CharacterJump(GameEvent data)
     {
         CharacterJumpEvent e = (CharacterJumpEvent)data;
-        GetSpotCharacter(e.Caster.ID)?.Jump();
+        GetGameCharacter(e.Caster.ID)?.Jump();
 
     }
 
     void CharacterFire(GameEvent data)
     {
         CharacterFireEvent e = (CharacterFireEvent)data;
-        GetSpotCharacter(e.Caster.ID)?.Fire();
+        GetGameCharacter(e.Caster.ID)?.Fire();
     }
 
     void CharacterDamage(GameEvent data)
     {
         CharacterShotEvent e = (CharacterShotEvent)data;
-        GetSpotCharacter(e.Target.ID)?.GetDamage(e.Damage);
+        GetGameCharacter(e.Target.ID)?.GetDamage(e.Damage);
     }
 
     void CharacterAim(GameEvent data)
     {
         CharacterAimEvent e = (CharacterAimEvent)data;
-        GetSpotCharacter(e.Caster.ID)?.Aim(e.Forward, e.RootRatation);
+        GetGameCharacter(e.Caster.ID)?.Aim(e.Forward, e.RootRatation);
 
     }
 
     void CharacterAimOut(GameEvent data)
     {
         CharacterAimOutEvent e = (CharacterAimOutEvent)data;
-        GetSpotCharacter(e.Caster.ID)?.AimOut();
+        GetGameCharacter(e.Caster.ID)?.AimOut();
 
     }
 
     void CharacterTryConsume(GameEvent data)
     {
         CharacterTryConsumeEvent e = (CharacterTryConsumeEvent)data;
-        GetSpotCharacter(e.Caster.ID)?.TryConsume();
+        GetGameCharacter(e.Caster.ID)?.TryConsume();
 
     }
 
     void CharacterConsume(GameEvent data)
     {
         CharacterConsumeEvent e = (CharacterConsumeEvent)data;
-        GetSpotCharacter(e.Caster.ID)?.ConsumeCaster(GetSpotCharacter(e.Target.ID));
-        GetSpotCharacter(e.Target.ID)?.ConsumeTarget();
+        GetGameCharacter(e.Caster.ID)?.ConsumeCaster(GetGameCharacter(e.Target.ID));
+        GetGameCharacter(e.Target.ID)?.ConsumeTarget();
     }
 }

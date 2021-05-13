@@ -11,12 +11,35 @@ public class GameCharacterDriver : MonoBehaviourPunCallbacks
     Vector3 SecondCamForward;
     Vector3 SecondMoveVector;
     bool SecondRunBool;
-
+    int spectatorIndex = 0;
 
     void Update()
     {
         if (MyCharacter == null)
         {
+            if(CameraControl.Instance.CamTarget == null)
+            {
+                CameraControl.Instance.CamTarget = CharacterContext.Instance.GetAlliveGameCharacter(spectatorIndex).gameObject;
+            }
+
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                spectatorIndex--;
+                if (spectatorIndex < 0)
+                {
+                    spectatorIndex = CharacterContext.Instance.GetAlliveCount() - 1;
+                }
+                CameraControl.Instance.CamTarget = CharacterContext.Instance.GetAlliveGameCharacter(spectatorIndex).gameObject;
+            }
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                spectatorIndex++;
+                if (spectatorIndex > CharacterContext.Instance.GetAlliveCount() - 1) 
+                {
+                    spectatorIndex = 0;
+                }
+                CameraControl.Instance.CamTarget = CharacterContext.Instance.GetAlliveGameCharacter(spectatorIndex).gameObject;
+            }
             return;
         }
 

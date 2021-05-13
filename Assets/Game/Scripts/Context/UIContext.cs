@@ -50,12 +50,12 @@ public class UIContext : MonoBehaviour
     {
         CharacterShotEvent e = (CharacterShotEvent)data;
         GetNameTag(e.Target.ID)?.UpdateNameTag();
-        var target = CharacterContext.Instance.GetSpotCharacter(e.Target.ID);
+        var target = CharacterContext.Instance.GetGameCharacter(e.Target.ID);
         if (target != null && target.photonView.IsMine)
         {
             HUD.UpdateNameTag();
         }
-        var caster = CharacterContext.Instance.GetSpotCharacter(e.Caster.ID);
+        var caster = CharacterContext.Instance.GetGameCharacter(e.Caster.ID);
         if (caster != null && caster.photonView.IsMine)
         {
             HUD.UpdateAmmo();
