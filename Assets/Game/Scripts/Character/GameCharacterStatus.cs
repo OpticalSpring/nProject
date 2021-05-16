@@ -5,6 +5,7 @@ using UnityEngine;
 public struct CharacterInfo
 {
     public int ID;
+    public bool IsSpy;
 }
 
 public class CharacterStatus

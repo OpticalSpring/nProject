@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class InitCharacterEvent : GameEvent
 {
-    public InitCharacterEvent()
+    public int Key;
+    public InitCharacterEvent(int key)
     {
         GameEventID = GameEventType.InitCharacter;
+        Key = key;
     }
 }
+
+
 

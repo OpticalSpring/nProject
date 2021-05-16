@@ -11,6 +11,7 @@ public class GameEvent
 
         //GameProcess
         InitCharacter,
+        SelectSpy,
 
         //Character
         CharacterMove,

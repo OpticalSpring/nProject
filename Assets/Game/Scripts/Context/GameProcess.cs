@@ -21,7 +21,7 @@ public class GameProcess : MonoBehaviourPunCallbacks
     }
     IEnumerator GameStart()
     {
-        Debug.LogWarning("Enter Scene");
+        IngameChatManager.Instance.SendNotifyMessage("Enter Scene", false);
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         yield return new WaitForSeconds(1);
@@ -29,8 +29,11 @@ public class GameProcess : MonoBehaviourPunCallbacks
         {
             yield break;
         }
-        Debug.LogWarning("Init Character");
-        new InitCharacterEvent().Send();
+        IngameChatManager.Instance.SendNotifyMessage("Character Set", true);
+        new InitCharacterEvent(Random.Range(0, PhotonNetwork.CurrentRoom.PlayerCount)).Send();
+
     }
+
+    
 
 }

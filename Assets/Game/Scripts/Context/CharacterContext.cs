@@ -33,13 +33,22 @@ public class CharacterContext : MonoBehaviourPunCallbacks
 
     public void InitCharacter(GameEvent data)
     {
+        InitCharacterEvent e = (InitCharacterEvent)data;
         GameObject character = PhotonNetwork.Instantiate(
             Path.Combine("Game", CharacterPrefab.name),
-            gameObject.transform.position,
+            gameObject.transform.position + new Vector3(1,0,1) * Random.Range(-10,10),
             Quaternion.identity,
             0
         );
-
+        if(PhotonNetwork.CurrentRoom.GetPlayer(e.Key) == PhotonNetwork.LocalPlayer)
+        {
+            character.GetComponent<GameCharacter>().CharacterInfo.IsSpy = true;
+            IngameChatManager.Instance.SendNotifyMessage("You Are Spy", false);
+        }
+        else
+        {
+            IngameChatManager.Instance.SendNotifyMessage("You Are Human", false);
+        }
         CamObject.GetComponent<GameCharacterDriver>().MyCharacter = character.GetComponent<GameCharacter>();
         CamObject.GetComponent<CameraControl>().CamTarget = character;
 
@@ -52,6 +61,7 @@ public class CharacterContext : MonoBehaviourPunCallbacks
         {
             UIContext.Instance.HUD.Target = character.gameObject;
             UIContext.Instance.HUD.UpdateNameTag();
+            UIContext.Instance.HUD.UpdateAmmo();
         }
         else
         {
@@ -154,4 +164,6 @@ public class CharacterContext : MonoBehaviourPunCallbacks
         GetGameCharacter(e.Target.ID)?.ConsumeTarget();
         new CharacterDeadEvent(e.Caster, e.Target, DeadCause.Consume).Send();
     }
+
+    
 }

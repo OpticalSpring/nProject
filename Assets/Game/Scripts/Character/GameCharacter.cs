@@ -206,7 +206,10 @@ public class GameCharacter : MonoBehaviourPunCallbacks
 
     public void TryConsume()
     {
-
+        if (!CharacterInfo.IsSpy)
+        {
+            return;
+        }
         if (!photonView.IsMine)
         {
             return;

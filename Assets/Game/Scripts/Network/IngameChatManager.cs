@@ -79,4 +79,16 @@ public class IngameChatManager : MonoBehaviourPunCallbacks
         }
         mainText.text += "\n" + inputLine;
     }
+
+    public void SendNotifyMessage(string inputLine, bool other)
+    {
+        if (other)
+        {
+            photonView.RPC("SendChatMessage", RpcTarget.All, inputLine, 0);
+        }
+        else
+        {
+            SendChatMessage(inputLine, 0);
+        }
+    }
 }

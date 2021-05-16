@@ -97,6 +97,7 @@ MonoBehaviour:
   PlayerName: 
   CharacterInfo:
     ID: 0
+    IsSpy: 0
   SkinnedMeshes:
   - {fileID: 7554189229927712213}
   - {fileID: 7555421945139724565}
