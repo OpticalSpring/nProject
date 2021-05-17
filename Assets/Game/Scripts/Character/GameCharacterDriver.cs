@@ -15,6 +15,11 @@ public class GameCharacterDriver : MonoBehaviourPunCallbacks
 
     void Update()
     {
+        if(GameProcess.Instance.gameProcess == GameProcess.GameProcessState.Start)
+        {
+            return;
+        }
+
         if (MyCharacter == null)
         {
             if(CameraControl.Instance.CamTarget == null)

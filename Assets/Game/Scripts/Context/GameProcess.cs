@@ -11,6 +11,8 @@ public class GameProcess : MonoBehaviourPunCallbacks
         Instance = this;
     }
 
+    public GameProcessState gameProcess;
+
     private void Start()
     {
         GameContext.Instance.InitGameEvent();
@@ -25,6 +27,7 @@ public class GameProcess : MonoBehaviourPunCallbacks
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         yield return new WaitForSeconds(1);
+        gameProcess = GameProcessState.Ingame;
         if (!PhotonNetwork.IsMasterClient)
         {
             yield break;
@@ -34,6 +37,37 @@ public class GameProcess : MonoBehaviourPunCallbacks
 
     }
 
-    
 
+    private void Update()
+    {
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            return;
+        }
+        if (gameProcess == GameProcessState.Start || gameProcess == GameProcessState.End)
+        {
+            return;
+        }
+        if(CharacterContext.Instance.GetAlliveCount() <= 1)
+        {
+            gameProcess = GameProcessState.End;
+            if (CharacterContext.Instance.GetAlliveGameCharacter(0).CharacterInfo.IsSpy)
+            {
+                IngameChatManager.Instance.SendNotifyMessage("Spy Win", true);
+            }
+            else
+            {
+                IngameChatManager.Instance.SendNotifyMessage("Human Win", true);
+            }
+        }
+    }
+
+    public enum GameProcessState
+    {
+        Start,
+        Ingame,
+        End
+    }
 }
+
+
