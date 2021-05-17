@@ -15,7 +15,7 @@ public class GameCharacterDriver : MonoBehaviourPunCallbacks
 
     void Update()
     {
-        if(GameProcess.Instance.gameProcess == GameProcess.GameProcessState.Start)
+        if(GameProcess.Instance.GameState == GameProcess.GameProcessState.Start)
         {
             return;
         }

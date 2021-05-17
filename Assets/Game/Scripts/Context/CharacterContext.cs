@@ -34,13 +34,17 @@ public class CharacterContext : MonoBehaviourPunCallbacks
     public void InitCharacter(GameEvent data)
     {
         InitCharacterEvent e = (InitCharacterEvent)data;
-        GameObject character = PhotonNetwork.Instantiate(
+
+        bool isSpy = (e.ID == PhotonNetwork.LocalPlayer.NickName);
+
+            GameObject character = PhotonNetwork.Instantiate(
             Path.Combine("Game", CharacterPrefab.name),
             gameObject.transform.position + new Vector3(1,0,1) * Random.Range(-10,10),
             Quaternion.identity,
             0
         );
-        if(PhotonNetwork.CurrentRoom.GetPlayer(e.Key) == PhotonNetwork.LocalPlayer)
+        
+        if (isSpy)
         {
             character.GetComponent<GameCharacter>().CharacterInfo.IsSpy = true;
             IngameChatManager.Instance.SendNotifyMessage("You Are Spy", false);

@@ -11,7 +11,12 @@ public class GameProcess : MonoBehaviourPunCallbacks
         Instance = this;
     }
 
-    public GameProcessState gameProcess;
+    public GameProcessState GameState;
+
+    public void SubscribeEvent()
+    {
+        GameContext.Instance.RegisterObserver(GameEvent.GameEventType.GameProcessChange, GameProcessChange);
+    }
 
     private void Start()
     {
@@ -19,21 +24,25 @@ public class GameProcess : MonoBehaviourPunCallbacks
         CharacterContext.Instance.SubscribeEvent();
         UIContext.Instance.SubscribeEvent();
         FXContext.Instance.SubscribeEvent();
+        SubscribeEvent();
         StartCoroutine(GameStart());
     }
     IEnumerator GameStart()
     {
         IngameChatManager.Instance.SendNotifyMessage("Enter Scene", false);
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.visible = false;
+        //Cursor.lockState = CursorLockMode.Locked;
         yield return new WaitForSeconds(1);
-        gameProcess = GameProcessState.Ingame;
         if (!PhotonNetwork.IsMasterClient)
         {
             yield break;
         }
         IngameChatManager.Instance.SendNotifyMessage("Character Set", true);
-        new InitCharacterEvent(Random.Range(0, PhotonNetwork.CurrentRoom.PlayerCount)).Send();
+        var spy = PhotonNetwork.CurrentRoom.Players[Random.Range(1, PhotonNetwork.CurrentRoom.PlayerCount+1)];
+        new InitCharacterEvent(spy.NickName).Send();
+        yield return new WaitForSeconds(5);
+        IngameChatManager.Instance.SendNotifyMessage("Game Start", true);
+        new GameProcessChangeEvent(GameProcessState.Ingame).Send();
 
     }
 
@@ -44,19 +53,35 @@ public class GameProcess : MonoBehaviourPunCallbacks
         {
             return;
         }
-        if (gameProcess == GameProcessState.Start || gameProcess == GameProcessState.End)
+        if (GameState == GameProcessState.Start || GameState == GameProcessState.End)
         {
             return;
         }
         if(CharacterContext.Instance.GetAlliveCount() <= 1)
         {
-            gameProcess = GameProcessState.End;
+            new GameProcessChangeEvent(GameProcessState.End).Send();
             if (CharacterContext.Instance.GetAlliveGameCharacter(0).CharacterInfo.IsSpy)
             {
                 IngameChatManager.Instance.SendNotifyMessage("Spy Win", true);
             }
             else
             {
+                IngameChatManager.Instance.SendNotifyMessage("Human Win", true);
+            }
+        }
+        else
+        {
+            bool isSpy = false;
+            foreach(var character in CharacterContext.Instance.GameCharacters)
+            {
+                if(character.CharacterInfo.IsSpy == true)
+                {
+                    isSpy = true;
+                }
+            }
+            if(isSpy == false)
+            {
+                new GameProcessChangeEvent(GameProcessState.End).Send();
                 IngameChatManager.Instance.SendNotifyMessage("Human Win", true);
             }
         }
@@ -67,6 +92,12 @@ public class GameProcess : MonoBehaviourPunCallbacks
         Start,
         Ingame,
         End
+    }
+
+    void GameProcessChange(GameEvent data)
+    {
+        GameProcessChangeEvent e = (GameProcessChangeEvent)data;
+        GameState = e.State;
     }
 }
 

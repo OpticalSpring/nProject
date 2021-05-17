@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
-public class GameCharacter : MonoBehaviourPunCallbacks
+public class GameCharacter : MonoBehaviourPunCallbacks, IPunObservable
 {
     public int ColorNum;
     public Color PlayerColor;
@@ -26,6 +26,17 @@ public class GameCharacter : MonoBehaviourPunCallbacks
         GravityProcess();
     }
 
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(CharacterInfo.IsSpy);
+        }
+        else
+        {
+            this.CharacterInfo.IsSpy = (bool)stream.ReceiveNext();
+        }
+    }
 
     private void OnDestroy()
     {
@@ -241,4 +252,6 @@ public class GameCharacter : MonoBehaviourPunCallbacks
     {
         CharacterContext.Instance.RemoveCharacter(this);
     }
+
+    
 }
