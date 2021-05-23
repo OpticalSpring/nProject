@@ -7,12 +7,12 @@ using Photon.Pun;
 using Photon.Realtime;
 public class TitleManager : MonoBehaviourPunCallbacks
 {
-    public static TitleManager instance = null;
+    public static TitleManager Instance = null;
     void Awake()
     {
-        if (null == instance)
+        if (null == Instance)
         {
-            instance = this;
+            Instance = this;
         }
         OnLogin();
     }
@@ -25,6 +25,7 @@ public class TitleManager : MonoBehaviourPunCallbacks
     public Text curPlayerList;
 
 
+
     // Update is called once per frame
     void Update()
     {
@@ -33,10 +34,10 @@ public class TitleManager : MonoBehaviourPunCallbacks
 
     void OnLogin()
     {
+        if (PhotonNetwork.IsConnected) return;
+        PhotonNetwork.ConnectUsingSettings();
         PhotonNetwork.GameVersion = gameVer;
         PhotonNetwork.NickName = PlayerPrefs.GetString("NickName");
-        if (PhotonNetwork.IsConnected == false)
-            PhotonNetwork.ConnectUsingSettings();
         PhotonNetwork.AutomaticallySyncScene = true;
         PhotonNetwork.SendRate = 60;
         PhotonNetwork.SerializationRate = 30;
@@ -88,7 +89,7 @@ public class TitleManager : MonoBehaviourPunCallbacks
             for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
             {
                 object colorNum;
-                PhotonNetwork.PlayerList[i].CustomProperties.TryGetValue("Color",out colorNum);
+                PhotonNetwork.PlayerList[i].CustomProperties.TryGetValue("Color", out colorNum);
                 curPlayerList.text += PhotonNetwork.PlayerList[i].NickName + colorNum + "\n";
 
             }
@@ -109,7 +110,7 @@ public class TitleManager : MonoBehaviourPunCallbacks
     {
         for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
         {
-           if(ColorManager.GetPlayerNameToCol(PhotonNetwork.PlayerList[i].NickName) == n)
+            if (ColorManager.GetPlayerNameToCol(PhotonNetwork.PlayerList[i].NickName) == n)
             {
                 return true;
             }
@@ -196,10 +197,17 @@ public class TitleManager : MonoBehaviourPunCallbacks
     public void StartGame()
     {
         PhotonNetwork.CurrentRoom.IsOpen = false;
-        SceneManager.LoadSceneAsync(1);
+        SceneFlowManager.Instance.TitleToIngameFromGameStart();
     }
 
+    public void EndGame()
+    {
+        PhotonNetwork.CurrentRoom.IsOpen = true;
 
+        OpenUI(3);
+        SetPlayerColorNoOverlap();
+
+    }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
@@ -210,7 +218,7 @@ public class TitleManager : MonoBehaviourPunCallbacks
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-        IngameChatManager.Instance.SendNotifyMessage(newPlayer.NickName + "님이 입장했습니다.",false);
+        IngameChatManager.Instance.SendNotifyMessage(newPlayer.NickName + "님이 입장했습니다.", false);
 
     }
     void OnDisconnectedFromServer()

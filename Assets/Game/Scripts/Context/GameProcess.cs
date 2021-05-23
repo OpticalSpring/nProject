@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameProcess : MonoBehaviourPunCallbacks
 {
@@ -38,7 +39,7 @@ public class GameProcess : MonoBehaviourPunCallbacks
             yield break;
         }
         IngameChatManager.Instance.SendNotifyMessage("Character Set", true);
-        var spy = PhotonNetwork.CurrentRoom.Players[Random.Range(1, PhotonNetwork.CurrentRoom.PlayerCount+1)];
+        var spy = PhotonNetwork.CurrentRoom.Players[Random.Range(1, PhotonNetwork.CurrentRoom.PlayerCount + 1)];
         new InitCharacterEvent(spy.NickName).Send();
         yield return new WaitForSeconds(5);
         IngameChatManager.Instance.SendNotifyMessage("Game Start", true);
@@ -57,7 +58,7 @@ public class GameProcess : MonoBehaviourPunCallbacks
         {
             return;
         }
-        if(CharacterContext.Instance.GetAlliveCount() <= 1)
+        if (CharacterContext.Instance.GetAlliveCount() <= 1)
         {
             new GameProcessChangeEvent(GameProcessState.End).Send();
             if (CharacterContext.Instance.GetAlliveGameCharacter(0).CharacterInfo.IsSpy)
@@ -72,17 +73,17 @@ public class GameProcess : MonoBehaviourPunCallbacks
         else
         {
             bool isSpy = false;
-            foreach(var character in CharacterContext.Instance.GameCharacters)
+            foreach (var character in CharacterContext.Instance.GameCharacters)
             {
-                if(character.CharacterInfo.IsSpy == true)
+                if (character.CharacterInfo.IsSpy == true)
                 {
                     isSpy = true;
                 }
             }
-            if(isSpy == false)
+            if (isSpy == false)
             {
-                new GameProcessChangeEvent(GameProcessState.End).Send();
                 IngameChatManager.Instance.SendNotifyMessage("Human Win", true);
+                new GameProcessChangeEvent(GameProcessState.End).Send();
             }
         }
     }
@@ -98,6 +99,19 @@ public class GameProcess : MonoBehaviourPunCallbacks
     {
         GameProcessChangeEvent e = (GameProcessChangeEvent)data;
         GameState = e.State;
+
+        if (e.State == GameProcessState.End)
+        {
+            StartCoroutine(GameEnd());
+        }
+    }
+
+    IEnumerator GameEnd()
+    {
+        yield return new WaitForSeconds(1);
+        IngameChatManager.Instance.SendNotifyMessage("Back Lobby Scene", false);
+        yield return new WaitForSeconds(1);
+        SceneFlowManager.Instance.IngameToTitleFromEndGame();
     }
 }
 

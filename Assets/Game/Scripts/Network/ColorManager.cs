@@ -73,6 +73,10 @@ public class ColorManager : MonoBehaviour
     }
     public static int GetPlayerNameToCol(string name)
     {
+        if (!name.Contains("#"))
+        {
+            return -1;
+        }
         return int.Parse(name.Substring(name.IndexOf("#") + 1, 2));
     }
     public static string SetPlayerNameToCol(string name)

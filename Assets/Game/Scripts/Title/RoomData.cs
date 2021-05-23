@@ -28,6 +28,6 @@ public class RoomData : MonoBehaviour
 
     public void JoinRoom()
     {
-        TitleManager.instance.JoinRoom(roomName);
+        TitleManager.Instance.JoinRoom(roomName);
     }
 }

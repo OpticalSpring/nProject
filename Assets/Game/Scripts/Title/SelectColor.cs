@@ -15,12 +15,12 @@ public class SelectColor : MonoBehaviour
 
     public void Select()
     {
-        TitleManager.instance.SetPlayerColor(colorNum);
+        TitleManager.Instance.SetPlayerColor(colorNum);
     }
 
     private void Update()
     {
-        if(TitleManager.instance.GetPlayerColor(colorNum) == true)
+        if(TitleManager.Instance.GetPlayerColor(colorNum) == true)
         {
             xImage.SetActive(true);
         }
