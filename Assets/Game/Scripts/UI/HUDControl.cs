@@ -11,6 +11,7 @@ public class HUDControl : MonoBehaviour
     public TextMeshProUGUI HPNowText;
     public TextMeshProUGUI HPMaxText;
     public TextMeshProUGUI AmmoText;
+    public TextMeshProUGUI CountText;
     // Start is called before the first frame update
     void Start()
     {
@@ -59,5 +60,12 @@ public class HUDControl : MonoBehaviour
     public void UpdateAmmo()
     {
         AmmoText.text = Target.GetComponent<GameCharacter>().CurrentStatus.Ammo.ToString();
+    }
+    
+    public void UpdateCount(int count)
+    {
+        int min = count / 60;
+        int sec = count % 60;
+        CountText.text = string.Format("{0:00}:{1:00}", min, sec);
     }
 }

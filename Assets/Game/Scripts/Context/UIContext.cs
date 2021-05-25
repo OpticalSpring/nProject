@@ -16,6 +16,7 @@ public class UIContext : MonoBehaviour
     public void SubscribeEvent()
     {
         GameContext.Instance.RegisterObserver(GameEvent.GameEventType.CharacterShot, NameTagUpdate);
+        GameContext.Instance.RegisterObserver(GameEvent.GameEventType.GameCountChange, CountUpdate);
     }
 
 
@@ -62,5 +63,9 @@ public class UIContext : MonoBehaviour
         }
     }
 
-    
+    void CountUpdate(GameEvent data)
+    {
+        GameCountChangeEvent e = (GameCountChangeEvent) data;
+        HUD.UpdateCount(e.Count);
+    }
 }

@@ -13,10 +13,12 @@ public class GameProcess : MonoBehaviourPunCallbacks
     }
 
     public GameProcessState GameState;
+    public int GameCount;
 
     public void SubscribeEvent()
     {
         GameContext.Instance.RegisterObserver(GameEvent.GameEventType.GameProcessChange, GameProcessChange);
+        GameContext.Instance.RegisterObserver(GameEvent.GameEventType.GameCountChange, SyncGameCount);
     }
 
     private void Start()
@@ -27,6 +29,7 @@ public class GameProcess : MonoBehaviourPunCallbacks
         FXContext.Instance.SubscribeEvent();
         SubscribeEvent();
         StartCoroutine(GameStart());
+        StartCoroutine(GameCountDown());
     }
     IEnumerator GameStart()
     {
@@ -47,6 +50,30 @@ public class GameProcess : MonoBehaviourPunCallbacks
 
     }
 
+    IEnumerator GameCountDown()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(1);
+            if (PhotonNetwork.IsMasterClient && GameState == GameProcessState.Ingame)
+            {
+                GameCount--;
+                new GameCountChangeEvent(GameCount).Send();
+                if (GameCount <= 0)
+                {
+                    new GameProcessChangeEvent(GameProcessState.End).Send();
+                    IngameChatManager.Instance.SendNotifyMessage("Count is Zero - Human Win", true);
+                }
+            }
+        }
+    }
+
+    void SyncGameCount(GameEvent data)
+    {
+        GameCountChangeEvent e = (GameCountChangeEvent)data;
+        GameCount = e.Count;
+    }
+
 
     private void Update()
     {
@@ -63,11 +90,11 @@ public class GameProcess : MonoBehaviourPunCallbacks
             new GameProcessChangeEvent(GameProcessState.End).Send();
             if (CharacterContext.Instance.GetAlliveGameCharacter(0).CharacterInfo.IsSpy)
             {
-                IngameChatManager.Instance.SendNotifyMessage("Spy Win", true);
+                IngameChatManager.Instance.SendNotifyMessage("No Survival - Spy Win", true);
             }
             else
             {
-                IngameChatManager.Instance.SendNotifyMessage("Human Win", true);
+                IngameChatManager.Instance.SendNotifyMessage("No Survival - Human Win", true);
             }
         }
         else
@@ -75,14 +102,14 @@ public class GameProcess : MonoBehaviourPunCallbacks
             bool isSpy = false;
             foreach (var character in CharacterContext.Instance.GameCharacters)
             {
-                if (character.CharacterInfo.IsSpy == true)
+                if (character.CharacterInfo.IsSpy)
                 {
                     isSpy = true;
                 }
             }
             if (isSpy == false)
             {
-                IngameChatManager.Instance.SendNotifyMessage("Human Win", true);
+                IngameChatManager.Instance.SendNotifyMessage("Find The Spy - Human Win", true);
                 new GameProcessChangeEvent(GameProcessState.End).Send();
             }
         }

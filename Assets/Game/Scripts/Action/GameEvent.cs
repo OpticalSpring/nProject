@@ -12,6 +12,7 @@ public class GameEvent
         //GameProcess
         InitCharacter,
         GameProcessChange,
+        GameCountChange,
 
         //Character
         CharacterMove,
@@ -87,6 +88,8 @@ public class EventJsonUtility
                 return UnityEngine.JsonUtility.FromJson<InitCharacterEvent>(eventString);
             case GameEvent.GameEventType.GameProcessChange:
                 return UnityEngine.JsonUtility.FromJson<GameProcessChangeEvent>(eventString);
+            case GameEvent.GameEventType.GameCountChange:
+                return UnityEngine.JsonUtility.FromJson<GameCountChangeEvent>(eventString);
             case GameEvent.GameEventType.CharacterMove:
                 return UnityEngine.JsonUtility.FromJson<CharacterMoveEvent>(eventString);
             case GameEvent.GameEventType.CharacterJump:

@@ -26,5 +26,17 @@ public class GameProcessChangeEvent : GameEvent
     }
 }
 
+[Serializable]
+public class GameCountChangeEvent : GameEvent
+{
+    public int Count;
+
+    public GameCountChangeEvent(int count)
+    {
+        GameEventID = GameEventType.GameCountChange;
+        Count = count;
+    }
+}
+
 
 

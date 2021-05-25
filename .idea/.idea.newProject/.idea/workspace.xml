@@ -25,8 +25,12 @@
     <changedPaths>
       <option value="$PROJECT_DIR$/Assets/Game/Scripts/Title/InitData.cs" />
       <option value="$PROJECT_DIR$/Assets/Game/Scripts/Title/SceneFlowManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Game/Scripts/Context/GameProcess.cs" />
       <option value="$PROJECT_DIR$/Assets/Game/Scripts/Title/TitleManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Game/Scripts/Action/GameProcessEvent.cs" />
+      <option value="$PROJECT_DIR$/Assets/Game/Scripts/Action/GameEvent.cs" />
+      <option value="$PROJECT_DIR$/Assets/Game/Scripts/Context/UIContext.cs" />
+      <option value="$PROJECT_DIR$/Assets/Game/Scripts/Context/GameProcess.cs" />
+      <option value="$PROJECT_DIR$/Assets/Game/Scripts/UI/HUDControl.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1t1MH0wONlm5az4oyJBKU78jUIU" />
@@ -62,10 +66,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="16508">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="16508" />
+      <option name="pid" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -81,7 +85,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1621932055416</updated>
-      <workItem from="1621932088138" duration="4549000" />
+      <workItem from="1621932088138" duration="5041000" />
+      <workItem from="1621942328400" duration="3901000" />
     </task>
     <servers />
   </component>
