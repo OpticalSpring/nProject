@@ -16,6 +16,7 @@ public class TitleManager : MonoBehaviourPunCallbacks
         }
         SceneFlowManager.Instance.Init();
         OnLogin();
+        StartCoroutine(AutoReflesh());
     }
     private string gameVer = "0.1";
     public GameObject[] uiGroup;
@@ -39,7 +40,7 @@ public class TitleManager : MonoBehaviourPunCallbacks
         PhotonNetwork.ConnectUsingSettings();
         PhotonNetwork.GameVersion = gameVer;
         PhotonNetwork.NickName = PlayerPrefs.GetString("NickName");
-        PhotonNetwork.AutomaticallySyncScene = true;
+        PhotonNetwork.AutomaticallySyncScene = false;
         PhotonNetwork.SendRate = 60;
         PhotonNetwork.SerializationRate = 30;
         PhotonNetwork.QuickResends = 3;
@@ -105,12 +106,24 @@ public class TitleManager : MonoBehaviourPunCallbacks
                 startButton.SetActive(false);
             }
 
-            if (!uiGroup[3].activeSelf)
+        }
+    }
+
+    IEnumerator AutoReflesh()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(1);
+            if (PhotonNetwork.InRoom)
             {
-                OpenUI(3);
+                if (!uiGroup[3].activeSelf)
+                {
+                    OpenUI(3);
+                }
+
+                IsOverlapPlayerColor();
             }
         }
-
     }
 
     public bool GetPlayerColor(int n)
@@ -151,6 +164,26 @@ public class TitleManager : MonoBehaviourPunCallbacks
         SetPlayerColor(n);
     }
 
+    void IsOverlapPlayerColor()
+    {
+        string oldName = PhotonNetwork.NickName;
+        int n = ColorManager.GetPlayerNameToCol(oldName);
+        if (n == 0)
+        {
+            SetPlayerColorNoOverlap();
+            return;
+        }
+        for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
+        {
+            if(PhotonNetwork.PlayerList[i].NickName == oldName) continue;
+            if (ColorManager.GetPlayerNameToCol(PhotonNetwork.PlayerList[i].NickName) == n)
+            {
+                SetPlayerColorNoOverlap();
+                return;
+            }
+        }
+    }
+
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
@@ -161,7 +194,7 @@ public class TitleManager : MonoBehaviourPunCallbacks
 
         foreach (RoomInfo roomInfo in roomList)
         {
-            if (roomInfo.IsOpen == true)
+            if (roomInfo.IsOpen)
             {
 
                 GameObject _room = Instantiate(roomPrefab, roomGrid.transform);
@@ -178,13 +211,13 @@ public class TitleManager : MonoBehaviourPunCallbacks
 
     public void LeftRoom()
     {
+        OpenUI(1);
         if (PhotonNetwork.InRoom)
         {
 
             PhotonNetwork.LeaveRoom();
             PhotonNetwork.JoinLobby();
 
-            OpenUI(1);
             Debug.Log("LeftRoom");
         }
     }
@@ -206,6 +239,12 @@ public class TitleManager : MonoBehaviourPunCallbacks
 
     public void StartGame()
     {
+        photonView.RPC("ShardGame", RpcTarget.All);
+    }
+
+    [PunRPC]
+    public void ShardGame()
+    {
         PhotonNetwork.CurrentRoom.IsOpen = false;
         SceneFlowManager.Instance.TitleToIngameFromGameStart();
     }
@@ -216,7 +255,7 @@ public class TitleManager : MonoBehaviourPunCallbacks
 
         OpenUI(3);
         SetPlayerColorNoOverlap();
-
+        
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)

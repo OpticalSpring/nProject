@@ -21,7 +21,6 @@ public class SceneFlowManager : MonoBehaviour
                 myObject.AddComponent<SceneFlowManager>();
                 DontDestroyOnLoad(myObject);
                 _instance = myObject.GetComponent<SceneFlowManager>();
-                
             }
             return _instance;
         }

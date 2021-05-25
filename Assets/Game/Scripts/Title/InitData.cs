@@ -9,13 +9,13 @@ public class InitData : MonoBehaviour
 
     private void Start()
     {
-        if(SceneFlowManager.Instance.NickName?.Length == 0)
+        if(SceneFlowManager.Instance.NickName?.Length > 0)
         {
-            inputName.text = PlayerPrefs.GetString("NickName");
+            inputName.text = SceneFlowManager.Instance.NickName;
         }
         else
         {
-            inputName.text = SceneFlowManager.Instance.NickName;
+            inputName.text = PlayerPrefs.GetString("NickName");
         }
         SetName();
     }

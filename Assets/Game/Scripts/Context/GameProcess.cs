@@ -33,7 +33,7 @@ public class GameProcess : MonoBehaviourPunCallbacks
         IngameChatManager.Instance.SendNotifyMessage("Enter Scene", false);
         //Cursor.visible = false;
         //Cursor.lockState = CursorLockMode.Locked;
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(2);
         if (!PhotonNetwork.IsMasterClient)
         {
             yield break;
