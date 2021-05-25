@@ -3,10 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
 public class SceneFlowManager : MonoBehaviour
 {
     static SceneFlowManager _instance;
+    public string NickName;
+    public int ColorNum;
     public static SceneFlowManager Instance
     {
         get
@@ -24,7 +27,10 @@ public class SceneFlowManager : MonoBehaviour
         }
     }
 
-
+    public void Init()
+    {
+        
+    }
     public void TitleToIngameFromGameStart()
     {
         StartCoroutine(LoadSceneAsync(1));

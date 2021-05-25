@@ -9,7 +9,14 @@ public class InitData : MonoBehaviour
 
     private void Start()
     {
-        inputName.text = PlayerPrefs.GetString("UserName");
+        if(SceneFlowManager.Instance.NickName?.Length == 0)
+        {
+            inputName.text = PlayerPrefs.GetString("NickName");
+        }
+        else
+        {
+            inputName.text = SceneFlowManager.Instance.NickName;
+        }
         SetName();
     }
 
@@ -26,7 +33,7 @@ public class InitData : MonoBehaviour
         inputName.text = inputName.text.Replace('#', ' ');
 
 
-        PlayerPrefs.SetString("UserName", inputName.text);
+        PlayerPrefs.SetString("NickName", inputName.text);
         PhotonNetwork.NickName = inputName.text;
     }
 

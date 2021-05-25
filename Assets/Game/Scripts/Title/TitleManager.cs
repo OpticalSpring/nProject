@@ -14,6 +14,7 @@ public class TitleManager : MonoBehaviourPunCallbacks
         {
             Instance = this;
         }
+        SceneFlowManager.Instance.Init();
         OnLogin();
     }
     private string gameVer = "0.1";
@@ -65,7 +66,7 @@ public class TitleManager : MonoBehaviourPunCallbacks
             RO.IsOpen = true;
             RO.IsVisible = true;
 
-            PhotonNetwork.JoinOrCreateRoom(PlayerPrefs.GetString("UserName"), RO, TypedLobby.Default);
+            PhotonNetwork.JoinOrCreateRoom(PlayerPrefs.GetString("NickName"), RO, TypedLobby.Default);
             OpenUI(3);
             SetPlayerColorNoOverlap();
             Debug.Log("InitRoom");
@@ -84,6 +85,7 @@ public class TitleManager : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.InRoom)
         {
+            
             curRoomName.text = PhotonNetwork.CurrentRoom.Name + "";
             curPlayerList.text = "";
             for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
@@ -101,6 +103,11 @@ public class TitleManager : MonoBehaviourPunCallbacks
             else
             {
                 startButton.SetActive(false);
+            }
+
+            if (!uiGroup[3].activeSelf)
+            {
+                OpenUI(3);
             }
         }
 
@@ -120,23 +127,26 @@ public class TitleManager : MonoBehaviourPunCallbacks
 
     public void SetPlayerColor(int n)
     {
-        if (GetPlayerColor(n) == true)
+        if (GetPlayerColor(n))
         {
             return;
         }
         PhotonNetwork.NickName = ColorManager.SetPlayerColToName(PhotonNetwork.NickName, n);
+        SceneFlowManager.Instance.NickName = ColorManager.GetPlayerNameOutCol(PhotonNetwork.NickName);
+        SceneFlowManager.Instance.ColorNum = n;
     }
 
     void SetPlayerColorNoOverlap()
     {
-        int n;
+        int n = SceneFlowManager.Instance.ColorNum;
+        if(n == 0) n = Random.Range(1, 13);
         while (true)
         {
-            n = Random.Range(0, 13);
-            if (GetPlayerColor(n) == false)
+            if (!GetPlayerColor(n))
             {
                 break;
             }
+            n = Random.Range(1, 13);
         }
         SetPlayerColor(n);
     }
