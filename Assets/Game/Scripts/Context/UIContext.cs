@@ -17,6 +17,7 @@ public class UIContext : MonoBehaviour
     {
         GameContext.Instance.RegisterObserver(GameEvent.GameEventType.CharacterShot, NameTagUpdate);
         GameContext.Instance.RegisterObserver(GameEvent.GameEventType.GameCountChange, CountUpdate);
+        GameContext.Instance.RegisterObserver(GameEvent.GameEventType.GameProcessChange, HUDInit);
     }
 
 
@@ -67,5 +68,16 @@ public class UIContext : MonoBehaviour
     {
         GameCountChangeEvent e = (GameCountChangeEvent) data;
         HUD.UpdateCount(e.Count);
+    }
+
+    void HUDInit(GameEvent data)
+    {
+        GameProcessChangeEvent e = (GameProcessChangeEvent) data;
+        if (e.State == GameProcess.GameProcessState.Ingame)
+        {
+            HUD.UpdateNameTag();
+            HUD.UpdateAmmo();
+            HUD.UpdateType();
+        }
     }
 }

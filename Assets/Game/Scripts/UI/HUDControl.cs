@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -7,16 +8,12 @@ public class HUDControl : MonoBehaviour
 {
     public GameObject Root;
     public GameObject Target;
+    public TextMeshProUGUI TypeText;
     public TextMeshProUGUI NameText;
     public TextMeshProUGUI HPNowText;
     public TextMeshProUGUI HPMaxText;
     public TextMeshProUGUI AmmoText;
     public TextMeshProUGUI CountText;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
@@ -33,13 +30,17 @@ public class HUDControl : MonoBehaviour
 
     bool IsVisible()
     {
-        if(Target == null)
+        if(Target == null || GameProcess.Instance.GameState != GameProcess.GameProcessState.Ingame)
         {
             return false;
         }
         return true;
     }
 
+    public void UpdateType()
+    {
+        TypeText.text = Target.GetComponent<GameCharacter>().CharacterInfo.IsSpy ? "SPY" : "HUMAN";
+    }
     public void UpdateNameTag()
     {
         UpdateName(Target.GetComponent<GameCharacter>().PlayerName);

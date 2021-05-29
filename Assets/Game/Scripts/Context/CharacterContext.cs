@@ -64,8 +64,6 @@ public class CharacterContext : MonoBehaviourPunCallbacks
         if (character.photonView.IsMine)
         {
             UIContext.Instance.HUD.Target = character.gameObject;
-            UIContext.Instance.HUD.UpdateNameTag();
-            UIContext.Instance.HUD.UpdateAmmo();
         }
         else
         {
