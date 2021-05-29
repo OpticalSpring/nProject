@@ -147,6 +147,7 @@ public class TitleManager : MonoBehaviourPunCallbacks
         PhotonNetwork.NickName = ColorManager.SetPlayerColToName(PhotonNetwork.NickName, n);
         SceneFlowManager.Instance.NickName = ColorManager.GetPlayerNameOutCol(PhotonNetwork.NickName);
         SceneFlowManager.Instance.ColorNum = n;
+        IngameChatManager.Instance.PlayerColor = n;
     }
 
     void SetPlayerColorNoOverlap()

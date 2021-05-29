@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
+using UnityEngine.Serialization;
 
 public class IngameChatManager : MonoBehaviourPunCallbacks
 {
@@ -15,16 +16,16 @@ public class IngameChatManager : MonoBehaviourPunCallbacks
         }
     }
 
-    public Text mainText;
-    public InputField chatField;
+    public Text MainText;
+    public InputField ChatField;
     public bool ChatEnabled;
-    public Color playerColor;
-    public string playerName;
+    public int PlayerColor;
+    public string PlayerName;
     public int ChatLevel = 1;
 
     void Start()
     {
-        playerName = PhotonNetwork.NickName;
+        PlayerName = PhotonNetwork.NickName;
     }
 
     void Update()
@@ -34,13 +35,13 @@ public class IngameChatManager : MonoBehaviourPunCallbacks
             if (ChatEnabled)
             {
                 Chat();
-                chatField.gameObject.SetActive(false);
+                ChatField.gameObject.SetActive(false);
                 ChatEnabled = false;
             }
             else
             {
-                chatField.gameObject.SetActive(true);
-                chatField.ActivateInputField();
+                ChatField.gameObject.SetActive(true);
+                ChatField.ActivateInputField();
                 ChatEnabled = true;
             }
         }
@@ -53,7 +54,7 @@ public class IngameChatManager : MonoBehaviourPunCallbacks
 
     void Chat()
     {
-        string c = chatField.text;
+        string c = ChatField.text;
         if (c.Length == 0)
         {
             return;
@@ -62,11 +63,11 @@ public class IngameChatManager : MonoBehaviourPunCallbacks
         {
             c = c.Substring(0, 20);
         }
-        string result = string.Format("<color=#{0}>[{1}]</color> ", ChatLevel == 2 ? ColorManager.ColToStr(ColorManager.NumToCol(0)) : ColorManager.ColToStr(playerColor), playerName);
+        string result = string.Format("<color=#{0}>[{1}]</color> ", ChatLevel == 2 ? ColorManager.ColToStr(ColorManager.NumToCol(0)) : ColorManager.ColToStr(ColorManager.NumToCol(PlayerColor)), PlayerName);
         result += c;
         PhotonView photonView = PhotonView.Get(this);
         photonView.RPC("SendChatMessage", RpcTarget.All, result, ChatLevel);
-        chatField.text = "";
+        ChatField.text = "";
     }
 
     [PunRPC]
@@ -77,7 +78,7 @@ public class IngameChatManager : MonoBehaviourPunCallbacks
         {
             return;
         }
-        mainText.text += "\n" + inputLine;
+        MainText.text += "\n" + inputLine;
     }
 
     public void SendNotifyMessage(string inputLine, bool other)

@@ -19,18 +19,26 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scripts/UI/HUDControl.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://C:/Program Files/Unity/Hub/Editor/2019.4.17f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.ugui/Runtime/EventSystem/EventSystem.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scripts/Context/UIContext.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
       <option value="$PROJECT_DIR$/Assets/Game/Scripts/Title/InitData.cs" />
-      <option value="$PROJECT_DIR$/Assets/Game/Scripts/Title/SceneFlowManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Game/Scripts/Title/TitleManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Game/Scripts/Action/GameProcessEvent.cs" />
       <option value="$PROJECT_DIR$/Assets/Game/Scripts/Action/GameEvent.cs" />
-      <option value="$PROJECT_DIR$/Assets/Game/Scripts/Context/UIContext.cs" />
       <option value="$PROJECT_DIR$/Assets/Game/Scripts/Context/GameProcess.cs" />
       <option value="$PROJECT_DIR$/Assets/Game/Scripts/UI/HUDControl.cs" />
+      <option value="$PROJECT_DIR$/Assets/Game/Scripts/Character/GameCharacterAnim.cs" />
+      <option value="$PROJECT_DIR$/Assets/Game/Scripts/Character/GameCharacterDriver.cs" />
+      <option value="$PROJECT_DIR$/Assets/Game/Scripts/Context/CharacterContext.cs" />
+      <option value="$PROJECT_DIR$/Assets/Game/Scripts/Context/UIContext.cs" />
+      <option value="$PROJECT_DIR$/Assets/Game/Scripts/Title/RoomData.cs" />
+      <option value="$PROJECT_DIR$/Assets/Game/Scripts/Title/SceneFlowManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Game/Scripts/Character/GameCharacter.cs" />
+      <option value="$PROJECT_DIR$/Assets/Game/Scripts/Network/IngameChatManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Game/Scripts/Title/TitleManager.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1t1MH0wONlm5az4oyJBKU78jUIU" />
@@ -45,6 +53,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.C#" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">

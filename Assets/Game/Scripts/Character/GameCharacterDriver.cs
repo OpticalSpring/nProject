@@ -1,6 +1,4 @@
 ﻿using Photon.Pun;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameCharacterDriver : MonoBehaviourPunCallbacks
@@ -76,7 +74,7 @@ public class GameCharacterDriver : MonoBehaviourPunCallbacks
             new CharacterFireEvent(MyCharacter.CharacterInfo).Send();
         }
 
-        if(IngameChatManager.Instance.ChatEnabled == true)
+        if(IngameChatManager.Instance.ChatEnabled)
         {
             moveVector = Vector3.zero;
             run = false;
@@ -89,7 +87,7 @@ public class GameCharacterDriver : MonoBehaviourPunCallbacks
             new CharacterMoveEvent(MyCharacter.CharacterInfo, moveVector, new Vector2(h,v), run).Send();
         }
 
-        if (IngameChatManager.Instance.ChatEnabled == true)
+        if (IngameChatManager.Instance.ChatEnabled)
         {
             return;
         }

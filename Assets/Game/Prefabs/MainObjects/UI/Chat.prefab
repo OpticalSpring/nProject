@@ -73,10 +73,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e461b6c12afa1e4190747a5a85fa4f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainText: {fileID: 5083280329707229652}
-  chatField: {fileID: 5083280330508364384}
-  playerColor: {r: 1, g: 0, b: 0, a: 1}
-  playerName: Default
+  MainText: {fileID: 5083280329707229652}
+  ChatField: {fileID: 5083280330508364384}
+  ChatEnabled: 0
+  PlayerColor: 0
+  PlayerName: 
+  ChatLevel: 1
 --- !u!1 &5083280329707229654
 GameObject:
   m_ObjectHideFlags: 0
@@ -155,7 +157,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Not in chat yet
+  m_Text: Default System Message
 --- !u!114 &5083280329707229650
 MonoBehaviour:
   m_ObjectHideFlags: 0

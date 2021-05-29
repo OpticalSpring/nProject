@@ -1,11 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 public class GameCharacter : MonoBehaviourPunCallbacks, IPunObservable
 {
-    public int ColorNum;
-    public Color PlayerColor;
+    public int PlayerColor;
     public string PlayerName;
     public CharacterInfo CharacterInfo;
     public CharacterStatus CurrentStatus;
@@ -34,7 +32,7 @@ public class GameCharacter : MonoBehaviourPunCallbacks, IPunObservable
         }
         else
         {
-            this.CharacterInfo.IsSpy = (bool)stream.ReceiveNext();
+            CharacterInfo.IsSpy = (bool)stream.ReceiveNext();
         }
     }
 
@@ -49,8 +47,7 @@ public class GameCharacter : MonoBehaviourPunCallbacks, IPunObservable
         CharacterInfo.ID = GetComponent<PhotonView>().ViewID;
 
         PlayerName = photonView.Owner.NickName;
-        int a = ColorManager.GetPlayerNameToCol(PlayerName);
-        SetPlayerColor(ColorManager.NumToCol(a));
+        SetPlayerColor(ColorManager.GetPlayerNameToCol(PlayerName));
         PlayerName = ColorManager.SetPlayerNameToCol(PlayerName);
         gameObject.name = PlayerName;
         CharacterContext.Instance.RegisterCharacter(this);
@@ -62,16 +59,16 @@ public class GameCharacter : MonoBehaviourPunCallbacks, IPunObservable
             return;
         }
         gameObject.layer = 2;
-        IngameChatManager.Instance.playerName = PlayerName;
-        IngameChatManager.Instance.playerColor = PlayerColor;
+        IngameChatManager.Instance.PlayerName = PlayerName;
+        IngameChatManager.Instance.PlayerColor = PlayerColor;
     }
 
-    public void SetPlayerColor(Color color)
+    public void SetPlayerColor(int color)
     {
         PlayerColor = color;
         foreach (SkinnedMeshRenderer mesh in SkinnedMeshes)
         {
-            mesh.material.color = color;
+            mesh.material.color = ColorManager.NumToCol(color);
         }
     }
     public void Aim(Vector3 forward, float rootRotation)
@@ -243,8 +240,8 @@ public class GameCharacter : MonoBehaviourPunCallbacks, IPunObservable
         {
             return;
         }
-        IngameChatManager.Instance.playerName = PlayerName;
-        IngameChatManager.Instance.playerColor = PlayerColor;
+        IngameChatManager.Instance.PlayerName = PlayerName;
+        IngameChatManager.Instance.PlayerColor = PlayerColor;
         UIContext.Instance.HUD.UpdateNameTag();
     }
 

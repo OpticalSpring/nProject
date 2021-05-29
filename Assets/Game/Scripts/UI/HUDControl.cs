@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 
 public class HUDControl : MonoBehaviour
@@ -10,10 +7,12 @@ public class HUDControl : MonoBehaviour
     public GameObject Target;
     public TextMeshProUGUI TypeText;
     public TextMeshProUGUI NameText;
-    public TextMeshProUGUI HPNowText;
-    public TextMeshProUGUI HPMaxText;
+    public TextMeshProUGUI HpCurrentText;
+    public TextMeshProUGUI HpMaxText;
     public TextMeshProUGUI AmmoText;
     public TextMeshProUGUI CountText;
+    public GameObject InteractionObject;
+    public GameObject ConsumeObject;
 
     // Update is called once per frame
     void Update()
@@ -44,13 +43,13 @@ public class HUDControl : MonoBehaviour
     public void UpdateNameTag()
     {
         UpdateName(Target.GetComponent<GameCharacter>().PlayerName);
-        UpdateHP(Target.GetComponent<GameCharacter>().CurrentStatus.HP_NOW, Target.GetComponent<GameCharacter>().CurrentStatus.HP_MAX);
+        UpdateHp(Target.GetComponent<GameCharacter>().CurrentStatus.HP_NOW, Target.GetComponent<GameCharacter>().CurrentStatus.HP_MAX);
     }
 
-    void UpdateHP(int curHP, int maxHP)
+    void UpdateHp(int curHp, int maxHp)
     {
-        HPNowText.text = curHP.ToString();
-        HPMaxText.text = maxHP.ToString();
+        HpCurrentText.text = curHp.ToString();
+        HpMaxText.text = maxHp.ToString();
     }
 
     void UpdateName(string name)
