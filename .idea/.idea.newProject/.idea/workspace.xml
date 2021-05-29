@@ -36,9 +36,10 @@
       <option value="$PROJECT_DIR$/Assets/Game/Scripts/Context/UIContext.cs" />
       <option value="$PROJECT_DIR$/Assets/Game/Scripts/Title/RoomData.cs" />
       <option value="$PROJECT_DIR$/Assets/Game/Scripts/Title/SceneFlowManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Game/Scripts/Character/GameCharacter.cs" />
       <option value="$PROJECT_DIR$/Assets/Game/Scripts/Network/IngameChatManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Game/Scripts/Title/TitleManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Game/Scripts/Character/GameCharacterStatus.cs" />
+      <option value="$PROJECT_DIR$/Assets/Game/Scripts/Character/GameCharacter.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1t1MH0wONlm5az4oyJBKU78jUIU" />

@@ -22,6 +22,7 @@ public class GameCharacter : MonoBehaviourPunCallbacks, IPunObservable
     {
         CommentMovement();
         GravityProcess();
+        CoolDownTime();
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
@@ -209,6 +210,14 @@ public class GameCharacter : MonoBehaviourPunCallbacks, IPunObservable
             newPos.y -= CurrentStatus.Velocity;
             gameObject.transform.position = newPos;
             jumpTime -= Time.deltaTime;
+        }
+    }
+
+    void CoolDownTime()
+    {
+        if (CurrentStatus.ConsumeCurrentTime > 0)
+        {
+            CurrentStatus.ConsumeCurrentTime -= Time.deltaTime;
         }
     }
 

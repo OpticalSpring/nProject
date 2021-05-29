@@ -22,16 +22,15 @@ public class CharacterStatus
     public float Velocity;
     public bool Aim;
     public int Ammo;
+    public float ConsumeCurrentTime;
+    public float ConsumeMaxTime;
     public CharacterStatus()
     {
         HP_NOW = HP_MAX;
         Velocity = 0;
         Ammo = 60;
+        ConsumeMaxTime = 60;
     }
 }
 
-public class CharacterCondition
-{
-    
-}
 
