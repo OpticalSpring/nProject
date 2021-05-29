@@ -8,7 +8,7 @@ public struct CharacterInfo
     public bool IsSpy;
 }
 
-public class CharacterStatus
+public class CharacterStatus : MonoBehaviour
 {
     public int HP_NOW;
     public int HP_MAX = 1000;

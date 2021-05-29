@@ -6,7 +6,7 @@ public class GameCharacter : MonoBehaviourPunCallbacks, IPunObservable
     public int PlayerColor;
     public string PlayerName;
     public CharacterInfo CharacterInfo;
-    public CharacterStatus CurrentStatus;
+    [HideInInspector] public CharacterStatus CurrentStatus;
     public List<SkinnedMeshRenderer> SkinnedMeshes;
     public GameObject Muzzle;
     public GameObject FireEffect;
@@ -215,6 +215,8 @@ public class GameCharacter : MonoBehaviourPunCallbacks, IPunObservable
 
     void CoolDownTime()
     {
+        if (!CharacterInfo.IsSpy) return;
+        
         if (CurrentStatus.ConsumeCurrentTime > 0)
         {
             CurrentStatus.ConsumeCurrentTime -= Time.deltaTime;
@@ -231,11 +233,16 @@ public class GameCharacter : MonoBehaviourPunCallbacks, IPunObservable
         {
             return;
         }
+        if (CurrentStatus.ConsumeCurrentTime > 0)
+        {
+            return;
+        }
         RaycastHit rayHit;
         GameCameraLogic.CheckObject(CameraControl.Instance.MainCamera, out rayHit);
 
         if (rayHit.collider?.gameObject?.GetComponent<GameCharacter>())
         {
+            CurrentStatus.ConsumeCurrentTime = CurrentStatus.ConsumeMaxTime;
             new CharacterConsumeEvent(CharacterInfo, rayHit.collider.gameObject.GetComponent<GameCharacter>().CharacterInfo).Send();
         }
     }
