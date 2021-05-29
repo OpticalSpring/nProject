@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using ExitGames.Client.Photon.StructWrapping;
 using UnityEngine;
 
 public class UIContext : MonoBehaviour
@@ -78,5 +80,23 @@ public class UIContext : MonoBehaviour
             HUD.UpdateAmmo();
             HUD.UpdateType();
         }
+    }
+
+
+    private void Update()
+    {
+        CheckObjectInteraction();
+    }
+
+    void CheckObjectInteraction()
+    {
+        if (HUD.Target.GetComponent<GameCharacter>().CharacterInfo.IsSpy == false)
+        {
+            return;
+        }
+        
+        RaycastHit rayHit;
+        HUD.ConsumeActive(GameCameraLogic.CheckEnableConsume(CameraControl.Instance.MainCamera, out rayHit, 5));
+        
     }
 }

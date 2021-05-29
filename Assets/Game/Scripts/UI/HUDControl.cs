@@ -13,6 +13,7 @@ public class HUDControl : MonoBehaviour
     public TextMeshProUGUI CountText;
     public GameObject InteractionObject;
     public GameObject ConsumeObject;
+    public TextMeshProUGUI ConsumeTimeText;
 
     // Update is called once per frame
     void Update()
@@ -67,5 +68,25 @@ public class HUDControl : MonoBehaviour
         int min = count / 60;
         int sec = count % 60;
         CountText.text = string.Format("{0:00}:{1:00}", min, sec);
+    }
+
+    public void ConsumeActive(bool active)
+    {
+        if (active)
+        {
+            ConsumeObject.SetActive(true);
+            if (Target.GetComponent<GameCharacter>().CurrentStatus.ConsumeCurrentTime > 0)
+            {
+                ConsumeTimeText.text = string.Format("- {0:00}", Target.GetComponent<GameCharacter>().CurrentStatus.ConsumeCurrentTime);
+            }
+            else
+            {
+                ConsumeTimeText.text = string.Format("- Consume!");
+            }
+        }
+        else
+        {
+            ConsumeObject.SetActive(false);
+        }
     }
 }

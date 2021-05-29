@@ -137,7 +137,7 @@ public class GameCharacter : MonoBehaviourPunCallbacks, IPunObservable
             return;
         }
         RaycastHit rayHit;
-        GameCameraLogic.CheckObject(CameraControl.Instance.MainCamera, out rayHit);
+        GameCameraLogic.CheckObject(CameraControl.Instance.MainCamera, out rayHit, 100);
         
         if(rayHit.collider?.gameObject)
         {
@@ -238,9 +238,7 @@ public class GameCharacter : MonoBehaviourPunCallbacks, IPunObservable
             return;
         }
         RaycastHit rayHit;
-        GameCameraLogic.CheckObject(CameraControl.Instance.MainCamera, out rayHit);
-
-        if (rayHit.collider?.gameObject?.GetComponent<GameCharacter>())
+        if (GameCameraLogic.CheckEnableConsume(CameraControl.Instance.MainCamera, out rayHit, 5))
         {
             CurrentStatus.ConsumeCurrentTime = CurrentStatus.ConsumeMaxTime;
             new CharacterConsumeEvent(CharacterInfo, rayHit.collider.gameObject.GetComponent<GameCharacter>().CharacterInfo).Send();

@@ -23,11 +23,24 @@ public class GameCameraLogic : MonoBehaviour
 
     }
 
-    public static void CheckObject(GameObject camMain, out RaycastHit rayHit)
+    public static void CheckObject(GameObject camMain, out RaycastHit rayHit, int maxDistance)
     {
-
         int mask = 1 << 2;
         mask = ~mask;
-        Physics.Raycast(camMain.transform.position, camMain.transform.forward, out rayHit, 100, mask);
+        Physics.Raycast(camMain.transform.position, camMain.transform.forward, out rayHit, maxDistance, mask);
+    }
+
+    public static bool CheckEnableConsume(GameObject camMain, out RaycastHit rayHit, int maxDistance)
+    {
+        CheckObject(camMain, out rayHit, maxDistance);
+
+        if (rayHit.collider?.gameObject?.GetComponent<GameCharacter>())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }
